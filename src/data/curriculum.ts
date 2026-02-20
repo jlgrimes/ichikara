@@ -1,8 +1,16 @@
+export interface SampleSentence {
+  japanese: string;       // full sentence/phrase in Japanese
+  highlightedTerm: string; // the new concept to highlight (substring of japanese)
+  literal: string;        // literal breakdown, e.g. "Me (← owner of) dog"
+  natural: string;        // natural English, e.g. "My dog"
+}
+
 export interface Lesson {
   id: string;
   module: number;
   title: string;
   subtitle: string;
+  sample: SampleSentence;
   concept: string; // structural concept, no translation gloss
   keyPoints: string[];
   practiceItems: PracticeItem[];
@@ -20,6 +28,12 @@ export const CURRICULUM: Lesson[] = [
     module: 0,
     title: '名詞 — Nouns',
     subtitle: 'The raw material',
+    sample: {
+      japanese: 'ねこ',
+      highlightedTerm: 'ねこ',
+      literal: 'cat (no role until a particle follows)',
+      natural: 'cat / a cat / the cats — same word',
+    },
     concept:
       'Nouns in Japanese carry no inherent role. A noun is just a thing — inert, untyped. Its role in a sentence is determined entirely by the particle that follows it. This is fundamentally different from English, where word order determines role.',
     keyPoints: [
@@ -35,6 +49,12 @@ export const CURRICULUM: Lesson[] = [
     module: 0,
     title: 'だ / です — The Copula',
     subtitle: 'The equals sign',
+    sample: {
+      japanese: 'これはねこだ',
+      highlightedTerm: 'だ',
+      literal: 'this (topic) cat (=)',
+      natural: 'This is a cat',
+    },
     concept:
       'だ and です are the copula — they connect a subject to what it is. Think of them as the = operator. "猫だ" means [thing] = [cat]. です is the polite register; だ is plain. Neither is "more correct" — they are the same statement at different register levels.',
     keyPoints: [
@@ -50,6 +70,12 @@ export const CURRICULUM: Lesson[] = [
     module: 1,
     title: 'は — Topic Marker',
     subtitle: 'Setting context',
+    sample: {
+      japanese: 'ねこはさかなをたべる',
+      highlightedTerm: 'は',
+      literal: 'cat (as for...) fish (obj) eats',
+      natural: "The cat eats fish",
+    },
     concept:
       'は does not mean "subject". It sets the topic — the thing the sentence comments on. Everything after は is a statement about that topic. A sentence can have a topic (は) and a separate subject (が) at the same time.',
     keyPoints: [
@@ -65,6 +91,12 @@ export const CURRICULUM: Lesson[] = [
     module: 1,
     title: 'が — Subject Marker',
     subtitle: 'The doer',
+    sample: {
+      japanese: 'ねこがたべる',
+      highlightedTerm: 'が',
+      literal: 'cat (← doer) eats',
+      natural: "The cat eats",
+    },
     concept:
       'が identifies the grammatical subject — specifically the entity performing or experiencing the predicate. Unlike は, が answers the question "which one?" It introduces new information or makes a specific identification.',
     keyPoints: [
@@ -80,6 +112,12 @@ export const CURRICULUM: Lesson[] = [
     module: 1,
     title: 'を — Object Marker',
     subtitle: 'The receiver',
+    sample: {
+      japanese: 'ねこをみる',
+      highlightedTerm: 'を',
+      literal: 'cat (← receives action) see',
+      natural: "See the cat / I see the cat",
+    },
     concept:
       'を marks the direct object — the thing the verb acts upon. It has one job. In "[A]が[B]を[VERB]", を tells you B is the thing being verbed.',
     keyPoints: [
@@ -95,6 +133,12 @@ export const CURRICULUM: Lesson[] = [
     module: 1,
     title: 'に — Target / Point',
     subtitle: 'The pin',
+    sample: {
+      japanese: 'がっこうにいく',
+      highlightedTerm: 'に',
+      literal: 'school (← pin: destination) go',
+      natural: "Go to school",
+    },
     concept:
       'に pins an action to a specific point — a destination in space, a moment in time, or a recipient. Think of に as placing a pin on a map or timeline. It answers "where to?" or "when?" or "to whom?"',
     keyPoints: [
@@ -110,6 +154,12 @@ export const CURRICULUM: Lesson[] = [
     module: 1,
     title: 'で — Context / Means',
     subtitle: 'The stage',
+    sample: {
+      japanese: 'こうえんであそぶ',
+      highlightedTerm: 'で',
+      literal: 'park (← stage) play',
+      natural: "Play at the park",
+    },
     concept:
       'で marks where an action occurs or the means by which it is done. Unlike に (a point), で marks the arena or tool. "公園で遊ぶ" — the park is not a destination, it is the stage the playing happens on.',
     keyPoints: [
@@ -125,6 +175,12 @@ export const CURRICULUM: Lesson[] = [
     module: 1,
     title: 'の — Noun Linker',
     subtitle: 'The modifier chain',
+    sample: {
+      japanese: 'わたしのいぬ',
+      highlightedTerm: 'の',
+      literal: 'Me (← owner of) dog',
+      natural: "My dog",
+    },
     concept:
       'の links two nouns. The noun before の modifies or belongs to the noun after it. It is not just possession — it expresses any relationship between two nouns where the first categorizes or qualifies the second.',
     keyPoints: [
@@ -143,6 +199,12 @@ export const CURRICULUM: Lesson[] = [
     module: 2,
     title: '動詞グループ — Verb Groups',
     subtitle: 'The conjugation classes',
+    sample: {
+      japanese: 'たべる',
+      highlightedTerm: 'たべる',
+      literal: 'eat (Group 2: る-verb — drop る to conjugate)',
+      natural: "to eat",
+    },
     concept:
       'Japanese verbs fall into three conjugation classes. Group 1 (う-verbs): dictionary form ends in a non-る vowel sound, or ends in る with an /a/, /u/, or /o/ vowel before it. Group 2 (る-verbs): dictionary form ends in る with an /i/ or /e/ vowel before it. Group 3: only する and くる — fully irregular. Identifying the group is the prerequisite to every conjugation.',
     keyPoints: [
@@ -159,6 +221,12 @@ export const CURRICULUM: Lesson[] = [
     module: 2,
     title: '辞書形 — Dictionary Form',
     subtitle: 'The base',
+    sample: {
+      japanese: 'まいにちたべる',
+      highlightedTerm: 'たべる',
+      literal: 'every-day eat (← plain non-past)',
+      natural: "I eat every day / I will eat every day",
+    },
     concept:
       'The dictionary form (辞書形) is the citation form — the form verbs appear in when listed. It always ends in an /u/ vowel sound: く, す, つ, ぬ, ぶ, む, る, ぐ, う. It is also the plain non-past affirmative form — it expresses either present habit or future intent depending on context. There is no separate "present tense" form.',
     keyPoints: [
@@ -175,6 +243,12 @@ export const CURRICULUM: Lesson[] = [
     module: 2,
     title: 'ます形 — Polite Form',
     subtitle: 'Register switch',
+    sample: {
+      japanese: 'まいにちたべます',
+      highlightedTerm: 'ます',
+      literal: 'every-day eat (← polite non-past)',
+      natural: "I eat every day (polite)",
+    },
     concept:
       'The ます-form is the polite non-past affirmative. It is not a separate tense — it is the same non-past meaning as the dictionary form, but at polite register. Formed by taking the verb stem and appending ます. The stem is derived differently per group: Group 1 shifts the final vowel to /i/; Group 2 drops る; Group 3 is irregular.',
     keyPoints: [
@@ -191,6 +265,12 @@ export const CURRICULUM: Lesson[] = [
     module: 2,
     title: 'て形 — Connector Form',
     subtitle: 'The joint',
+    sample: {
+      japanese: 'たべてねる',
+      highlightedTerm: 'て',
+      literal: 'eat (← connector) sleep',
+      natural: "Eat and then sleep",
+    },
     concept:
       'The て-form is a non-finite connector. It does not express tense on its own — it borrows tense from whatever follows it. Its primary function is chaining: A-て B means A and then B, or A while doing B, or A therefore B — the exact relationship is inferred from context and verb semantics. It is also the base for requests (てください), progressive aspect (ている), and many auxiliary constructions.',
     keyPoints: [
@@ -208,6 +288,12 @@ export const CURRICULUM: Lesson[] = [
     module: 2,
     title: 'た形 — Past Form',
     subtitle: 'Completed or prior',
+    sample: {
+      japanese: 'ごはんをたべた',
+      highlightedTerm: 'た',
+      literal: 'meal (obj) eat (← completed)',
+      natural: "I ate / I have eaten",
+    },
     concept:
       'た-form is the plain past/perfective. It marks an event as completed or as prior to the reference time. Formation follows the same phonological rules as て-form — just swap て/で for た/だ. In plain register, this is the sentence-final past. In embedded clauses, it marks relative past (prior to whatever the main clause time is).',
     keyPoints: [
@@ -225,6 +311,12 @@ export const CURRICULUM: Lesson[] = [
     module: 2,
     title: 'ない形 — Negative Form',
     subtitle: 'Absence of action',
+    sample: {
+      japanese: 'たべない',
+      highlightedTerm: 'ない',
+      literal: 'eat (← absent)',
+      natural: "Don't eat / I don't eat",
+    },
     concept:
       'The plain negative is formed with ない. For Group 1 verbs, the final /u/ vowel shifts to /a/ before ない (書く → 書か + ない). For Group 2, drop る + ない. Group 3: しない, こない. The one exception: う (the verb "to exist/do") → わない (not うない). ない itself is an い-adjective and conjugates accordingly: なかった (past negative).',
     keyPoints: [
@@ -245,6 +337,12 @@ export const CURRICULUM: Lesson[] = [
     module: 3,
     title: 'い形容詞 — い-Adjectives',
     subtitle: 'Self-conjugating descriptors',
+    sample: {
+      japanese: 'たかいやま',
+      highlightedTerm: 'たかい',
+      literal: 'high/expensive (self-conjugating) mountain',
+      natural: "A tall mountain",
+    },
     concept:
       'い-adjectives are a closed word class that conjugate directly — they carry tense and polarity in their own ending without needing an auxiliary. Every い-adjective ends in い in its citation form. To conjugate: drop the final い and add the appropriate suffix. They can directly precede a noun (attributive position) or end a clause (predicative position) without any connector.',
     keyPoints: [
@@ -263,6 +361,12 @@ export const CURRICULUM: Lesson[] = [
     module: 3,
     title: 'な形容詞 — な-Adjectives',
     subtitle: 'Noun-like descriptors',
+    sample: {
+      japanese: 'しずかなまち',
+      highlightedTerm: 'な',
+      literal: 'quiet (← copula-connector) town',
+      natural: "A quiet town",
+    },
     concept:
       'な-adjectives are structurally nouns — they cannot conjugate on their own. They borrow the copula (だ/です) to express tense and polarity. In attributive position (before a noun), they use な as a connector instead of の. This な is not a particle — it is a modified copula form specific to this position.',
     keyPoints: [
@@ -281,6 +385,12 @@ export const CURRICULUM: Lesson[] = [
     module: 3,
     title: '比較 — Comparison',
     subtitle: 'More, less, most',
+    sample: {
+      japanese: 'ねこはいぬよりちいさい',
+      highlightedTerm: 'より',
+      literal: 'cat (topic) dog (← standard of comparison) small',
+      natural: "Cats are smaller than dogs",
+    },
     concept:
       'Japanese has no inflected comparative or superlative forms — adjectives do not change shape for degree. Instead, comparison is expressed structurally: より marks the standard of comparison ("more than"); の中で...一番 marks the superlative domain ("the most among..."). The adjective itself stays in its plain form.',
     keyPoints: [
