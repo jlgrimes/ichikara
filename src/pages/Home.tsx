@@ -12,6 +12,8 @@ export function Home({ onSelectLesson, onGoToParticles }: HomeProps) {
     { id: 1, label: 'Particle Type System' },
     { id: 2, label: 'Verb System' },
     { id: 3, label: 'Adjectives' },
+    { id: 4, label: 'Extended Particles' },
+    { id: 5, label: 'Clauses & Nominalization' },
   ];
 
   return (
