@@ -135,4 +135,162 @@ export const CURRICULUM: Lesson[] = [
     ],
     practiceItems: [],
   },
+
+  // ─── Module 2: Verb System ────────────────────────────────────────────────
+
+  {
+    id: 'verb-groups',
+    module: 2,
+    title: '動詞グループ — Verb Groups',
+    subtitle: 'The conjugation classes',
+    concept:
+      'Japanese verbs fall into three conjugation classes. Group 1 (う-verbs): dictionary form ends in a non-る vowel sound, or ends in る with an /a/, /u/, or /o/ vowel before it. Group 2 (る-verbs): dictionary form ends in る with an /i/ or /e/ vowel before it. Group 3: only する and くる — fully irregular. Identifying the group is the prerequisite to every conjugation.',
+    keyPoints: [
+      'Group 1 (う-verbs): 書く, 飲む, 話す, 帰る* — stem changes at conjugation boundary',
+      'Group 2 (る-verbs): 食べる, 見る, 起きる — drop る, add ending directly',
+      'Group 3 (irregulars): する → し | くる → き — memorize, no rule',
+      '*帰る looks like Group 2 but is Group 1 — /a/ vowel before る',
+      'When in doubt: if you can drop る and the stem ends in /i/ or /e/, it\'s Group 2',
+    ],
+    practiceItems: [],
+  },
+  {
+    id: 'dictionary-form',
+    module: 2,
+    title: '辞書形 — Dictionary Form',
+    subtitle: 'The base',
+    concept:
+      'The dictionary form (辞書形) is the citation form — the form verbs appear in when listed. It always ends in an /u/ vowel sound: く, す, つ, ぬ, ぶ, む, る, ぐ, う. It is also the plain non-past affirmative form — it expresses either present habit or future intent depending on context. There is no separate "present tense" form.',
+    keyPoints: [
+      'All verbs in dictionary form end in an /u/-row kana',
+      'Non-past: covers both habitual present and future (context disambiguates)',
+      'Plain register — casual speech, embedded clauses, before nouns',
+      'Before です in polite embedded contexts: 食べる + です ≠ standard; use ます-form instead',
+      'Used directly before nouns as a modifier: 食べる人 = a person who eats',
+    ],
+    practiceItems: [],
+  },
+  {
+    id: 'masu-form',
+    module: 2,
+    title: 'ます形 — Polite Form',
+    subtitle: 'Register switch',
+    concept:
+      'The ます-form is the polite non-past affirmative. It is not a separate tense — it is the same non-past meaning as the dictionary form, but at polite register. Formed by taking the verb stem and appending ます. The stem is derived differently per group: Group 1 shifts the final vowel to /i/; Group 2 drops る; Group 3 is irregular.',
+    keyPoints: [
+      'Group 1 stem: shift final /u/ → /i/ (書く → 書き、飲む → 飲み)',
+      'Group 2 stem: drop る (食べる → 食べ、見る → 見)',
+      'Group 3: する → し + ます、くる → き + ます',
+      'ます itself conjugates: ます (non-past) | ました (past) | ません (negative) | ませんでした (past negative)',
+      'ます-form stem is also used for て-form, た-form, and other derived forms',
+    ],
+    practiceItems: [],
+  },
+  {
+    id: 'te-form',
+    module: 2,
+    title: 'て形 — Connector Form',
+    subtitle: 'The joint',
+    concept:
+      'The て-form is a non-finite connector. It does not express tense on its own — it borrows tense from whatever follows it. Its primary function is chaining: A-て B means A and then B, or A while doing B, or A therefore B — the exact relationship is inferred from context and verb semantics. It is also the base for requests (てください), progressive aspect (ている), and many auxiliary constructions.',
+    keyPoints: [
+      'Group 2: drop る + て (食べる → 食べて)',
+      'Group 1 phonological rules: く→いて, ぐ→いで, す→して, つ/ぬ/ぶ/む→って/んで, る/う/つ→って',
+      'Group 3: する → して、くる → きて',
+      'Chaining: 起きて、シャワーを浴びて、朝ごはんを食べた — sequence of morning actions',
+      'Request: てください = please do [verb] (polite imperative)',
+      'Progressive: ている = [verb]-ing / resultant state (context determines which)',
+    ],
+    practiceItems: [],
+  },
+  {
+    id: 'ta-form',
+    module: 2,
+    title: 'た形 — Past Form',
+    subtitle: 'Completed or prior',
+    concept:
+      'た-form is the plain past/perfective. It marks an event as completed or as prior to the reference time. Formation follows the same phonological rules as て-form — just swap て/で for た/だ. In plain register, this is the sentence-final past. In embedded clauses, it marks relative past (prior to whatever the main clause time is).',
+    keyPoints: [
+      'Formation mirrors て-form: 食べて → 食べた, 書いて → 書いた, 飲んで → 飲んだ',
+      'Group 3: した, きた',
+      'Plain past affirmative: 食べた = ate / have eaten',
+      'Polite past: ました (from the ます-form conjugation)',
+      'Embedded relative past: 食べた人 = a person who ate / the person who ate',
+      'Not purely "past tense" — marks completion or anteriority, not just clock time',
+    ],
+    practiceItems: [],
+  },
+  {
+    id: 'nai-form',
+    module: 2,
+    title: 'ない形 — Negative Form',
+    subtitle: 'Absence of action',
+    concept:
+      'The plain negative is formed with ない. For Group 1 verbs, the final /u/ vowel shifts to /a/ before ない (書く → 書か + ない). For Group 2, drop る + ない. Group 3: しない, こない. The one exception: う (the verb "to exist/do") → わない (not うない). ない itself is an い-adjective and conjugates accordingly: なかった (past negative).',
+    keyPoints: [
+      'Group 1: shift final /u/ → /a/ + ない (書く → 書かない, 飲む → 飲まない)',
+      'Group 2: drop る + ない (食べる → 食べない)',
+      'Group 3: する → しない、くる → こない',
+      'Exception: う → わない (not うない)',
+      'ない is an い-adjective: ない (non-past neg) | なかった (past neg)',
+      'Polite negative: ません / ませんでした',
+    ],
+    practiceItems: [],
+  },
+
+  // ─── Module 3: Adjectives ────────────────────────────────────────────────
+
+  {
+    id: 'i-adjectives',
+    module: 3,
+    title: 'い形容詞 — い-Adjectives',
+    subtitle: 'Self-conjugating descriptors',
+    concept:
+      'い-adjectives are a closed word class that conjugate directly — they carry tense and polarity in their own ending without needing an auxiliary. Every い-adjective ends in い in its citation form. To conjugate: drop the final い and add the appropriate suffix. They can directly precede a noun (attributive position) or end a clause (predicative position) without any connector.',
+    keyPoints: [
+      'Citation form ends in い: 高い, 大きい, 新しい, 難しい',
+      'Non-past affirmative: 高い (plain) | 高いです (polite)',
+      'Past affirmative: 高かった (plain) | 高かったです (polite)',
+      'Non-past negative: 高くない (plain) | 高くないです / 高くありません (polite)',
+      'Past negative: 高くなかった (plain) | 高くなかったです / 高くありませんでした (polite)',
+      'Adverbial form: drop い + く (高い → 高く = in a high manner / at a high [level])',
+      'いい (good) is irregular — conjugates as よい: よかった, よくない',
+    ],
+    practiceItems: [],
+  },
+  {
+    id: 'na-adjectives',
+    module: 3,
+    title: 'な形容詞 — な-Adjectives',
+    subtitle: 'Noun-like descriptors',
+    concept:
+      'な-adjectives are structurally nouns — they cannot conjugate on their own. They borrow the copula (だ/です) to express tense and polarity. In attributive position (before a noun), they use な as a connector instead of の. This な is not a particle — it is a modified copula form specific to this position.',
+    keyPoints: [
+      'Predicative: 静かだ / 静かです (plain/polite non-past)',
+      'Past: 静かだった / 静かでした',
+      'Negative: 静かじゃない / 静かじゃありません (colloquial) | 静かではない (formal)',
+      'Past negative: 静かじゃなかった / 静かじゃありませんでした',
+      'Attributive (before noun): 静かな町 — な replaces だ in this position',
+      'Adverbial: 静かに — に replaces だ to modify a verb',
+      'Structurally: な-adj + noun = [noun]-like noun modifying another noun',
+    ],
+    practiceItems: [],
+  },
+  {
+    id: 'adj-comparison',
+    module: 3,
+    title: '比較 — Comparison',
+    subtitle: 'More, less, most',
+    concept:
+      'Japanese has no inflected comparative or superlative forms — adjectives do not change shape for degree. Instead, comparison is expressed structurally: より marks the standard of comparison ("more than"); の中で...一番 marks the superlative domain ("the most among..."). The adjective itself stays in its plain form.',
+    keyPoints: [
+      'Comparative: AはBより[adj] — A is [adj]-er than B',
+      'より = "than" / "compared to" — attaches to the standard (B)',
+      'Superlative: [domain]の中で一番[adj] — most [adj] within [domain]',
+      '一番 = number one / the most — precedes the adjective',
+      'No "-er" / "-est" endings — the adjective form never changes for degree',
+      'Degree adverbs: もっと (more), あまり～ない (not very), とても (very), かなり (quite)',
+    ],
+    practiceItems: [],
+  },
 ];

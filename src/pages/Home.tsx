@@ -7,7 +7,12 @@ interface HomeProps {
 }
 
 export function Home({ onSelectLesson, onGoToParticles }: HomeProps) {
-  const modules = [0, 1];
+  const modules: Array<{ id: number; label: string }> = [
+    { id: 0, label: 'Primitives' },
+    { id: 1, label: 'Particle Type System' },
+    { id: 2, label: 'Verb System' },
+    { id: 3, label: 'Adjectives' },
+  ];
 
   return (
     <div className="max-w-lg mx-auto px-4 py-10 space-y-10">
@@ -34,12 +39,12 @@ export function Home({ onSelectLesson, onGoToParticles }: HomeProps) {
       </button>
 
       {/* Curriculum */}
-      {modules.map((mod) => {
+      {modules.map(({ id: mod, label }) => {
         const lessons = CURRICULUM.filter((l) => l.module === mod);
         return (
           <div key={mod}>
             <h2 className="text-xs font-mono text-gray-400 uppercase tracking-widest mb-3">
-              Module {mod} — {mod === 0 ? 'Primitives' : 'Particle Type System'}
+              Module {mod} — {label}
             </h2>
             <div className="space-y-3">
               {lessons.map((lesson) => (
