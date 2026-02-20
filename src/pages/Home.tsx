@@ -28,7 +28,7 @@ export function Home({ onSignOut }: HomeProps) {
         right={
           <button
             onClick={onSignOut}
-            className="text-xs text-gray-400 active:opacity-50 font-mono min-h-[44px] px-1"
+            className="text-xs font-mono text-gray-400 tracking-wider min-h-[44px] px-1 active:opacity-40 transition-opacity"
           >
             sign out
           </button>
@@ -41,11 +41,22 @@ export function Home({ onSignOut }: HomeProps) {
           {/* Core reference shortcut */}
           <button
             onClick={() => push(<ParticlesView />)}
-            className="w-full bg-[var(--color-ink)] text-white rounded-2xl p-5 text-left active:opacity-80 transition-opacity select-none"
+            className={[
+              'w-full text-left',
+              'bg-[var(--color-ink)]',
+              'rounded-3xl p-6',
+              'shadow-[0_4px_24px_rgba(26,26,46,0.18)]',
+              'active:scale-[0.97] active:opacity-90',
+              'transition-all duration-150 ease-out select-none',
+            ].join(' ')}
           >
-            <p className="text-xs font-mono opacity-60 mb-1 uppercase tracking-widest">Core Reference</p>
-            <h2 className="text-xl font-bold">Particle Type System</h2>
-            <p className="text-sm opacity-70 mt-1">
+            <p className="text-[11px] font-mono text-white/50 mb-1.5 uppercase tracking-widest">
+              Core Reference
+            </p>
+            <h2 className="text-[19px] font-bold text-white leading-snug">
+              Particle Type System
+            </h2>
+            <p className="text-[13px] text-white/60 mt-1.5">
               は　が　を　に　で　の — the skeleton of every sentence
             </p>
           </button>

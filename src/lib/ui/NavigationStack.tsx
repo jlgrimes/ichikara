@@ -114,7 +114,8 @@ export function NavigationStack({ initialPage }: NavigationStackProps) {
         removeTop();
         x.set(0);
       } else {
-        animate(x, 0, { type: 'spring', stiffness: 500, damping: 40 });
+        // Snappy iOS spring — high stiffness, critically damped
+      animate(x, 0, { type: 'spring', stiffness: 700, damping: 50, restDelta: 0.5 });
       }
     },
     [x, winWidth, removeTop],

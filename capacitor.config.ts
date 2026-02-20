@@ -5,7 +5,7 @@ const config: CapacitorConfig = {
   appName: 'Ichikara',
   webDir: 'dist',
   ios: {
-    contentInset: 'always',
+    contentInset: 'never', // we handle safe areas in CSS via env(safe-area-inset-*)
   },
 };
 

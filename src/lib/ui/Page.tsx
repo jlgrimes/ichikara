@@ -9,10 +9,13 @@ export function Page({ children, className = '' }: PageProps) {
   );
 }
 
-/** The scrollable body of a page. Fills remaining height after Navbar. */
+/** Scrollable body of a page. Fills remaining height, respects home indicator. */
 export function PageContent({ children, className = '' }: PageProps) {
   return (
-    <div className={`flex-1 overflow-y-auto overscroll-none ${className}`}>
+    <div
+      className={`flex-1 overflow-y-auto overscroll-none ${className}`}
+      style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}
+    >
       {children}
     </div>
   );
