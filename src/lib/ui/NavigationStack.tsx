@@ -1,21 +1,20 @@
 import {
-  animate,
-  motion,
-  useMotionValue,
-  useTransform,
-  useDragControls,
-} from 'framer-motion';
-import {
   createContext,
   useCallback,
   useContext,
+  useEffect,
   useLayoutEffect,
   useRef,
   useState,
   type ReactNode,
 } from 'react';
 
-// ── Context ─────────────────────────────────────────────────────────────────
+// ── Easing curves (match iOS spring feel) ───────────────────────────────────
+const PUSH_EASE = 'cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+const POP_EASE  = 'cubic-bezier(0.40, 0.00, 0.60, 1.00)';
+const SNAP_EASE = 'cubic-bezier(0.34, 1.20, 0.64, 1.00)'; // slight overshoot
+
+// ── Context ──────────────────────────────────────────────────────────────────
 
 interface NavigationContextValue {
   push: (page: ReactNode) => void;
@@ -38,149 +37,191 @@ interface StackEntry {
   page: ReactNode;
 }
 
-// ── NavigationStack ──────────────────────────────────────────────────────────
+// ── Helpers ──────────────────────────────────────────────────────────────────
 
-interface NavigationStackProps {
-  initialPage: ReactNode;
+function tx(el: HTMLElement | null, x: number, transition = 'none') {
+  if (!el) return;
+  el.style.transition = transition;
+  el.style.transform = `translate3d(${x}px,0,0)`;
 }
 
-export function NavigationStack({ initialPage }: NavigationStackProps) {
-  const winWidth = window.innerWidth;
+// ── NavigationStack ──────────────────────────────────────────────────────────
+
+export function NavigationStack({ initialPage }: { initialPage: ReactNode }) {
+  const winW = window.innerWidth;
 
   const [stack, setStack] = useState<StackEntry[]>([
     { id: 'root', page: initialPage },
   ]);
 
-  // Shared motion value for the current page's x position.
-  // Previous page derives its x from this via useTransform (parallax).
-  const x = useMotionValue(0);
+  // Stable ref map: entry id → DOM element
+  const elMap = useRef<Map<string, HTMLDivElement>>(new Map());
+  const overlayRef = useRef<HTMLDivElement | null>(null);
 
-  // Previous page parallax: when current is fully right (popped), prev is at 0.
-  // When current is idle (x=0), prev is hidden 30% off-screen left.
-  const prevX = useTransform(x, [0, winWidth], [-winWidth * 0.3, 0]);
+  // Mutable refs so pointer handlers always see fresh values without re-registering
+  const stackRef    = useRef(stack);
+  const canGoBackRef = useRef(false);
+  stackRef.current   = stack;
+  canGoBackRef.current = stack.length > 1;
 
-  // Dim overlay on prev page — fades as you swipe back, full when covered
-  const overlayOpacity = useTransform(x, [0, winWidth], [0.25, 0]);
+  const getEl  = (id: string) => elMap.current.get(id) ?? null;
+  const currId = () => stackRef.current[stackRef.current.length - 1].id;
+  const prevId = () => stackRef.current.length > 1
+    ? stackRef.current[stackRef.current.length - 2].id
+    : null;
 
-  const dragControls = useDragControls();
-  const pendingPush = useRef(false);
-
-  // ── Stack mutations ──────────────────────────────────────────────────────
+  // ── Stack mutations ────────────────────────────────────────────────────────
 
   const removeTop = useCallback(() => {
-    setStack((prev) => (prev.length > 1 ? prev.slice(0, -1) : prev));
+    setStack(p => (p.length > 1 ? p.slice(0, -1) : p));
   }, []);
 
-  const pop = useCallback(async () => {
-    // Animate current page out to the right
-    await animate(x, winWidth, { type: 'tween', ease: 'easeIn', duration: 0.26 });
-    removeTop();
-    x.set(0);
-  }, [x, winWidth, removeTop]);
+  const pop = useCallback(() => {
+    const cId = currId(), pId = prevId();
+    const curr = getEl(cId), prev = pId ? getEl(pId) : null;
+    const overlay = overlayRef.current;
 
-  const push = useCallback(
-    (page: ReactNode) => {
-      pendingPush.current = true;
-      setStack((prev) => [...prev, { id: crypto.randomUUID(), page }]);
-    },
-    [],
-  );
+    tx(curr,    winW,          `transform 0.28s ${POP_EASE}`);
+    tx(prev,    0,             `transform 0.28s ${POP_EASE}`);
+    if (overlay) { overlay.style.transition = `opacity 0.28s ${POP_EASE}`; overlay.style.opacity = '0'; }
 
-  // ── Push animation ───────────────────────────────────────────────────────
-  // useLayoutEffect fires synchronously after DOM update but before paint,
-  // so we can set x to winWidth before the new page is visible, then animate in.
+    setTimeout(removeTop, 280);
+  }, [winW, removeTop]);
 
-  const prevStackLen = useRef(stack.length);
+  const push = useCallback((page: ReactNode) => {
+    setStack(p => [...p, { id: crypto.randomUUID(), page }]);
+  }, []);
+
+  // ── Push animation ─────────────────────────────────────────────────────────
+  // useLayoutEffect fires before paint — lets us set the initial off-screen
+  // position before the new page becomes visible, then kick off the CSS transition.
+
+  const prevLen = useRef(stack.length);
   useLayoutEffect(() => {
-    if (pendingPush.current && stack.length > prevStackLen.current) {
-      x.set(winWidth); // place new page off-screen right before paint
-      pendingPush.current = false;
-      animate(x, 0, {
-        type: 'tween',
-        ease: [0.25, 0.46, 0.45, 0.94] as unknown as 'easeOut',
-        duration: 0.32,
-      });
+    const newLen = stack.length;
+    if (newLen <= prevLen.current) { prevLen.current = newLen; return; }
+    prevLen.current = newLen;
+
+    const cId = currId(), pId = prevId();
+    const curr = getEl(cId), prev = pId ? getEl(pId) : null;
+    const overlay = overlayRef.current;
+
+    // Place new page off-screen right before paint
+    tx(curr, winW);
+    curr?.getBoundingClientRect(); // force reflow so 'none' takes effect
+
+    // Animate in
+    tx(curr,    0,              `transform 0.32s ${PUSH_EASE}`);
+    tx(prev,    -winW * 0.3,   `transform 0.32s ${PUSH_EASE}`);
+    if (overlay) {
+      overlay.style.transition = 'none';
+      overlay.style.opacity = '0';
+      overlay.getBoundingClientRect();
+      overlay.style.transition = `opacity 0.32s ${PUSH_EASE}`;
+      overlay.style.opacity = '0.25';
     }
-    prevStackLen.current = stack.length;
-  }, [stack.length, x, winWidth]);
+  }, [stack.length, winW]);
 
-  // ── Drag to go back ──────────────────────────────────────────────────────
+  // ── Drag gesture — pure pointer events, zero rAF ─────────────────────────
 
-  const handleDragEnd = useCallback(
-    async (_: unknown, info: { offset: { x: number }; velocity: { x: number } }) => {
-      const shouldPop = info.offset.x > 80 || info.velocity.x > 400;
-      if (shouldPop) {
-        await animate(x, winWidth, { type: 'tween', ease: 'easeOut', duration: 0.22 });
-        removeTop();
-        x.set(0);
+  const drag = useRef({ active: false, startX: 0, startTime: 0 });
+
+  useEffect(() => {
+    const onMove = (e: PointerEvent) => {
+      if (!drag.current.active) return;
+      const dx = Math.max(0, e.clientX - drag.current.startX);
+      const cId = currId(), pId = prevId();
+
+      tx(getEl(cId), dx);
+      tx(pId ? getEl(pId) : null, -winW * 0.3 + dx * 0.3);
+      if (overlayRef.current)
+        overlayRef.current.style.opacity = String(0.25 * Math.max(0, 1 - dx / winW));
+    };
+
+    const onUp = (e: PointerEvent) => {
+      if (!drag.current.active) return;
+      drag.current.active = false;
+
+      const dx = Math.max(0, e.clientX - drag.current.startX);
+      const dt = Math.max(Date.now() - drag.current.startTime, 1);
+      const vel = dx / dt; // px/ms
+
+      const cId = currId(), pId = prevId();
+      const curr = getEl(cId), prev = pId ? getEl(pId) : null;
+      const overlay = overlayRef.current;
+
+      if (dx > winW * 0.35 || vel > 0.4) {
+        // Complete the pop
+        tx(curr, winW, `transform 0.22s ${POP_EASE}`);
+        tx(prev, 0,    `transform 0.22s ${POP_EASE}`);
+        if (overlay) { overlay.style.transition = `opacity 0.22s ${POP_EASE}`; overlay.style.opacity = '0'; }
+        setTimeout(removeTop, 220);
       } else {
-        // Snappy iOS spring — high stiffness, critically damped
-      animate(x, 0, { type: 'spring', stiffness: 700, damping: 50, restDelta: 0.5 });
+        // Snap back
+        tx(curr, 0,            `transform 0.3s ${SNAP_EASE}`);
+        tx(prev, -winW * 0.3,  `transform 0.3s ${SNAP_EASE}`);
+        if (overlay) { overlay.style.transition = `opacity 0.3s ${SNAP_EASE}`; overlay.style.opacity = '0.25'; }
       }
-    },
-    [x, winWidth, removeTop],
-  );
+    };
+
+    window.addEventListener('pointermove',  onMove, { passive: true });
+    window.addEventListener('pointerup',    onUp,   { passive: true });
+    window.addEventListener('pointercancel', onUp,  { passive: true });
+    return () => {
+      window.removeEventListener('pointermove',  onMove);
+      window.removeEventListener('pointerup',    onUp);
+      window.removeEventListener('pointercancel', onUp);
+    };
+  }, [winW, removeTop]); // stable — reads stack via refs
+
+  const onPointerDown = useCallback((e: React.PointerEvent, id: string) => {
+    if (!canGoBackRef.current) return;
+    if (id !== currId()) return;
+    if (e.clientX > 44) return;
+    e.currentTarget.setPointerCapture(e.pointerId);
+    drag.current = { active: true, startX: e.clientX, startTime: Date.now() };
+  }, []);
+
+  // ── Render ────────────────────────────────────────────────────────────────
 
   const canGoBack = stack.length > 1;
-  const current = stack[stack.length - 1];
-  const previous = stack.length > 1 ? stack[stack.length - 2] : null;
 
   return (
     <NavigationContext.Provider value={{ push, pop, canGoBack }}>
       <div className="h-dvh overflow-hidden relative bg-[var(--color-paper)]">
+        {stack.map((entry, i) => {
+          const isCurrent = i === stack.length - 1;
+          const isPrev    = i === stack.length - 2;
+          const hidden    = !isCurrent && !isPrev;
 
-        {/* Previous page — parallax behind current */}
-        {previous && (
-          <motion.div
-            style={{ x: prevX }}
-            className="absolute inset-0 will-change-transform"
-          >
-            {previous.page}
-            {/* Dim overlay — darkens when covered by current page */}
-            <motion.div
-              className="absolute inset-0 bg-black pointer-events-none"
-              style={{ opacity: overlayOpacity }}
-            />
-          </motion.div>
-        )}
+          return (
+            <div
+              key={entry.id}
+              ref={el => {
+                if (el) elMap.current.set(entry.id, el);
+                else    elMap.current.delete(entry.id);
+              }}
+              onPointerDown={isCurrent ? e => onPointerDown(e, entry.id) : undefined}
+              className="absolute inset-0 will-change-transform"
+              style={{
+                visibility: hidden ? 'hidden' : 'visible',
+                transform: isCurrent ? 'translate3d(0,0,0)' : `translate3d(${-winW * 0.3}px,0,0)`,
+                zIndex: i,
+              }}
+            >
+              {entry.page}
 
-        {/* Current page — draggable from left edge */}
-        <motion.div
-          key={current.id}
-          drag={canGoBack ? 'x' : false}
-          dragControls={dragControls}
-          dragListener={false}          /* only start via controls.start() */
-          dragConstraints={{ left: 0, right: winWidth }}
-          dragElastic={0}              /* exact finger tracking */
-          style={{ x }}
-          onDragEnd={handleDragEnd}
-          onPointerDown={(e) => {
-            // Only activate from within 44px of left edge (iOS convention)
-            if (canGoBack && e.clientX < 44) {
-              dragControls.start(e);
-            }
-          }}
-          className="absolute inset-0 will-change-transform"
-        >
-          {/* Left-edge shadow — depth cue as you pull */}
-          <motion.div
-            className="absolute inset-y-0 left-0 w-8 pointer-events-none z-10"
-            style={{
-              background: useTransform(
-                x,
-                [0, winWidth],
-                ['rgba(0,0,0,0)', 'rgba(0,0,0,0)'],
-              ),
-              boxShadow: useTransform(
-                x,
-                [0, 20],
-                ['none', 'inset 6px 0 12px rgba(0,0,0,0.18)'],
-              ),
-            }}
-          />
-          {current.page}
-        </motion.div>
-
+              {/* Dim overlay on previous page */}
+              {isPrev && (
+                <div
+                  ref={overlayRef}
+                  className="absolute inset-0 bg-black pointer-events-none"
+                  style={{ opacity: 0.25 }}
+                />
+              )}
+            </div>
+          );
+        })}
       </div>
     </NavigationContext.Provider>
   );
