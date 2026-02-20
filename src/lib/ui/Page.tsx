@@ -13,7 +13,7 @@ export function Page({ children, className = '' }: PageProps) {
 export function PageContent({ children, className = '' }: PageProps) {
   return (
     <div
-      className={`flex-1 overflow-y-auto overscroll-none ${className}`}
+      className={`flex-1 overflow-y-auto overscroll-contain ${className}`}
       style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}
     >
       {children}

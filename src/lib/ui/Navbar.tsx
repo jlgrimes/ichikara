@@ -1,8 +1,14 @@
 import type { NavbarProps } from './types';
-import { useNavigation } from './NavigationStack';
+import { useNavigation, usePageDepth } from './NavigationStack';
 
 export function Navbar({ title, left, right }: NavbarProps) {
-  const { canGoBack, pop } = useNavigation();
+  const { pop } = useNavigation();
+
+  // Depth is set per-page by NavigationStack — not reactive to state changes.
+  // Home is always depth 0, lesson pages are depth > 0.
+  // This means the back button never flickers onto the home Navbar during transitions.
+  const depth = usePageDepth();
+  const showBack = depth > 0;
 
   const backButton = (
     <button
@@ -19,26 +25,19 @@ export function Navbar({ title, left, right }: NavbarProps) {
       style={{ paddingTop: 'env(safe-area-inset-top)' }}
     >
       <div className="h-11 flex items-center px-3 gap-1">
-        {/* Left slot */}
         <div className="w-24 flex items-center">
-          {left !== undefined ? left : canGoBack ? backButton : null}
+          {left !== undefined ? left : showBack ? backButton : null}
         </div>
-
-        {/* Title — centered */}
         <div className="flex-1 text-center">
           <span className="text-[15px] font-semibold text-[var(--color-ink)] truncate">
             {title}
           </span>
         </div>
-
-        {/* Right slot */}
         <div className="w-24 flex items-center justify-end">
           {right}
         </div>
       </div>
-
-      {/* Thin separator — very subtle, iOS 26 style */}
-      <div className="h-px bg-black/[0.06] mx-0" />
+      <div className="h-px bg-black/[0.06]" />
     </header>
   );
 }
