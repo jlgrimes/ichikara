@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import type { Session, User } from '@supabase/supabase-js';
 import { supabase } from '../lib/supabase';
+import { App as CapApp } from '@capacitor/app';
 
 interface AuthContextType {
   session: Session | null;
@@ -32,7 +33,23 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       setSession(session);
     });
 
-    return () => subscription.unsubscribe();
+    // Handle deep link from email confirmation
+    CapApp.addListener('appUrlOpen', ({ url }) => {
+      if (url.includes('login-callback')) {
+        // Extract tokens from the URL fragment and set the session
+        const hashParams = new URLSearchParams(url.split('#')[1]);
+        const accessToken = hashParams.get('access_token');
+        const refreshToken = hashParams.get('refresh_token');
+        if (accessToken && refreshToken) {
+          supabase.auth.setSession({ access_token: accessToken, refresh_token: refreshToken });
+        }
+      }
+    });
+
+    return () => {
+      subscription.unsubscribe();
+      CapApp.removeAllListeners();
+    };
   }, []);
 
   const signOut = async () => {

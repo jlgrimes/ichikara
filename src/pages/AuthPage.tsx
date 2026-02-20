@@ -18,7 +18,11 @@ export function AuthPage() {
     setSuccess(null);
 
     if (mode === 'signup') {
-      const { error } = await supabase.auth.signUp({ email, password });
+      const { error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: { emailRedirectTo: 'app.ichikara.ichikara://login-callback' },
+      });
       if (error) setError(error.message);
       else setSuccess('Check your email to confirm your account.');
     } else {
