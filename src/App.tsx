@@ -11,25 +11,23 @@ type Route =
   | { page: 'lesson'; id: string }
   | { page: 'particles' };
 
+// Pure slide — no opacity, no fade. Both pages move at the same time.
 const slideVariants = {
   enter: (dir: number) => ({
-    x: dir > 0 ? '100%' : '-25%',
-    opacity: dir > 0 ? 1 : 0.6,
+    x: dir > 0 ? '100%' : '-30%',
   }),
   center: {
     x: 0,
-    opacity: 1,
   },
   exit: (dir: number) => ({
-    x: dir > 0 ? '-25%' : '100%',
-    opacity: dir > 0 ? 0.6 : 1,
+    x: dir > 0 ? '-30%' : '100%',
   }),
 };
 
 const slideTransition = {
   type: 'tween' as const,
-  ease: 'easeInOut' as const,
-  duration: 0.3,
+  ease: [0.25, 0.46, 0.45, 0.94] as unknown as 'easeOut',
+  duration: 0.32,
 };
 
 function routeKey(r: Route) {
@@ -48,14 +46,13 @@ function AppShell() {
   const [direction, setDirection] = useState(1);
 
   const navigate = (next: Route) => {
-    const dir = routeDepth(next) >= routeDepth(route) ? 1 : -1;
-    setDirection(dir);
+    setDirection(routeDepth(next) >= routeDepth(route) ? 1 : -1);
     setRoute(next);
   };
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[var(--color-paper)] flex items-center justify-center">
+      <div className="h-dvh bg-[var(--color-paper)] flex items-center justify-center">
         <p className="text-gray-400 text-sm font-mono">loading...</p>
       </div>
     );
@@ -66,9 +63,10 @@ function AppShell() {
   }
 
   return (
-    <div className="min-h-screen bg-[var(--color-paper)] overflow-hidden">
-      {/* Top bar */}
-      <header className="sticky top-0 z-20 bg-[var(--color-paper)]/90 backdrop-blur border-b border-gray-100 px-4 py-3 flex items-center justify-between max-w-lg mx-auto">
+    // Full-height flex column — header is fixed size, slide area fills the rest
+    <div className="h-dvh flex flex-col bg-[var(--color-paper)] overflow-hidden">
+      {/* Header — fixed at top */}
+      <header className="z-20 shrink-0 bg-[var(--color-paper)]/90 backdrop-blur border-b border-gray-100 px-4 py-3 flex items-center justify-between">
         <button
           onClick={() => navigate({ page: 'home' })}
           className="text-xl font-black text-[var(--color-ink)] tracking-tight"
@@ -83,9 +81,9 @@ function AppShell() {
         </button>
       </header>
 
-      {/* Slide container — clips the slide animation */}
-      <div className="relative overflow-hidden">
-        <AnimatePresence initial={false} custom={direction} mode="popLayout">
+      {/* Slide area — relative + overflow-hidden clips the animation */}
+      <div className="relative flex-1 overflow-hidden">
+        <AnimatePresence initial={false} custom={direction} mode="sync">
           <motion.div
             key={routeKey(route)}
             custom={direction}
@@ -94,7 +92,9 @@ function AppShell() {
             animate="center"
             exit="exit"
             transition={slideTransition}
-            className="w-full"
+            // absolute + inset-0 so both entering/exiting pages sit on top of each other
+            // overflow-y-auto gives each page its own independent scroll
+            className="absolute inset-0 overflow-y-auto"
           >
             {route.page === 'home' && (
               <Home
