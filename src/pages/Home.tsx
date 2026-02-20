@@ -9,17 +9,51 @@ interface HomeProps {
 }
 
 const MODULE_LABELS: Record<number, string> = {
-  0: 'Primitives',
-  1: 'Particle Type System',
-  2: 'Verb System',
-  3: 'Adjectives',
-  4: 'Extended Particles',
-  5: 'Clauses & Nominalization',
+  0:  'Primitives',
+  1:  'Particle Type System',
+  2:  'Verb System',
+  3:  'Adjectives',
+  4:  'Extended Particles',
+  5:  'Clauses & Nominalization',
+  6:  'Relative Clauses',
+  7:  'て-Auxiliaries',
+  8:  'Potential & Passive',
+  9:  'Giving & Receiving',
+  10: 'Causative',
+  11: 'Conditionals',
+  12: 'Sentence-Final Particles',
 };
+
+// JLPT level groupings — visual dividers on home screen
+const JLPT_GROUPS = [
+  {
+    level: 'N5',
+    label: 'JLPT N5',
+    desc: 'Core building blocks',
+    modules: [0, 1, 2, 3],
+    pill: 'bg-emerald-100 text-emerald-700 border-emerald-200',
+    line: 'bg-emerald-100',
+  },
+  {
+    level: 'N4',
+    label: 'JLPT N4',
+    desc: 'Expanding structure',
+    modules: [4, 5, 6, 7, 8, 9],
+    pill: 'bg-blue-100 text-blue-700 border-blue-200',
+    line: 'bg-blue-100',
+  },
+  {
+    level: 'N3',
+    label: 'JLPT N3',
+    desc: 'Complex grammar',
+    modules: [10, 11, 12],
+    pill: 'bg-purple-100 text-purple-700 border-purple-200',
+    line: 'bg-purple-100',
+  },
+];
 
 export function Home({ onSignOut }: HomeProps) {
   const { push } = useNavigation();
-  const modules = [0, 1, 2, 3, 4, 5];
 
   return (
     <Page>
@@ -36,9 +70,9 @@ export function Home({ onSignOut }: HomeProps) {
       />
 
       <PageContent>
-        <div className="max-w-lg mx-auto px-4 py-6 space-y-8">
+        <div className="max-w-lg mx-auto px-4 py-6 space-y-10">
 
-          {/* Core reference shortcut */}
+          {/* Particle system shortcut */}
           <button
             onClick={() => push(<ParticlesView />)}
             className={[
@@ -61,24 +95,46 @@ export function Home({ onSignOut }: HomeProps) {
             </p>
           </button>
 
-          {/* Curriculum modules */}
-          {modules.map((mod) => {
-            const lessons = CURRICULUM.filter((l) => l.module === mod);
-            if (lessons.length === 0) return null;
+          {/* Curriculum — grouped by JLPT level */}
+          {JLPT_GROUPS.map(({ level, label, desc, modules, pill, line }) => {
+            const hasLessons = modules.some(mod =>
+              CURRICULUM.some(l => l.module === mod)
+            );
+            if (!hasLessons) return null;
+
             return (
-              <div key={mod}>
-                <p className="text-xs font-mono text-gray-400 uppercase tracking-widest mb-3">
-                  Module {mod} — {MODULE_LABELS[mod]}
-                </p>
-                <div className="space-y-3">
-                  {lessons.map((lesson) => (
-                    <LessonCard
-                      key={lesson.id}
-                      lesson={lesson}
-                      onClick={() => push(<LessonView lessonId={lesson.id} />)}
-                    />
-                  ))}
+              <div key={level} className="space-y-6">
+                {/* JLPT level divider */}
+                <div className="flex items-center gap-3">
+                  <div className={`flex-1 h-px ${line}`} />
+                  <div className={`flex flex-col items-center`}>
+                    <span className={`text-[11px] font-mono font-bold px-3 py-1 rounded-full border ${pill}`}>
+                      {label}
+                    </span>
+                    <span className="text-[10px] text-gray-400 font-mono mt-0.5">{desc}</span>
+                  </div>
+                  <div className={`flex-1 h-px ${line}`} />
                 </div>
+
+                {/* Modules in this JLPT level */}
+                {modules.map(mod => {
+                  const lessons = CURRICULUM.filter(l => l.module === mod);
+                  if (lessons.length === 0) return null;
+                  return (
+                    <div key={mod} className="space-y-3">
+                      <p className="text-xs font-mono text-gray-400 uppercase tracking-widest">
+                        Module {mod} — {MODULE_LABELS[mod]}
+                      </p>
+                      {lessons.map(lesson => (
+                        <LessonCard
+                          key={lesson.id}
+                          lesson={lesson}
+                          onClick={() => push(<LessonView lessonId={lesson.id} />)}
+                        />
+                      ))}
+                    </div>
+                  );
+                })}
               </div>
             );
           })}

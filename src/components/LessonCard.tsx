@@ -7,12 +7,22 @@ interface LessonCardProps {
 }
 
 const MODULE_COLORS: Record<number, { dot: string; label: string }> = {
-  0: { dot: 'bg-emerald-400', label: 'text-emerald-600' },
-  1: { dot: 'bg-blue-400',    label: 'text-blue-600' },
-  2: { dot: 'bg-purple-400',  label: 'text-purple-600' },
-  3: { dot: 'bg-orange-400',  label: 'text-orange-600' },
-  4: { dot: 'bg-pink-400',    label: 'text-pink-600' },
-  5: { dot: 'bg-cyan-400',    label: 'text-cyan-600' },
+  // N5
+  0:  { dot: 'bg-emerald-400', label: 'text-emerald-600' },
+  1:  { dot: 'bg-teal-400',    label: 'text-teal-600' },
+  2:  { dot: 'bg-green-400',   label: 'text-green-600' },
+  3:  { dot: 'bg-lime-400',    label: 'text-lime-600' },
+  // N4
+  4:  { dot: 'bg-blue-400',    label: 'text-blue-600' },
+  5:  { dot: 'bg-sky-400',     label: 'text-sky-600' },
+  6:  { dot: 'bg-indigo-400',  label: 'text-indigo-600' },
+  7:  { dot: 'bg-cyan-400',    label: 'text-cyan-600' },
+  8:  { dot: 'bg-violet-400',  label: 'text-violet-600' },
+  9:  { dot: 'bg-blue-300',    label: 'text-blue-500' },
+  // N3
+  10: { dot: 'bg-purple-400',  label: 'text-purple-600' },
+  11: { dot: 'bg-fuchsia-400', label: 'text-fuchsia-600' },
+  12: { dot: 'bg-pink-400',    label: 'text-pink-600' },
 };
 
 export function LessonCard({ lesson, onClick, completed = false }: LessonCardProps) {
