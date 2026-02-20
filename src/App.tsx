@@ -28,8 +28,8 @@ const slideVariants = {
 
 const slideTransition = {
   type: 'tween' as const,
-  ease: [0.32, 0.72, 0, 1], // iOS spring curve approximation
-  duration: 0.35,
+  ease: 'easeInOut' as const,
+  duration: 0.3,
 };
 
 function routeKey(r: Route) {
