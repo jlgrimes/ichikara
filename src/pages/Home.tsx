@@ -1,65 +1,88 @@
-import { LessonCard } from '../components/LessonCard';
+import {
+  Block,
+  BlockTitle,
+  List,
+  ListItem,
+  Navbar,
+  NavbarBackLink,
+  Page,
+} from 'konsta/react';
 import { CURRICULUM } from '../data/curriculum';
 
 interface HomeProps {
   onSelectLesson: (id: string) => void;
   onGoToParticles: () => void;
+  onSignOut: () => void;
 }
 
-export function Home({ onSelectLesson, onGoToParticles }: HomeProps) {
-  const modules: Array<{ id: number; label: string }> = [
-    { id: 0, label: 'Primitives' },
-    { id: 1, label: 'Particle Type System' },
-    { id: 2, label: 'Verb System' },
-    { id: 3, label: 'Adjectives' },
-    { id: 4, label: 'Extended Particles' },
-    { id: 5, label: 'Clauses & Nominalization' },
-  ];
+const MODULE_LABELS: Record<number, string> = {
+  0: 'Primitives',
+  1: 'Particle Type System',
+  2: 'Verb System',
+  3: 'Adjectives',
+  4: 'Extended Particles',
+  5: 'Clauses & Nominalization',
+};
+
+export function Home({ onSelectLesson, onGoToParticles, onSignOut }: HomeProps) {
+  const modules = [0, 1, 2, 3, 4, 5];
 
   return (
-    <div className="max-w-lg mx-auto px-4 py-10 space-y-10">
-      {/* Header */}
-      <div>
-        <h1 className="text-4xl font-black text-[var(--color-ink)] tracking-tight">
-          一から
-        </h1>
-        <p className="text-gray-500 mt-1 text-sm">
-          Japanese — structural, from the ground up.
-        </p>
-      </div>
+    <Page>
+      <Navbar
+        title="一から"
+        right={
+          <NavbarBackLink
+            text="Sign out"
+            onClick={onSignOut}
+          />
+        }
+      />
 
-      {/* Quick access: Particle type system */}
-      <button
-        onClick={onGoToParticles}
-        className="w-full bg-[var(--color-ink)] text-white rounded-2xl p-5 text-left hover:opacity-90 transition-opacity"
-      >
-        <p className="text-xs font-mono opacity-60 mb-1">CORE REFERENCE</p>
-        <h2 className="text-xl font-bold">Particle Type System</h2>
-        <p className="text-sm opacity-70 mt-1">
-          は　が　を　に　で　の — the skeleton of every sentence
+      {/* Core reference shortcut */}
+      <Block>
+        <p className="text-xs font-mono text-gray-400 uppercase tracking-widest mb-1">
+          Core Reference
         </p>
-      </button>
+        <button
+          onClick={onGoToParticles}
+          className="w-full bg-[var(--color-ink)] text-white rounded-2xl p-5 text-left active:opacity-80 transition-opacity"
+        >
+          <h2 className="text-lg font-bold">Particle Type System</h2>
+          <p className="text-sm opacity-70 mt-0.5">
+            は　が　を　に　で　の — the skeleton of every sentence
+          </p>
+        </button>
+      </Block>
 
-      {/* Curriculum */}
-      {modules.map(({ id: mod, label }) => {
+      {/* Curriculum modules */}
+      {modules.map((mod) => {
         const lessons = CURRICULUM.filter((l) => l.module === mod);
+        if (lessons.length === 0) return null;
         return (
           <div key={mod}>
-            <h2 className="text-xs font-mono text-gray-400 uppercase tracking-widest mb-3">
-              Module {mod} — {label}
-            </h2>
-            <div className="space-y-3">
+            <BlockTitle>
+              Module {mod} — {MODULE_LABELS[mod]}
+            </BlockTitle>
+            <List>
               {lessons.map((lesson) => (
-                <LessonCard
+                <ListItem
                   key={lesson.id}
-                  lesson={lesson}
+                  chevron
+                  link
+                  title={lesson.title}
+                  subtitle={lesson.subtitle}
                   onClick={() => onSelectLesson(lesson.id)}
                 />
               ))}
-            </div>
+            </List>
           </div>
         );
       })}
-    </div>
+
+      <Block>
+        <p className="text-xs text-center text-gray-300 font-mono pb-4">一から — from scratch</p>
+      </Block>
+    </Page>
   );
 }
