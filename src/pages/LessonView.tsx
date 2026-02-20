@@ -46,20 +46,44 @@ export function LessonView({ lessonId, onBack }: LessonViewProps) {
           <p className="text-gray-800 leading-relaxed text-sm">{lesson.concept}</p>
         </div>
 
-        {/* Key points */}
-        <div>
-          <p className="text-xs font-mono text-gray-400 uppercase tracking-widest mb-3">
-            Key Points
-          </p>
-          <ul className="space-y-3">
-            {lesson.keyPoints.map((point, i) => (
-              <li key={i} className="flex gap-3 items-start">
-                <span className="text-[var(--color-accent)] font-bold mt-0.5">→</span>
-                <span className="text-gray-700 text-sm leading-relaxed">{point}</span>
-              </li>
+        {/* Sections (with mini-hero headers) OR flat key points */}
+        {lesson.sections && lesson.sections.length > 0 ? (
+          <div className="divide-y divide-gray-100">
+            {lesson.sections.map((section, i) => (
+              <div key={i}>
+                <ConceptHero
+                  japanese={section.sample.japanese}
+                  highlightedTerm={section.sample.highlightedTerm}
+                  literal={section.sample.literal}
+                  natural={section.sample.natural}
+                  size="section"
+                />
+                <ul className="space-y-3 pb-6">
+                  {section.points.map((point, j) => (
+                    <li key={j} className="flex gap-3 items-start">
+                      <span className="text-[var(--color-accent)] font-bold mt-0.5">→</span>
+                      <span className="text-gray-700 text-sm leading-relaxed">{point}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             ))}
-          </ul>
-        </div>
+          </div>
+        ) : (
+          <div>
+            <p className="text-xs font-mono text-gray-400 uppercase tracking-widest mb-3">
+              Key Points
+            </p>
+            <ul className="space-y-3">
+              {lesson.keyPoints.map((point, i) => (
+                <li key={i} className="flex gap-3 items-start">
+                  <span className="text-[var(--color-accent)] font-bold mt-0.5">→</span>
+                  <span className="text-gray-700 text-sm leading-relaxed">{point}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
       </div>
     </div>
   );
