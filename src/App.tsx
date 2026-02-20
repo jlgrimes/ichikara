@@ -1,5 +1,4 @@
 import { AnimatePresence, motion } from 'framer-motion';
-import { KonstaProvider } from 'konsta/react';
 import { useState } from 'react';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { AuthPage } from './pages/AuthPage';
@@ -52,8 +51,7 @@ function AppShell() {
   if (!session) return <AuthPage />;
 
   return (
-    // h-dvh + overflow-hidden = viewport-locked, clips slide animation
-    <div className="h-dvh overflow-hidden relative">
+    <div className="h-dvh overflow-hidden relative bg-[var(--color-paper)]">
       <AnimatePresence initial={false} custom={direction} mode="sync">
         <motion.div
           key={routeKey(route)}
@@ -89,10 +87,8 @@ function AppShell() {
 
 export default function App() {
   return (
-    <KonstaProvider theme="ios">
-      <AuthProvider>
-        <AppShell />
-      </AuthProvider>
-    </KonstaProvider>
+    <AuthProvider>
+      <AppShell />
+    </AuthProvider>
   );
 }
