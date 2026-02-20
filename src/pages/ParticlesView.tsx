@@ -1,32 +1,17 @@
 import { useState } from 'react';
+import { Navbar, Page, PageContent } from '../lib/ui';
 import { ParticleCard } from '../components/ParticleCard';
 import { PARTICLES } from '../data/particles';
-import { useSwipeBack } from '../hooks/useSwipeBack';
 
-interface ParticlesViewProps {
-  onBack: () => void;
-}
-
-export function ParticlesView({ onBack }: ParticlesViewProps) {
+export function ParticlesView() {
   const [activeKey, setActiveKey] = useState<string | null>(null);
-  const pageRef = useSwipeBack(onBack);
 
   return (
-    <div ref={pageRef} className="h-full flex flex-col">
-      {/* Header */}
-      <header className="shrink-0 bg-[var(--color-paper)]/90 backdrop-blur border-b border-gray-100 px-4 py-3 flex items-center gap-3">
-        <button
-          onClick={onBack}
-          className="text-[var(--color-accent)] font-medium text-sm flex items-center gap-1"
-        >
-          ‹ Back
-        </button>
-        <span className="text-sm font-bold text-[var(--color-ink)]">Particle Type System</span>
-      </header>
+    <Page>
+      <Navbar title="Particle Type System" />
 
-      {/* Scrollable content */}
-      <div className="flex-1 overflow-y-auto">
-        <div className="max-w-lg mx-auto px-4 py-8">
+      <PageContent>
+        <div className="max-w-lg mx-auto px-4 py-6">
           <p className="text-sm text-gray-500 mb-6">
             Particles determine the role of every noun. Master these and the skeleton of Japanese is yours.
           </p>
@@ -41,7 +26,7 @@ export function ParticlesView({ onBack }: ParticlesViewProps) {
             ))}
           </div>
         </div>
-      </div>
-    </div>
+      </PageContent>
+    </Page>
   );
 }
