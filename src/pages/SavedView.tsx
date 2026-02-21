@@ -1,5 +1,5 @@
 import { useCallback, useRef, useState } from 'react';
-import { Page, PageContent, useNavigation } from '../lib/ui';
+import { Page, PageContent, Skeleton, useNavigation } from '../lib/ui';
 import { LessonCard } from '../components/LessonCard';
 import { useLanguage } from '../context/LanguageContext';
 import { useProgress } from '../context/ProgressContext';
@@ -75,9 +75,20 @@ export function SavedView() {
             </p>
           </div>
 
-          {/* Loading */}
+          {/* Loading skeletons */}
           {loading && (
-            <p className="text-sm font-mono text-gray-400 dark:text-gray-500">loading...</p>
+            <div className="space-y-8">
+              <div className="space-y-3">
+                <Skeleton.Line width={80} height={10} className="opacity-50" />
+                <Skeleton.LessonGrid count={4} />
+              </div>
+              <div className="space-y-3">
+                <Skeleton.Line width={100} height={10} className="opacity-50" />
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  {[1,2,3].map(i => <Skeleton.PhraseCard key={i} />)}
+                </div>
+              </div>
+            </div>
           )}
 
           {/* Empty state */}

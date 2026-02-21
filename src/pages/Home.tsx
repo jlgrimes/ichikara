@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { Page, PageContent, useNavigation } from '../lib/ui';
+import { Page, PageContent, Skeleton, useNavigation } from '../lib/ui';
 import { LessonCard } from '../components/LessonCard';
 import { useLanguage } from '../context/LanguageContext';
 import { useProgress } from '../context/ProgressContext';
@@ -58,7 +58,7 @@ const JLPT_GROUPS = [
 export function Home() {
   const { push }     = useNavigation();
   const { language } = useLanguage();
-  const { isComplete, completedCount } = useProgress();
+  const { isComplete, completedCount, loading: progressLoading } = useProgress();
   const CURRICULUM   = language.curriculum;
   const totalLessons = CURRICULUM.length;
   const pct          = totalLessons > 0 ? Math.round((completedCount / totalLessons) * 100) : 0;
@@ -124,21 +124,33 @@ export function Home() {
             <p className="text-sm text-gray-400 font-mono mt-1.5">from scratch</p>
 
             {/* Progress bar */}
-            <div className="mt-4 space-y-1.5">
-              <div className="flex items-center justify-between">
-                <span className="text-xs font-mono text-gray-400">
-                  {completedCount} / {totalLessons} lessons complete
-                </span>
-                {completedCount > 0 && (
-                  <span className="text-xs font-mono text-[var(--color-accent)]">{pct}%</span>
-                )}
-              </div>
-              <div className="h-1.5 bg-[var(--input-bg)] rounded-full overflow-hidden">
-                <div
-                  className="h-full bg-[var(--color-accent)] rounded-full transition-all duration-500 ease-out"
-                  style={{ width: `${pct}%` }}
-                />
-              </div>
+            <div className="mt-4">
+              {progressLoading ? (
+                <div className="space-y-1.5">
+                  <div className="flex items-center justify-between">
+                    <Skeleton.Line width={140} height={10} />
+                    <Skeleton.Line width={28} height={10} />
+                  </div>
+                  <Skeleton.Line width="100%" height={6} style={{ borderRadius: 9999 }} />
+                </div>
+              ) : (
+                <div className="space-y-1.5">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-mono text-gray-400">
+                      {completedCount} / {totalLessons} lessons complete
+                    </span>
+                    {completedCount > 0 && (
+                      <span className="text-xs font-mono text-[var(--color-accent)]">{pct}%</span>
+                    )}
+                  </div>
+                  <div className="h-1.5 bg-[var(--input-bg)] rounded-full overflow-hidden">
+                    <div
+                      className="h-full bg-[var(--color-accent)] rounded-full transition-all duration-500 ease-out"
+                      style={{ width: `${pct}%` }}
+                    />
+                  </div>
+                </div>
+              )}
             </div>
           </div>
 

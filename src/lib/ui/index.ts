@@ -10,6 +10,8 @@ export { Card } from './Card';
 export { Button } from './Button';
 export { List, ListItem } from './List';
 export { SectionTitle } from './SectionTitle';
+export { Skeleton } from './Skeleton';
+export { ErrorBoundary, ErrorState } from './ErrorBoundary';
 
 // ── New: QRT-192 ──────────────────────────────────────────────────────────────
 export { Input } from './Input';

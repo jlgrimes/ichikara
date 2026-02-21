@@ -3,7 +3,7 @@ import { AuthProvider, useAuth } from './context/AuthContext';
 import { LanguageProvider } from './context/LanguageContext';
 import { ProgressProvider } from './context/ProgressContext';
 import { BookmarkProvider } from './context/BookmarkContext';
-import { NavigationStack, TabBar, type NavigationHandle } from './lib/ui';
+import { NavigationStack, TabBar, ErrorBoundary, type NavigationHandle } from './lib/ui';
 import { AuthPage } from './pages/AuthPage';
 import { Home } from './pages/Home';
 import { SOSHome } from './pages/SOSHome';
@@ -159,7 +159,9 @@ export default function App() {
       <LanguageProvider>
         <ProgressProvider>
           <BookmarkProvider>
-            <AppShell />
+            <ErrorBoundary>
+              <AppShell />
+            </ErrorBoundary>
           </BookmarkProvider>
         </ProgressProvider>
       </LanguageProvider>
