@@ -1,4 +1,8 @@
 import { defineConfig, devices } from '@playwright/test';
+import { config as loadEnv } from 'dotenv';
+
+// Load .env.test if it exists (won't throw if missing — falls back to env vars)
+loadEnv({ path: '.env.test', override: false });
 
 /**
  * Ichikara E2E Test Suite — Playwright (web)
