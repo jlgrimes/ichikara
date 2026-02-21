@@ -11,7 +11,12 @@ createRoot(document.getElementById('root')!).render(
 );
 
 // Lazy-load monitoring after initial paint — keeps critical bundle small
-// Both Highlight.io (rrweb ~500KB) and PostHog are deferred to a separate chunk
+// Highlight.io (rrweb ~680KB) and PostHog are deferred to separate chunks
+
 if (import.meta.env.VITE_HIGHLIGHT_PROJECT_ID) {
   import('./lib/monitoring').then(({ initMonitoring }) => initMonitoring());
+}
+
+if (import.meta.env.VITE_POSTHOG_KEY) {
+  import('./lib/analytics').then(({ initAnalytics }) => initAnalytics());
 }

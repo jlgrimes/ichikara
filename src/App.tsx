@@ -33,12 +33,15 @@ function AppShell() {
   const [activeTab, setActiveTab]     = useState<Tab>('grammar');
   const [onboarded, setOnboarded]     = useState(() => isOnboarded());
 
-  // Identify user in Highlight.io once session is established (lazy — keeps main bundle small)
+  // Identify user in monitoring + analytics once session is established
   useEffect(() => {
     if (session?.user) {
-      import('./lib/monitoring').then(({ identifyUser }) => {
-        identifyUser(session.user!.id, session.user!.email ?? undefined);
-      });
+      const uid   = session.user.id;
+      const email = session.user.email ?? undefined;
+      import('./lib/monitoring').then(({ identifyUser }) => identifyUser(uid, email));
+      import('./lib/analytics').then(({ identifyAnalyticsUser }) =>
+        identifyAnalyticsUser(uid, email ? { email } : undefined),
+      );
     }
   }, [session?.user?.id]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -63,6 +66,7 @@ function AppShell() {
     navHandles.current.get(prevTab)?.popToRoot(false);
     currentTab.current = newTab;
     setActiveTab(newTab);
+    import('./lib/analytics').then(({ analytics }) => analytics.tabSwitched(newTab));
 
     const winW = window.innerWidth;
     const dir  = TAB_IDX[newTab] > TAB_IDX[prevTab] ? 1 : -1;

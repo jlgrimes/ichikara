@@ -79,12 +79,23 @@ export function SOSDetail({ categoryId }: SOSDetailProps) {
 
     setPlayingIdx(idx);
     speak(phrase.target, { lang: 'ja-JP', rate: 0.8 });
+    import('../lib/analytics').then(({ analytics }) =>
+      analytics.sosPhraseAudio(categoryId, phrase.target),
+    );
 
     // Most Japanese phrases are < 4 seconds; reset icon after a safe window
     // (SpeechSynthesisUtterance.onend isn't reliable on iOS WKWebView)
     const estimatedMs = Math.max(1500, phrase.target.length * 200);
     playTimerRef.current = setTimeout(() => setPlayingIdx(null), estimatedMs);
   }, []);
+
+  // Analytics — SOS category opened
+  useEffect(() => {
+    if (!category) return;
+    import('../lib/analytics').then(({ analytics }) =>
+      analytics.sosCategoryOpened(categoryId, category.name),
+    );
+  }, [categoryId]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Stop speech when navigating away
   useEffect(() => {

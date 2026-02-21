@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { Navbar, Page, PageContent, useNavigation } from '../lib/ui';
 import { ConceptHero } from '../components/ConceptHero';
 import { useLanguage } from '../context/LanguageContext';
@@ -32,6 +32,14 @@ export function LessonView({ lessonId }: LessonViewProps) {
 
   const cardIds = useMemo(() => (lesson ? getCardIds(lesson) : []), [lesson]);
   const mastery = useMemo(() => getLessonMastery(lessonId, cardIds), [lessonId, cardIds]);
+
+  // Analytics — fire on mount
+  useEffect(() => {
+    if (!lesson) return;
+    import('../lib/analytics').then(({ analytics }) =>
+      analytics.lessonOpened(lesson.id, lesson.module, lesson.title),
+    );
+  }, [lesson?.id]); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (!lesson) return null;
 
@@ -120,8 +128,15 @@ export function LessonView({ lessonId }: LessonViewProps) {
           <div>
             <button
               onClick={() => {
-                if (completed) { hapticMedium(); markIncomplete(lessonId); }
-                else { hapticSuccess(); markComplete(lessonId); }
+                if (completed) {
+                  hapticMedium();
+                  markIncomplete(lessonId);
+                  import('../lib/analytics').then(({ analytics }) => analytics.lessonUnmarked(lessonId));
+                } else {
+                  hapticSuccess();
+                  markComplete(lessonId);
+                  import('../lib/analytics').then(({ analytics }) => analytics.lessonCompleted(lessonId, lesson.module));
+                }
               }}
               className={[
                 'w-full rounded-2xl p-4 flex items-center justify-between gap-4',

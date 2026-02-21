@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Navbar, Page, PageContent, Button, useNavigation } from '../lib/ui';
 import { useLanguage } from '../context/LanguageContext';
 import { getLessonMastery, recordResult, sortByPriority } from '../lib/quiz';
@@ -164,6 +164,13 @@ export function QuizView({ lessonId }: QuizViewProps) {
   const [done, setDone]         = useState<Set<string>>(new Set());
   const [sessionComplete, setSessionComplete] = useState(false);
 
+  // Analytics — quiz started on mount
+  useEffect(() => {
+    import('../lib/analytics').then(({ analytics }) =>
+      analytics.quizStarted(lessonId, cardIds.length),
+    );
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
   // Card map for O(1) lookup
   const cardMap = useMemo(
     () => new Map(cards.map((c) => [c.id, c])),
@@ -202,6 +209,10 @@ export function QuizView({ lessonId }: QuizViewProps) {
           const remainingIds = queue.filter((id) => !newDone.has(id));
           if (remainingIds.length === 0) {
             setSessionComplete(true);
+            const finalMastery = getLessonMastery(lessonId, cardIds);
+            import('../lib/analytics').then(({ analytics }) =>
+              analytics.quizCompleted(lessonId, finalMastery, newDone.size),
+            );
           } else {
             // Re-queue cards that were answered wrong this session
             setQueue(sortByPriority(lessonId, remainingIds));

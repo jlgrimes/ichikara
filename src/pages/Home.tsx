@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { Page, PageContent, useNavigation } from '../lib/ui';
 import { LessonCard } from '../components/LessonCard';
 import { useLanguage } from '../context/LanguageContext';
@@ -74,6 +74,19 @@ export function Home() {
   const results = query.trim()
     ? search({ query, lessons: CURRICULUM, sosCategories: language.sosCategories })
     : [];
+
+  // Analytics — fire search event when query has results (debounced-ish: fires on render)
+  useEffect(() => {
+    if (!query.trim() || results.length === 0) return;
+    const timer = setTimeout(() => {
+      const lr = results.filter(r => r.kind === 'lesson').length;
+      const pr = results.filter(r => r.kind === 'phrase').length;
+      import('../lib/analytics').then(({ analytics }) =>
+        analytics.searchPerformed(query.trim().length, lr, pr),
+      );
+    }, 800); // fire after user stops typing for 800ms
+    return () => clearTimeout(timer);
+  }, [query, results.length]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const lessonResults = results.filter(r => r.kind === 'lesson') as Extract<(typeof results)[0], { kind: 'lesson' }>[];
   const phraseResults = results.filter(r => r.kind === 'phrase') as PhraseResult[];

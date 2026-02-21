@@ -191,7 +191,9 @@ export function OnboardingView({ onComplete }: Props) {
     hapticLight();
     if (isLast) {
       hapticSuccess();
-      markOnboarded(level ?? 'N5');
+      const chosen = level ?? 'N5';
+      markOnboarded(chosen);
+      import('../lib/analytics').then(({ analytics }) => analytics.onboardingCompleted(chosen));
       onComplete();
     } else {
       setScreen(s => s + 1);
@@ -212,7 +214,11 @@ export function OnboardingView({ onComplete }: Props) {
       {!isLast && (
         <div className="flex justify-end px-6 pt-4 pb-0">
           <button
-            onClick={() => { markOnboarded('skip'); onComplete(); }}
+            onClick={() => {
+              markOnboarded('skip');
+              import('../lib/analytics').then(({ analytics }) => analytics.onboardingSkipped());
+              onComplete();
+            }}
             className="text-sm text-gray-400 dark:text-gray-500 active:opacity-50 min-h-[44px] min-w-[44px] flex items-center justify-end"
           >
             Skip
