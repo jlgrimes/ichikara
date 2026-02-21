@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Page, PageContent, useNavigation } from '../lib/ui';
 import { useAuth } from '../context/AuthContext';
 import { useLanguage } from '../context/LanguageContext';
@@ -11,6 +12,13 @@ export function SettingsView({ onSignOut }: SettingsViewProps) {
   const { session }  = useAuth();
   const { push }     = useNavigation();
   const { language } = useLanguage();
+  const [signingOut, setSigningOut] = useState(false);
+
+  const handleSignOut = async () => {
+    setSigningOut(true);
+    try { await onSignOut(); }
+    finally { setSigningOut(false); }
+  };
 
   return (
     <Page>
@@ -63,10 +71,16 @@ export function SettingsView({ onSignOut }: SettingsViewProps) {
                 </p>
               </div>
               <button
-                onClick={onSignOut}
-                className="w-full px-5 py-4 text-left text-[var(--color-accent)] font-medium text-sm active:bg-[var(--surface-active)] transition-colors select-none"
+                onClick={handleSignOut}
+                disabled={signingOut}
+                className={[
+                  'w-full px-5 py-4 text-left font-medium text-sm transition-colors select-none',
+                  signingOut
+                    ? 'text-gray-400 cursor-not-allowed'
+                    : 'text-[var(--color-accent)] active:bg-[var(--surface-active)]',
+                ].join(' ')}
               >
-                Sign out
+                {signingOut ? 'Signing out…' : 'Sign out'}
               </button>
             </div>
           </div>

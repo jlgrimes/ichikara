@@ -3,7 +3,7 @@ import { AuthProvider, useAuth } from './context/AuthContext';
 import { LanguageProvider } from './context/LanguageContext';
 import { ProgressProvider } from './context/ProgressContext';
 import { BookmarkProvider } from './context/BookmarkContext';
-import { NavigationStack, TabBar, ErrorBoundary, type NavigationHandle } from './lib/ui';
+import { NavigationStack, TabBar, ErrorBoundary, Skeleton, type NavigationHandle } from './lib/ui';
 import { AuthPage } from './pages/AuthPage';
 import { Home } from './pages/Home';
 import { SOSHome } from './pages/SOSHome';
@@ -109,8 +109,17 @@ function AppShell() {
 
   if (loading) {
     return (
-      <div className="h-dvh bg-[var(--color-paper)] flex items-center justify-center">
-        <p className="text-gray-400 text-sm font-mono">loading...</p>
+      <div
+        className="h-dvh bg-[var(--color-paper)] flex flex-col items-center justify-center gap-5"
+        style={{ paddingTop: 'env(safe-area-inset-top)', paddingBottom: 'env(safe-area-inset-bottom)' }}
+      >
+        <div className="text-center space-y-1">
+          <p className="text-[42px] font-black text-[var(--color-ink)] tracking-tight leading-none select-none">
+            一から
+          </p>
+          <p className="text-sm text-gray-400 font-mono">from scratch</p>
+        </div>
+        <Skeleton.Line width={56} height={4} style={{ borderRadius: 9999 }} className="opacity-40" />
       </div>
     );
   }

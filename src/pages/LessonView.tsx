@@ -1,5 +1,5 @@
 import { useEffect, useMemo } from 'react';
-import { Navbar, Page, PageContent, useNavigation } from '../lib/ui';
+import { Navbar, Page, PageContent, ErrorState, useNavigation } from '../lib/ui';
 import { ConceptHero } from '../components/ConceptHero';
 import { useLanguage } from '../context/LanguageContext';
 import { useProgress } from '../context/ProgressContext';
@@ -41,7 +41,19 @@ export function LessonView({ lessonId }: LessonViewProps) {
     );
   }, [lesson?.id]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  if (!lesson) return null;
+  if (!lesson) {
+    return (
+      <Page>
+        <Navbar title="Lesson" />
+        <PageContent>
+          <ErrorState
+            title="Lesson not found"
+            message="This lesson may have been removed or the link is invalid."
+          />
+        </PageContent>
+      </Page>
+    );
+  }
 
   return (
     <Page>
