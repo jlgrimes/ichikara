@@ -17,7 +17,9 @@ function key(lessonId: string, cardId: string) {
 export function getScore(lessonId: string, cardId: string): number {
   try {
     const raw = localStorage.getItem(key(lessonId, cardId));
-    return raw !== null ? Math.max(0, parseInt(raw, 10)) : 0;
+    if (raw === null) return 0;
+    const n = parseInt(raw, 10);
+    return isNaN(n) ? 0 : Math.max(0, n);
   } catch {
     return 0;
   }

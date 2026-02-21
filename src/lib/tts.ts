@@ -8,9 +8,9 @@
  * handler. All call sites meet this requirement (button onClick).
  */
 
-/** True if speech synthesis is available in this environment. */
+/** True if speech synthesis is available and non-null in this environment. */
 export function isTTSAvailable(): boolean {
-  return typeof window !== 'undefined' && 'speechSynthesis' in window;
+  return typeof window !== 'undefined' && !!window.speechSynthesis;
 }
 
 interface SpeakOptions {
