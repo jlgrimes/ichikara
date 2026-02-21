@@ -1,20 +1,81 @@
-import { useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { NavigationStack, TabBar } from './lib/ui';
 import { AuthPage } from './pages/AuthPage';
 import { Home } from './pages/Home';
 import { SOSHome } from './pages/SOSHome';
+import { SettingsView } from './pages/SettingsView';
 
-type Tab = 'grammar' | 'sos';
+type Tab = 'grammar' | 'sos' | 'settings';
 
 const TABS = [
-  { id: 'grammar', icon: '文', label: 'Grammar' },
-  { id: 'sos',     icon: '助', label: 'SOS'     },
+  { id: 'grammar',  icon: '文', label: 'Grammar'  },
+  { id: 'sos',      icon: '助', label: 'SOS'       },
+  { id: 'settings', icon: '設', label: 'Settings'  },
 ];
+
+const TAB_ORDER: Record<Tab, number> = { grammar: 0, sos: 1, settings: 2 };
+
+// Morph animation: cross-fade + subtle directional slide (iOS 26 feel)
+const DUR = 260; // ms
+const OFFSET = 28; // px — gentle directional push, not a full slide
 
 function AppShell() {
   const { session, loading, signOut } = useAuth();
-  const [tab, setTab] = useState<Tab>('grammar');
+
+  // React state drives the tab bar indicator only
+  const [activeTab, setActiveTab] = useState<Tab>('grammar');
+
+  const tabRefs   = useRef<Map<Tab, HTMLDivElement>>(new Map());
+  const currentTab = useRef<Tab>('grammar');
+
+  // Set initial opacity/pointer-events on mount (avoids flash)
+  useEffect(() => {
+    tabRefs.current.forEach((el, id) => {
+      el.style.opacity      = id === 'grammar' ? '1' : '0';
+      el.style.pointerEvents = id === 'grammar' ? 'auto' : 'none';
+    });
+  }, []);
+
+  const switchTab = useCallback((newTab: Tab) => {
+    if (newTab === currentTab.current) return;
+    const prevTab = currentTab.current;
+    currentTab.current = newTab;
+    setActiveTab(newTab);
+
+    const dir    = TAB_ORDER[newTab] > TAB_ORDER[prevTab] ? 1 : -1;
+    const prevEl = tabRefs.current.get(prevTab);
+    const nextEl = tabRefs.current.get(newTab);
+    const ease   = `${DUR}ms cubic-bezier(0.25, 1, 0.5, 1)`;
+
+    // Incoming — place it offset + transparent, then animate in
+    if (nextEl) {
+      nextEl.style.transition   = 'none';
+      nextEl.style.opacity      = '0';
+      nextEl.style.transform    = `translateX(${dir * OFFSET}px)`;
+      nextEl.style.pointerEvents = 'none';
+      nextEl.getBoundingClientRect(); // flush reflow
+      nextEl.style.transition   = `opacity ${ease}, transform ${ease}`;
+      nextEl.style.opacity      = '1';
+      nextEl.style.transform    = 'translateX(0)';
+      nextEl.style.pointerEvents = 'auto';
+    }
+
+    // Outgoing — fade + slide away
+    if (prevEl) {
+      prevEl.style.transition   = `opacity ${ease}, transform ${ease}`;
+      prevEl.style.opacity      = '0';
+      prevEl.style.transform    = `translateX(${-dir * OFFSET}px)`;
+      prevEl.style.pointerEvents = 'none';
+      // Reset transform silently after animation so it's ready next time
+      setTimeout(() => {
+        if (prevEl) {
+          prevEl.style.transition = 'none';
+          prevEl.style.transform  = 'translateX(0)';
+        }
+      }, DUR + 20);
+    }
+  }, []);
 
   if (loading) {
     return (
@@ -28,21 +89,24 @@ function AppShell() {
 
   return (
     <div className="h-dvh overflow-hidden relative bg-[var(--color-paper)]">
-      {/* Grammar tab — keeps its own navigation stack mounted */}
-      <div className={tab === 'grammar' ? 'absolute inset-0' : 'hidden'}>
-        <NavigationStack initialPage={<Home onSignOut={signOut} />} />
-      </div>
+      {((['grammar', 'sos', 'settings'] as Tab[])).map(t => (
+        <div
+          key={t}
+          ref={el => { if (el) tabRefs.current.set(t, el); }}
+          className="absolute inset-0"
+          // Initial visibility is set in useEffect above
+          // style here is just a fallback — useEffect overrides
+        >
+          {t === 'grammar'  && <NavigationStack initialPage={<Home />} />}
+          {t === 'sos'      && <NavigationStack initialPage={<SOSHome />} />}
+          {t === 'settings' && <NavigationStack initialPage={<SettingsView onSignOut={signOut} />} />}
+        </div>
+      ))}
 
-      {/* SOS tab — separate navigation stack, also kept mounted */}
-      <div className={tab === 'sos' ? 'absolute inset-0' : 'hidden'}>
-        <NavigationStack initialPage={<SOSHome />} />
-      </div>
-
-      {/* Floating iOS 26 tab bar — sits over both stacks */}
       <TabBar<Tab>
         tabs={TABS}
-        activeTab={tab}
-        onChange={setTab}
+        activeTab={activeTab}
+        onChange={switchTab}
       />
     </div>
   );

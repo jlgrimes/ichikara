@@ -1,6 +1,6 @@
 export { NavigationStack, useNavigation } from './NavigationStack';
 export { TabBar } from './TabBar';
-export { Page, PageContent } from './Page';
+export { Page, PageContent, useScrollToTop } from './Page';
 export { Navbar } from './Navbar';
 export { Card } from './Card';
 export { Button } from './Button';

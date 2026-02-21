@@ -1,14 +1,12 @@
 import type { NavbarProps } from './types';
 import { useNavigation, usePageDepth } from './NavigationStack';
+import { useScrollToTop } from './Page';
 
 export function Navbar({ title, left, right }: NavbarProps) {
-  const { pop } = useNavigation();
-
-  // Depth is set per-page by NavigationStack — not reactive to state changes.
-  // Home is always depth 0, lesson pages are depth > 0.
-  // This means the back button never flickers onto the home Navbar during transitions.
-  const depth = usePageDepth();
-  const showBack = depth > 0;
+  const { pop }    = useNavigation();
+  const depth      = usePageDepth();
+  const scrollToTop = useScrollToTop();
+  const showBack   = depth > 0;
 
   const backButton = (
     <button
@@ -28,11 +26,17 @@ export function Navbar({ title, left, right }: NavbarProps) {
         <div className="w-24 flex items-center">
           {left !== undefined ? left : showBack ? backButton : null}
         </div>
-        <div className="flex-1 text-center">
-          <span className="text-[15px] font-semibold text-[var(--color-ink)] truncate">
+
+        {/* Title — tap to scroll to top (iOS convention) */}
+        <div className="flex-1 flex justify-center">
+          <button
+            onClick={scrollToTop}
+            className="text-[15px] font-semibold text-[var(--color-ink)] truncate active:opacity-60 transition-opacity"
+          >
             {title}
-          </span>
+          </button>
         </div>
+
         <div className="w-24 flex items-center justify-end">
           {right}
         </div>
