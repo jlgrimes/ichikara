@@ -4,7 +4,8 @@ import { LanguageProvider } from './context/LanguageContext';
 import { ProgressProvider } from './context/ProgressContext';
 import { BookmarkProvider } from './context/BookmarkContext';
 import { NavigationStack, TabBar, ErrorBoundary, Skeleton, ToastProvider, type NavigationHandle } from './lib/ui';
-import { AuthPage } from './pages/AuthPage';
+// AuthPage kept for direct sign-in (e.g. password reset links)
+// Primary auth flow is embedded in OnboardingView (QRT-199)
 import { Home } from './pages/Home';
 import { SOSHome } from './pages/SOSHome';
 import { SavedView } from './pages/SavedView';
@@ -124,10 +125,25 @@ function AppShell() {
     );
   }
 
-  if (!session) return <AuthPage />;
+  // No session: show full onboarding including auth screen
+  if (!session) {
+    return (
+      <OnboardingView
+        onComplete={() => setOnboarded(true)}
+        skipAuth={false}
+      />
+    );
+  }
 
+  // Session exists but not yet onboarded (just signed up / Apple Sign In):
+  // skip the auth screen, go straight to tour + level check
   if (!onboarded) {
-    return <OnboardingView onComplete={() => setOnboarded(true)} />;
+    return (
+      <OnboardingView
+        onComplete={() => setOnboarded(true)}
+        skipAuth={true}
+      />
+    );
   }
 
   return (
