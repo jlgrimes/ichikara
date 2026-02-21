@@ -101,12 +101,12 @@ export function SOSDetail({ categoryId }: SOSDetailProps) {
       <Navbar title={`${category.emoji}  ${category.name}`} />
 
       <PageContent>
-        <div className="max-w-lg mx-auto px-4 py-4">
+        <div className="max-w-4xl mx-auto px-4 py-4">
           <p className="text-xs font-mono text-gray-400 mb-5">
             tap phrase to show fullscreen · 🔊 to hear it
           </p>
 
-          <div className="space-y-3">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             {category.phrases.map((phrase, i) => (
               <div
                 key={i}

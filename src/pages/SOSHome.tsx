@@ -16,7 +16,7 @@ export function SOSHome() {
       />
 
       <PageContent>
-        <div className="max-w-lg mx-auto px-4 space-y-8">
+        <div className="max-w-4xl mx-auto px-4 space-y-8">
 
           {/* iOS 26 large title */}
           <div className="pt-6 pb-2">
@@ -29,7 +29,7 @@ export function SOSHome() {
           </div>
 
           {/* Category cards — same visual treatment as LessonCard */}
-          <div className="space-y-3">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {SOS_CATEGORIES.map(cat => (
               <button
                 key={cat.id}

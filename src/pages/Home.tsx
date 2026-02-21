@@ -101,7 +101,7 @@ export function Home() {
       />
 
       <PageContent>
-        <div className="max-w-lg mx-auto px-4 space-y-8">
+        <div className="max-w-4xl mx-auto px-4 space-y-8">
 
           {/* iOS 26 large title + progress summary */}
           <div className="pt-6 pb-0">
@@ -185,10 +185,11 @@ export function Home() {
                 <>
                   {/* Lesson results */}
                   {lessonResults.length > 0 && (
-                    <div className="space-y-3">
+                    <div className="space-y-2">
                       <p className="text-xs font-mono text-gray-400 uppercase tracking-widest">
                         Grammar Lessons — {lessonResults.length}
                       </p>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                       {lessonResults.map(r => (
                         <div key={r.lesson.id} className="space-y-1">
                           <LessonCard
@@ -203,6 +204,7 @@ export function Home() {
                           )}
                         </div>
                       ))}
+                      </div>
                     </div>
                   )}
 
@@ -314,10 +316,11 @@ export function Home() {
                       const lessons = CURRICULUM.filter(l => l.module === mod);
                       if (lessons.length === 0) return null;
                       return (
-                        <div key={mod} className="space-y-3">
+                        <div key={mod} className="space-y-2">
                           <p className="text-xs font-mono text-gray-400 uppercase tracking-widest">
                             Module {mod} — {MODULE_LABELS[mod]}
                           </p>
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                           {lessons.map(lesson => (
                             <LessonCard
                               key={lesson.id}
@@ -326,6 +329,7 @@ export function Home() {
                               onClick={() => push(<LessonView lessonId={lesson.id} />)}
                             />
                           ))}
+                          </div>
                         </div>
                       );
                     })}

@@ -11,8 +11,8 @@ export function ParticlesView() {
       <Navbar title="Particle Type System" />
 
       <PageContent>
-        <div className="max-w-lg mx-auto px-4 py-6">
-          <p className="text-sm text-gray-500 mb-6">
+        <div className="max-w-2xl mx-auto px-4 py-6">
+          <p className="text-sm text-gray-500 dark:text-gray-400 mb-6">
             Particles determine the role of every noun. Master these and the skeleton of Japanese is yours.
           </p>
           <div className="space-y-3">
