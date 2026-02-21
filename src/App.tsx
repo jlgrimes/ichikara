@@ -2,25 +2,28 @@ import { useCallback, useRef, useState } from 'react';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { LanguageProvider } from './context/LanguageContext';
 import { ProgressProvider } from './context/ProgressContext';
+import { BookmarkProvider } from './context/BookmarkContext';
 import { NavigationStack, TabBar, type NavigationHandle } from './lib/ui';
 import { AuthPage } from './pages/AuthPage';
 import { Home } from './pages/Home';
 import { SOSHome } from './pages/SOSHome';
+import { SavedView } from './pages/SavedView';
 import { SettingsView } from './pages/SettingsView';
 import { OnboardingView } from './pages/OnboardingView';
 import { isOnboarded } from './hooks/useOnboarding';
 
-type Tab = 'grammar' | 'sos' | 'settings';
+type Tab = 'grammar' | 'sos' | 'saved' | 'settings';
 
 const TABS = [
   { id: 'grammar',  icon: '文', label: 'Grammar'  },
   { id: 'sos',      icon: '助', label: 'SOS'       },
+  { id: 'saved',    icon: '★', label: 'Saved'     },
   { id: 'settings', icon: '設', label: 'Settings'  },
 ];
 
 // Tab position order — drives slide direction
-const TAB_IDX: Record<Tab, number> = { grammar: 0, sos: 1, settings: 2 };
-const TAB_LIST = ['grammar', 'sos', 'settings'] as Tab[];
+const TAB_IDX: Record<Tab, number> = { grammar: 0, sos: 1, saved: 2, settings: 3 };
+const TAB_LIST = ['grammar', 'sos', 'saved', 'settings'] as Tab[];
 
 const DUR  = 320; // ms — slightly longer for full-width slide to feel smooth
 const EASE = `${DUR}ms cubic-bezier(0.16, 1, 0.3, 1)`;
@@ -116,7 +119,7 @@ function AppShell() {
             tabRefs.current.set(t, el);
             if (isNew) {
               // Set initial position synchronously during commit — before first paint.
-              // Grammar lands at 0 (visible), SOS at +100vw, Settings at +200vw.
+              // Grammar=0, SOS=+1×, Saved=+2×, Settings=+3×vw.
               const winW = window.innerWidth;
               el.style.transition   = 'none';
               el.style.transform    = `translateX(${TAB_IDX[t] * winW}px)`;
@@ -127,6 +130,7 @@ function AppShell() {
         >
           {t === 'grammar'  && <NavigationStack ref={el => { if (el) navHandles.current.set('grammar', el); }}  initialPage={<Home />} />}
           {t === 'sos'      && <NavigationStack ref={el => { if (el) navHandles.current.set('sos', el); }}      initialPage={<SOSHome />} />}
+          {t === 'saved'    && <NavigationStack ref={el => { if (el) navHandles.current.set('saved', el); }}    initialPage={<SavedView />} />}
           {t === 'settings' && <NavigationStack ref={el => { if (el) navHandles.current.set('settings', el); }} initialPage={<SettingsView onSignOut={signOut} />} />}
         </div>
       ))}
@@ -141,7 +145,9 @@ export default function App() {
     <AuthProvider>
       <LanguageProvider>
         <ProgressProvider>
-          <AppShell />
+          <BookmarkProvider>
+            <AppShell />
+          </BookmarkProvider>
         </ProgressProvider>
       </LanguageProvider>
     </AuthProvider>

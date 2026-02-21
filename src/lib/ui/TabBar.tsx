@@ -52,7 +52,7 @@ function TabButton({
     <button
       onClick={onClick}
       className={[
-        'flex flex-col items-center gap-0.5 px-7 py-2 rounded-full min-w-[88px]',
+        'flex flex-col items-center gap-0.5 px-5 py-2 rounded-full min-w-[72px]',
         'transition-all duration-200 select-none active:scale-[0.93]',
         active
           ? 'bg-[var(--color-ink)]'

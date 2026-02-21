@@ -1,7 +1,9 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Navbar, Page, PageContent } from '../lib/ui';
 import { useLanguage } from '../context/LanguageContext';
+import { useBookmarks } from '../context/BookmarkContext';
 import { isTTSAvailable, speak, stopSpeaking } from '../lib/tts';
+import { hapticLight } from '../lib/haptics';
 import type { SOSPhrase } from '../types/language';
 
 interface SOSDetailProps {
@@ -61,6 +63,7 @@ function AudioBtn({ phrase, playing, onPlay, size = 'sm' }: AudioBtnProps) {
 
 export function SOSDetail({ categoryId }: SOSDetailProps) {
   const { language }   = useLanguage();
+  const { isBookmarked, toggleBookmark } = useBookmarks();
   const category       = language.sosCategories.find(c => c.id === categoryId);
   const [fullscreen, setFullscreen]   = useState<SOSPhrase | null>(null);
   const [playingIdx, setPlayingIdx]   = useState<number | null>(null);
@@ -143,6 +146,24 @@ export function SOSDetail({ categoryId }: SOSDetailProps) {
                   onPlay={(p) => playPhrase(p, i)}
                   size="sm"
                 />
+
+                {/* Bookmark button */}
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    hapticLight();
+                    toggleBookmark('phrase', `${categoryId}:${i}`);
+                  }}
+                  className="w-9 h-9 flex items-center justify-center text-lg active:opacity-40 transition-opacity shrink-0 select-none"
+                  aria-label={isBookmarked('phrase', `${categoryId}:${i}`) ? 'Remove bookmark' : 'Save phrase'}
+                >
+                  <span className={isBookmarked('phrase', `${categoryId}:${i}`)
+                    ? 'text-[var(--color-accent)]'
+                    : 'text-gray-300 dark:text-gray-600'
+                  }>
+                    {isBookmarked('phrase', `${categoryId}:${i}`) ? '★' : '☆'}
+                  </span>
+                </button>
               </div>
             ))}
           </div>

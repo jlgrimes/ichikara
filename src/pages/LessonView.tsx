@@ -3,6 +3,7 @@ import { Navbar, Page, PageContent, useNavigation } from '../lib/ui';
 import { ConceptHero } from '../components/ConceptHero';
 import { useLanguage } from '../context/LanguageContext';
 import { useProgress } from '../context/ProgressContext';
+import { useBookmarks } from '../context/BookmarkContext';
 import { getLessonMastery } from '../lib/quiz';
 import { hapticMedium, hapticSuccess } from '../lib/haptics';
 import { QuizView } from './QuizView';
@@ -24,8 +25,10 @@ export function LessonView({ lessonId }: LessonViewProps) {
   const { push }               = useNavigation();
   const { language }           = useLanguage();
   const { isComplete, markComplete, markIncomplete } = useProgress();
-  const lesson     = language.curriculum.find((l) => l.id === lessonId);
-  const completed  = isComplete(lessonId);
+  const { isBookmarked, toggleBookmark } = useBookmarks();
+  const lesson      = language.curriculum.find((l) => l.id === lessonId);
+  const completed   = isComplete(lessonId);
+  const bookmarked  = isBookmarked('lesson', lessonId);
 
   const cardIds = useMemo(() => (lesson ? getCardIds(lesson) : []), [lesson]);
   const mastery = useMemo(() => getLessonMastery(lessonId, cardIds), [lessonId, cardIds]);
@@ -34,7 +37,20 @@ export function LessonView({ lessonId }: LessonViewProps) {
 
   return (
     <Page>
-      <Navbar title={`Module ${lesson.module}`} />
+      <Navbar
+        title={`Module ${lesson.module}`}
+        right={
+          <button
+            onClick={() => { hapticMedium(); toggleBookmark('lesson', lessonId); }}
+            className="min-h-[44px] min-w-[44px] flex items-center justify-end text-xl active:opacity-40 transition-opacity"
+            aria-label={bookmarked ? 'Remove bookmark' : 'Bookmark lesson'}
+          >
+            <span className={bookmarked ? 'text-[var(--color-accent)]' : 'text-gray-300 dark:text-gray-600'}>
+              {bookmarked ? '★' : '☆'}
+            </span>
+          </button>
+        }
+      />
 
       <PageContent>
         {/* Big hero */}
