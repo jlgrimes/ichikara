@@ -46,7 +46,7 @@ function AppShell() {
     const dir    = TAB_ORDER[newTab] > TAB_ORDER[prevTab] ? 1 : -1;
     const prevEl = tabRefs.current.get(prevTab);
     const nextEl = tabRefs.current.get(newTab);
-    const ease   = `${DUR}ms cubic-bezier(0.25, 1, 0.5, 1)`;
+    const ease   = `${DUR}ms cubic-bezier(0.16, 1, 0.3, 1)`;
 
     // Incoming — place it offset + transparent, then animate in
     if (nextEl) {

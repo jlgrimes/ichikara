@@ -11,8 +11,9 @@ import {
 
 // ── Easing ───────────────────────────────────────────────────────────────────
 // Aggressive ease-out — fast deceleration like iOS nav
-const PUSH_EASE = 'cubic-bezier(0.22, 1, 0.36, 1)';
-const POP_EASE  = 'cubic-bezier(0.32, 0, 0.67, 0)';
+// Both push and pop use ease-out — fast start, gentle tail
+const PUSH_EASE = 'cubic-bezier(0.16, 1, 0.3, 1)';
+const POP_EASE  = 'cubic-bezier(0.16, 1, 0.3, 1)';
 const SNAP_EASE = 'cubic-bezier(0.34, 1.28, 0.64, 1)'; // spring overshoot on snap-back
 
 // ── Navigation context (push/pop/canGoBack) ───────────────────────────────────
