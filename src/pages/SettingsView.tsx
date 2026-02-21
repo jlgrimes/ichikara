@@ -22,6 +22,7 @@ import { supabase } from '../lib/supabase';
 import { LanguageSelector } from './LanguageSelector';
 import { PrivacyPage } from './PrivacyPage';
 import { TermsPage } from './TermsPage';
+import { PaywallView } from './PaywallView';
 
 // Dev-only component catalog — tree-shaken in prod
 const ComponentCatalog = import.meta.env.DEV
@@ -250,7 +251,7 @@ export function SettingsView({ onSignOut }: SettingsViewProps) {
                     <button
                       onClick={() => {
                         hapticMedium();
-                        // TODO QRT-202: push PaywallView
+                        push(<PaywallView source="settings" />);
                       }}
                       className="w-full rounded-2xl py-3.5 bg-amber-500 text-white font-bold text-sm active:opacity-80 transition-opacity select-none"
                     >

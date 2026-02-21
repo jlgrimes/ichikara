@@ -1,9 +1,11 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { Navbar, Page, PageContent, useToast } from '../lib/ui';
+import { Navbar, Page, PageContent, useNavigation, useToast } from '../lib/ui';
 import { useLanguage } from '../context/LanguageContext';
 import { useBookmarks } from '../context/BookmarkContext';
 import { isTTSAvailable, speak, stopSpeaking } from '../lib/tts';
 import { hapticLight } from '../lib/haptics';
+import { usePremiumGate } from '../hooks/usePremiumGate'; // QRT-203
+import { PaywallView } from './PaywallView'; // QRT-203
 import type { SOSPhrase } from '../types/language';
 
 interface SOSDetailProps {
@@ -65,6 +67,8 @@ export function SOSDetail({ categoryId }: SOSDetailProps) {
   const { language }   = useLanguage();
   const { isBookmarked, toggleBookmark } = useBookmarks();
   const toast          = useToast();
+  const { push }       = useNavigation();
+  const { canAccess }  = usePremiumGate();
   const category       = language.sosCategories.find(c => c.id === categoryId);
   const [fullscreen, setFullscreen]   = useState<SOSPhrase | null>(null);
   const [playingIdx, setPlayingIdx]   = useState<number | null>(null);
@@ -75,6 +79,12 @@ export function SOSDetail({ categoryId }: SOSDetailProps) {
   // ── Speech ─────────────────────────────────────────────────────────────────
 
   const playPhrase = useCallback((phrase: SOSPhrase, idx: number) => {
+    // Gate audio behind premium (QRT-203)
+    if (!canAccess('audio')) {
+      push(<PaywallView source="audio_sos" />);
+      return;
+    }
+
     // Clear any pending "playing" reset
     if (playTimerRef.current) clearTimeout(playTimerRef.current);
 
@@ -88,7 +98,7 @@ export function SOSDetail({ categoryId }: SOSDetailProps) {
     // (SpeechSynthesisUtterance.onend isn't reliable on iOS WKWebView)
     const estimatedMs = Math.max(1500, phrase.target.length * 200);
     playTimerRef.current = setTimeout(() => setPlayingIdx(null), estimatedMs);
-  }, []);
+  }, [canAccess, push, categoryId]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Analytics — SOS category opened
   useEffect(() => {
