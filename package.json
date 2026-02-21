@@ -14,7 +14,9 @@
     "@capacitor/core": "^8.1.0",
     "@capacitor/haptics": "^8.0.0",
     "@capacitor/ios": "^8.1.0",
+    "@highlight-run/react": "^21.0.0",
     "@supabase/supabase-js": "^2.97.0",
+    "posthog-js": "^1.352.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0"
   },

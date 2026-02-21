@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { LanguageProvider } from './context/LanguageContext';
 import { ProgressProvider } from './context/ProgressContext';
@@ -32,6 +32,15 @@ function AppShell() {
   const { session, loading, signOut } = useAuth();
   const [activeTab, setActiveTab]     = useState<Tab>('grammar');
   const [onboarded, setOnboarded]     = useState(() => isOnboarded());
+
+  // Identify user in Highlight.io once session is established (lazy — keeps main bundle small)
+  useEffect(() => {
+    if (session?.user) {
+      import('./lib/monitoring').then(({ identifyUser }) => {
+        identifyUser(session.user!.id, session.user!.email ?? undefined);
+      });
+    }
+  }, [session?.user?.id]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const tabRefs       = useRef<Map<Tab, HTMLDivElement>>(new Map());
   const navHandles    = useRef<Map<Tab, NavigationHandle>>(new Map());
