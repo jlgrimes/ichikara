@@ -61,17 +61,6 @@ export function SettingsView({ onSignOut }: SettingsViewProps) {
             </div>
           </div>
 
-          {/* Component library credit */}
-          <div>
-            <p className="text-xs font-mono text-gray-400 uppercase tracking-widest mb-3 px-1">
-              Built with
-            </p>
-            <div className="bg-white/80 backdrop-blur-sm rounded-3xl border border-white/60 shadow-[0_2px_16px_rgba(0,0,0,0.06)] px-5 py-4">
-              <p className="text-sm font-medium text-[var(--color-ink)]">Capacitor + React</p>
-              <p className="text-xs text-gray-400 mt-0.5 font-mono">Custom nav library with 120fps swipe-back</p>
-            </div>
-          </div>
-
         </div>
       </PageContent>
     </Page>

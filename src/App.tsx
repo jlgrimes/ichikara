@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useLayoutEffect, useRef, useState } from 'react';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { NavigationStack, TabBar } from './lib/ui';
 import { AuthPage } from './pages/AuthPage';
@@ -14,28 +14,32 @@ const TABS = [
   { id: 'settings', icon: '設', label: 'Settings'  },
 ];
 
-const TAB_ORDER: Record<Tab, number> = { grammar: 0, sos: 1, settings: 2 };
+// Tab position order — drives slide direction
+const TAB_IDX: Record<Tab, number> = { grammar: 0, sos: 1, settings: 2 };
+const TAB_LIST = ['grammar', 'sos', 'settings'] as Tab[];
 
-// Morph animation: cross-fade + subtle directional slide (iOS 26 feel)
-const DUR = 260; // ms
-const OFFSET = 28; // px — gentle directional push, not a full slide
+const DUR  = 320; // ms — slightly longer for full-width slide to feel smooth
+const EASE = `${DUR}ms cubic-bezier(0.16, 1, 0.3, 1)`;
 
 function AppShell() {
   const { session, loading, signOut } = useAuth();
-
-  // React state drives the tab bar indicator only
   const [activeTab, setActiveTab] = useState<Tab>('grammar');
 
   const tabRefs   = useRef<Map<Tab, HTMLDivElement>>(new Map());
   const currentTab = useRef<Tab>('grammar');
 
-  // Set initial opacity/pointer-events on mount (avoids flash)
-  useEffect(() => {
+  // useLayoutEffect — fires before paint, so no flash.
+  // Pre-position ALL tabs: grammar at 0, sos at +100vw, settings at +200vw.
+  // No opacity tricks — pure positional slide, just like iOS.
+  useLayoutEffect(() => {
+    const winW = window.innerWidth;
     tabRefs.current.forEach((el, id) => {
-      el.style.opacity      = id === 'grammar' ? '1' : '0';
+      const offset = (TAB_IDX[id] - TAB_IDX['grammar']) * winW;
+      el.style.transition   = 'none';
+      el.style.transform    = `translateX(${offset}px)`;
       el.style.pointerEvents = id === 'grammar' ? 'auto' : 'none';
     });
-  }, []);
+  }, []); // runs once before first paint
 
   const switchTab = useCallback((newTab: Tab) => {
     if (newTab === currentTab.current) return;
@@ -43,38 +47,41 @@ function AppShell() {
     currentTab.current = newTab;
     setActiveTab(newTab);
 
-    const dir    = TAB_ORDER[newTab] > TAB_ORDER[prevTab] ? 1 : -1;
+    const winW = window.innerWidth;
+    const dir  = TAB_IDX[newTab] > TAB_IDX[prevTab] ? 1 : -1;
+
     const prevEl = tabRefs.current.get(prevTab);
     const nextEl = tabRefs.current.get(newTab);
-    const ease   = `${DUR}ms cubic-bezier(0.16, 1, 0.3, 1)`;
 
-    // Incoming — place it offset + transparent, then animate in
+    // Snap incoming to exactly 1 screen-width in the correct direction,
+    // then animate to 0. This handles non-adjacent tab jumps cleanly.
     if (nextEl) {
       nextEl.style.transition   = 'none';
-      nextEl.style.opacity      = '0';
-      nextEl.style.transform    = `translateX(${dir * OFFSET}px)`;
+      nextEl.style.transform    = `translateX(${dir * winW}px)`;
       nextEl.style.pointerEvents = 'none';
       nextEl.getBoundingClientRect(); // flush reflow
-      nextEl.style.transition   = `opacity ${ease}, transform ${ease}`;
-      nextEl.style.opacity      = '1';
+      nextEl.style.transition   = `transform ${EASE}`;
       nextEl.style.transform    = 'translateX(0)';
       nextEl.style.pointerEvents = 'auto';
     }
 
-    // Outgoing — fade + slide away
+    // Outgoing slides away in the opposite direction
     if (prevEl) {
-      prevEl.style.transition   = `opacity ${ease}, transform ${ease}`;
-      prevEl.style.opacity      = '0';
-      prevEl.style.transform    = `translateX(${-dir * OFFSET}px)`;
+      prevEl.style.transition   = `transform ${EASE}`;
+      prevEl.style.transform    = `translateX(${-dir * winW}px)`;
       prevEl.style.pointerEvents = 'none';
-      // Reset transform silently after animation so it's ready next time
-      setTimeout(() => {
-        if (prevEl) {
-          prevEl.style.transition = 'none';
-          prevEl.style.transform  = 'translateX(0)';
-        }
-      }, DUR + 20);
     }
+
+    // After animation, reposition ALL non-active tabs relative to new active.
+    // This ensures any tab is always ready to slide in from the correct side.
+    setTimeout(() => {
+      tabRefs.current.forEach((el, id) => {
+        if (id === newTab) return;
+        const relativeOffset = (TAB_IDX[id] - TAB_IDX[newTab]) * winW;
+        el.style.transition = 'none';
+        el.style.transform  = `translateX(${relativeOffset}px)`;
+      });
+    }, DUR + 16);
   }, []);
 
   if (loading) {
@@ -89,13 +96,11 @@ function AppShell() {
 
   return (
     <div className="h-dvh overflow-hidden relative bg-[var(--color-paper)]">
-      {((['grammar', 'sos', 'settings'] as Tab[])).map(t => (
+      {TAB_LIST.map(t => (
         <div
           key={t}
           ref={el => { if (el) tabRefs.current.set(t, el); }}
-          className="absolute inset-0"
-          // Initial visibility is set in useEffect above
-          // style here is just a fallback — useEffect overrides
+          className="absolute inset-0 will-change-transform"
         >
           {t === 'grammar'  && <NavigationStack initialPage={<Home />} />}
           {t === 'sos'      && <NavigationStack initialPage={<SOSHome />} />}
@@ -103,11 +108,7 @@ function AppShell() {
         </div>
       ))}
 
-      <TabBar<Tab>
-        tabs={TABS}
-        activeTab={activeTab}
-        onChange={switchTab}
-      />
+      <TabBar<Tab> tabs={TABS} activeTab={activeTab} onChange={switchTab} />
     </div>
   );
 }

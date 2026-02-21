@@ -1,4 +1,4 @@
-import { Navbar, Page, PageContent, useNavigation } from '../lib/ui';
+import { Page, PageContent, useNavigation } from '../lib/ui';
 import { SOS_CATEGORIES } from '../data/sos';
 import { SOSDetail } from './SOSDetail';
 
@@ -7,38 +7,56 @@ export function SOSHome() {
 
   return (
     <Page>
-      <Navbar title="SOS" />
+      {/* Safe area fill — matches Home style */}
+      <div
+        className="shrink-0 bg-[var(--color-paper)]"
+        style={{ height: 'env(safe-area-inset-top)' }}
+      />
 
       <PageContent>
-        <div className="max-w-lg mx-auto px-4 py-6">
-          <p className="text-xs font-mono text-gray-400 uppercase tracking-widest mb-1">
-            Quick Reference
-          </p>
-          <p className="text-sm text-gray-500 mb-6">
-            Tap a category. Show your phone to locals.
-          </p>
+        <div className="max-w-lg mx-auto px-4 space-y-8">
 
-          {/* 2-column grid */}
-          <div className="grid grid-cols-2 gap-3">
+          {/* iOS 26 large title */}
+          <div className="pt-6 pb-2">
+            <h1 className="text-[42px] font-black text-[var(--color-ink)] tracking-tight leading-none">
+              SOS
+            </h1>
+            <p className="text-sm text-gray-400 font-mono mt-1.5">
+              tap a card · show your phone
+            </p>
+          </div>
+
+          {/* Category cards — same visual treatment as LessonCard */}
+          <div className="space-y-3">
             {SOS_CATEGORIES.map(cat => (
               <button
                 key={cat.id}
                 onClick={() => push(<SOSDetail categoryId={cat.id} />)}
                 className={[
-                  'flex flex-col items-center justify-center gap-2',
-                  'rounded-3xl border border-white/60 shadow-[0_2px_12px_rgba(0,0,0,0.06)]',
-                  'p-6 aspect-square select-none',
-                  'active:scale-[0.95] active:shadow-none transition-all duration-150',
-                  cat.color,
+                  'w-full text-left',
+                  'bg-white/80 backdrop-blur-sm',
+                  'rounded-3xl border border-white/60',
+                  'shadow-[0_2px_16px_rgba(0,0,0,0.06)]',
+                  'p-5',
+                  'active:scale-[0.97] active:shadow-none active:bg-white/60',
+                  'transition-all duration-150 ease-out select-none',
                 ].join(' ')}
               >
-                <span className="text-4xl">{cat.emoji}</span>
-                <span className="text-[13px] font-bold text-[var(--color-ink)] text-center leading-tight">
-                  {cat.name}
-                </span>
-                <span className="text-[11px] font-mono text-gray-400">
-                  {cat.phrases.length} phrases
-                </span>
+                <div className="flex items-center justify-between gap-3">
+                  <div className="flex items-center gap-4">
+                    {/* Emoji in a soft pill */}
+                    <span className="text-3xl leading-none">{cat.emoji}</span>
+                    <div>
+                      <p className="text-[17px] font-bold text-[var(--color-ink)] leading-snug">
+                        {cat.name}
+                      </p>
+                      <p className="text-[13px] text-gray-500 mt-0.5">
+                        {cat.phrases.length} phrases
+                      </p>
+                    </div>
+                  </div>
+                  <span className="text-gray-300 text-xl shrink-0 leading-none">›</span>
+                </div>
               </button>
             ))}
           </div>

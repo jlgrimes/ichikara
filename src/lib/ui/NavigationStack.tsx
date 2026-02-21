@@ -66,7 +66,6 @@ export function NavigationStack({ initialPage }: { initialPage: ReactNode }) {
   ]);
 
   const elMap     = useRef<Map<string, HTMLDivElement>>(new Map());
-  const overlayRef = useRef<HTMLDivElement | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
   // Mutable refs so touch handlers always see fresh values
@@ -94,8 +93,6 @@ export function NavigationStack({ initialPage }: { initialPage: ReactNode }) {
     const cId = currId(), pId = prevId();
     tx(getEl(cId), winW, `transform 0.28s ${POP_EASE}`);
     tx(pId ? getEl(pId) : null, 0, `transform 0.28s ${POP_EASE}`);
-    const ov = overlayRef.current;
-    if (ov) { ov.style.transition = `opacity 0.28s ${POP_EASE}`; ov.style.opacity = '0'; }
     setTimeout(removeTop, 280);
   }, [winW, removeTop]);
 
@@ -113,20 +110,12 @@ export function NavigationStack({ initialPage }: { initialPage: ReactNode }) {
 
     const cId = currId(), pId = prevId();
     const curr = getEl(cId), prev = pId ? getEl(pId) : null;
-    const ov = overlayRef.current;
 
     tx(curr, winW); // place off-screen before paint
     curr?.getBoundingClientRect(); // flush
 
     tx(curr, 0,           `transform 0.38s ${PUSH_EASE}`);
     tx(prev, -winW * 0.3, `transform 0.38s ${PUSH_EASE}`);
-    if (ov) {
-      ov.style.transition = 'none';
-      ov.style.opacity = '0';
-      ov.getBoundingClientRect();
-      ov.style.transition = `opacity 0.38s ${PUSH_EASE}`;
-      ov.style.opacity = '0.25';
-    }
   }, [stack.length, winW]);
 
   // ── Touch gesture — direction-detecting, scroll-blocking ─────────────────
@@ -187,8 +176,6 @@ export function NavigationStack({ initialPage }: { initialPage: ReactNode }) {
       const cId = currId(), pId = prevId();
       tx(getEl(cId), clampedDx);
       tx(pId ? getEl(pId) : null, -winW * 0.3 + clampedDx * 0.3);
-      const ov = overlayRef.current;
-      if (ov) ov.style.opacity = String(0.25 * Math.max(0, 1 - clampedDx / winW));
     };
 
     const onTouchEnd = (e: TouchEvent) => {
@@ -203,17 +190,14 @@ export function NavigationStack({ initialPage }: { initialPage: ReactNode }) {
 
       const cId = currId(), pId = prevId();
       const curr = getEl(cId), prev = pId ? getEl(pId) : null;
-      const ov = overlayRef.current;
 
       if (dx > winW * 0.35 || vel > 0.4) {
         tx(curr, winW, `transform 0.22s ${POP_EASE}`);
         tx(prev, 0,    `transform 0.22s ${POP_EASE}`);
-        if (ov) { ov.style.transition = `opacity 0.22s ${POP_EASE}`; ov.style.opacity = '0'; }
         setTimeout(removeTop, 220);
       } else {
         tx(curr, 0,           `transform 0.3s ${SNAP_EASE}`);
         tx(prev, -winW * 0.3, `transform 0.3s ${SNAP_EASE}`);
-        if (ov) { ov.style.transition = `opacity 0.3s ${SNAP_EASE}`; ov.style.opacity = '0.25'; }
       }
     };
 
@@ -261,13 +245,6 @@ export function NavigationStack({ initialPage }: { initialPage: ReactNode }) {
                 }}
               >
                 {entry.page}
-                {isPrev && (
-                  <div
-                    ref={overlayRef}
-                    className="absolute inset-0 bg-black pointer-events-none"
-                    style={{ opacity: 0.25 }}
-                  />
-                )}
               </div>
             </PageDepthContext.Provider>
           );

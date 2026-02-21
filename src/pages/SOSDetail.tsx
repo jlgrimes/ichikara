@@ -14,12 +14,12 @@ export function SOSDetail({ categoryId }: SOSDetailProps) {
 
   return (
     <Page>
-      <Navbar title={`${category.emoji} ${category.name}`} />
+      <Navbar title={`${category.emoji}  ${category.name}`} />
 
       <PageContent>
         <div className="max-w-lg mx-auto px-4 py-4">
           <p className="text-xs font-mono text-gray-400 mb-5">
-            Tap any phrase to show it fullscreen
+            tap any phrase to show it fullscreen
           </p>
 
           <div className="space-y-3">
@@ -28,20 +28,20 @@ export function SOSDetail({ categoryId }: SOSDetailProps) {
                 key={i}
                 onClick={() => setFullscreen(phrase)}
                 className={[
-                  'w-full text-left rounded-3xl border border-white/60',
-                  'shadow-[0_2px_12px_rgba(0,0,0,0.05)]',
-                  'p-5 select-none',
-                  'active:scale-[0.98] active:shadow-none transition-all duration-150',
-                  category.color,
+                  'w-full text-left',
+                  'bg-white/80 backdrop-blur-sm',
+                  'rounded-3xl border border-white/60',
+                  'shadow-[0_2px_16px_rgba(0,0,0,0.06)]',
+                  'p-5',
+                  'active:scale-[0.97] active:shadow-none active:bg-white/60',
+                  'transition-all duration-150 ease-out select-none',
                 ].join(' ')}
               >
-                {/* Japanese — large, for showing to people */}
-                <p className="text-2xl font-black text-[var(--color-ink)] leading-snug mb-1">
+                {/* Japanese — big, point-at-screen size */}
+                <p className="text-2xl font-black text-[var(--color-ink)] leading-snug mb-1.5">
                   {phrase.japanese}
                 </p>
-                {/* Romaji */}
-                <p className="text-xs font-mono text-gray-500 mb-1">{phrase.romaji}</p>
-                {/* English */}
+                <p className="text-xs font-mono text-gray-400 mb-0.5">{phrase.romaji}</p>
                 <p className="text-sm text-gray-600">{phrase.english}</p>
               </button>
             ))}
@@ -54,22 +54,21 @@ export function SOSDetail({ categoryId }: SOSDetailProps) {
         <div
           className="absolute inset-0 z-50 flex flex-col items-center justify-center bg-[var(--color-ink)] px-8"
           onClick={() => setFullscreen(null)}
-          style={{ paddingTop: 'env(safe-area-inset-top)', paddingBottom: 'env(safe-area-inset-bottom)' }}
+          style={{
+            paddingTop: 'env(safe-area-inset-top)',
+            paddingBottom: 'env(safe-area-inset-bottom)',
+          }}
         >
-          <p className="text-xs font-mono text-white/40 uppercase tracking-widest mb-12">
+          <p className="text-[11px] font-mono text-white/30 uppercase tracking-widest mb-16">
             tap anywhere to close
           </p>
-
-          {/* Giant Japanese text — easy to read from a distance */}
           <p className="text-6xl font-black text-white text-center leading-tight mb-8">
             {fullscreen.japanese}
           </p>
-
-          {/* Romaji + English below, smaller */}
-          <p className="text-lg font-mono text-white/60 text-center mb-2">
+          <p className="text-lg font-mono text-white/50 text-center mb-2">
             {fullscreen.romaji}
           </p>
-          <p className="text-base text-white/50 text-center">
+          <p className="text-base text-white/40 text-center">
             {fullscreen.english}
           </p>
         </div>
