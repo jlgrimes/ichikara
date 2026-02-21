@@ -1,4 +1,5 @@
 export { NavigationStack, useNavigation } from './NavigationStack';
+export { TabBar } from './TabBar';
 export { Page, PageContent } from './Page';
 export { Navbar } from './Navbar';
 export { Card } from './Card';

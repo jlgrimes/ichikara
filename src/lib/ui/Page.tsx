@@ -14,7 +14,8 @@ export function PageContent({ children, className = '' }: PageProps) {
   return (
     <div
       className={`flex-1 overflow-y-auto overscroll-contain ${className}`}
-      style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}
+      // Extra bottom padding so content clears the floating tab bar
+      style={{ paddingBottom: 'calc(env(safe-area-inset-bottom) + 80px)' }}
     >
       {children}
     </div>
