@@ -4,13 +4,13 @@ import {
   useState,
   type ReactNode,
 } from 'react';
-import type { LanguageContent } from '../types/language';
+import type { LanguageBundle } from '../data/languages/japanese';
 import { getLanguageContent } from '../data/languages/index';
 
 const STORAGE_KEY = 'ichikara_language';
 
 interface LanguageContextValue {
-  language: LanguageContent;
+  language: LanguageBundle;
   languageId: string;
   setLanguageId: (id: string) => void;
 }
@@ -34,8 +34,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   };
 
   // Default to Japanese if the selected language isn't available yet
-  const language = getLanguageContent(languageId)
-    ?? getLanguageContent('japanese')!;
+  const language = (getLanguageContent(languageId) ?? getLanguageContent('japanese'))!;
 
   return (
     <LanguageContext.Provider value={{ language, languageId, setLanguageId }}>

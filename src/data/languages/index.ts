@@ -1,4 +1,5 @@
-import type { LanguageMeta, LanguageContent } from '../../types/language';
+import type { LanguageMeta } from '../../types/language';
+import type { LanguageBundle } from './japanese';
 import { JAPANESE } from './japanese';
 
 // ── Language registry ─────────────────────────────────────────────────────────
@@ -88,11 +89,11 @@ export const LANGUAGE_META: LanguageMeta[] = [
 // ── Content loader ────────────────────────────────────────────────────────────
 // Available language bundles. Add imports here as languages are built.
 
-const AVAILABLE_CONTENT: Record<string, LanguageContent> = {
+const AVAILABLE_CONTENT: Record<string, LanguageBundle> = {
   japanese: JAPANESE,
 };
 
-export function getLanguageContent(id: string): LanguageContent | null {
+export function getLanguageContent(id: string): LanguageBundle | null {
   return AVAILABLE_CONTENT[id] ?? null;
 }
 
