@@ -17,6 +17,11 @@ export type { ToastVariant, ToastPosition, ToastOptions } from './Toast';
 export { BottomSheet } from './BottomSheet';
 export { ActionSheet } from './ActionSheet';
 export type { ActionSheetAction } from './ActionSheet';
+export {
+  spring, animate, pageTransition, useAnimation,
+  springs, Presets, fadeInFrames, fadeOutFrames, slideFrames,
+} from './animations';
+export type { SpringConfig, SpringResult, AnimationPreset, TransitionType, Keyframes } from './animations';
 
 // ── New: QRT-192 ──────────────────────────────────────────────────────────────
 export { Input } from './Input';
