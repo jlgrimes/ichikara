@@ -32,6 +32,15 @@ export { Chip, ChipGroup } from './Chip';
 export { SegmentedControl } from './SegmentedControl';
 export type { SegmentedControlProps, SegmentOption } from './SegmentedControl';
 
+// ── New: QRT-198 ──────────────────────────────────────────────────────────────
+export { ProgressBar, StepDots } from './Progress';
+export type {
+  ProgressBarProps,
+  ProgressBarSize,
+  ProgressBarVariant,
+  StepDotsProps,
+} from './Progress';
+
 // ── Dev tools — import directly, not via barrel, to keep prod bundle clean ────
 // import { ComponentCatalog } from './ComponentCatalog'; // use in app conditionally
 

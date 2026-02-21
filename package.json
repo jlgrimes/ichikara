@@ -14,7 +14,9 @@
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
     "test:e2e:headed": "playwright test --headed",
-    "test:e2e:report": "playwright show-report tests/e2e/.report"
+    "test:e2e:report": "playwright show-report tests/e2e/.report",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
   },
   "dependencies": {
     "@capacitor/app": "^8.0.1",
@@ -23,6 +25,7 @@
     "@capacitor/ios": "^8.1.0",
     "@highlight-run/react": "^21.0.0",
     "@supabase/supabase-js": "^2.97.0",
+    "highlight.run": "^9.26.1",
     "posthog-js": "^1.352.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0"
@@ -31,6 +34,8 @@
     "@capacitor/cli": "^8.1.0",
     "@eslint/js": "^9.39.1",
     "@playwright/test": "^1.58.2",
+    "@storybook/addon-essentials": "^8.6.14",
+    "@storybook/react-vite": "^10.2.10",
     "@tailwindcss/vite": "^4.2.0",
     "@types/node": "^24.10.1",
     "@types/react": "^19.2.7",
@@ -43,6 +48,7 @@
     "eslint-plugin-react-refresh": "^0.4.24",
     "globals": "^16.5.0",
     "jsdom": "^28.1.0",
+    "storybook": "^10.2.10",
     "tailwindcss": "^4.2.0",
     "typescript": "~5.9.3",
     "typescript-eslint": "^8.48.0",

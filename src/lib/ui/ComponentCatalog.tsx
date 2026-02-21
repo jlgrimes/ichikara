@@ -20,6 +20,7 @@
  *   13 · ActionSheet   — destructive + disabled actions
  *   14 · Animations    — spring presets live demo
  *   15 · SegmentedControl — sliding pill tabs (2–6 segments)
+ *   16 · Progress        — ProgressBar (linear track) + StepDots (quiz stepper)
  */
 
 import { useState, useRef } from 'react';
@@ -38,6 +39,7 @@ import { ActionSheet } from './ActionSheet';
 import { useToast } from './Toast';
 import { Presets, animate } from './animations';
 import { SegmentedControl } from './SegmentedControl';
+import { ProgressBar, StepDots } from './Progress';
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
@@ -740,6 +742,77 @@ function SegmentedControlSection() {
   );
 }
 
+// ── 16 · Progress ─────────────────────────────────────────────────────────────
+
+function ProgressSection() {
+  const [step, setStep] = useState(0);
+  const TOTAL_STEPS = 5;
+
+  return (
+    <Section title="16 · Progress">
+
+      {/* ── ProgressBar ── */}
+      <Label>xs (3 px) — minimal, understated</Label>
+      <ProgressBar value={40} size="xs" />
+
+      <Label>sm (6 px) — default, like Home.tsx course bar</Label>
+      <ProgressBar value={72} size="sm" showLabel label="72 / 100 lessons complete" />
+
+      <Label>md (8 px) — emphasis</Label>
+      <ProgressBar value={55} size="md" showLabel />
+
+      <Label>lg (12 px) — shimmer fill</Label>
+      <ProgressBar value={88} size="lg" showLabel />
+
+      <Label>Variants</Label>
+      <div className="space-y-2">
+        {(['accent', 'success', 'warning', 'danger', 'muted'] as const).map(v => (
+          <div key={v} className="flex items-center gap-3">
+            <span className="text-[10px] font-mono text-[var(--color-muted)] w-14 shrink-0">{v}</span>
+            <div className="flex-1">
+              <ProgressBar value={65} variant={v} size="sm" />
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <Label>0% and 100% edge cases</Label>
+      <ProgressBar value={0}   size="sm" showLabel label="Not started" />
+      <ProgressBar value={100} size="sm" showLabel variant="success" label="Complete!" />
+
+      <Label>Raw count mode (value / max)</Label>
+      <ProgressBar value={3} max={7} size="sm" showLabel />
+
+      {/* ── StepDots ── */}
+      <Label>StepDots — default (5 steps, tap to advance)</Label>
+      <StepDots total={TOTAL_STEPS} current={step} />
+      <div className="flex gap-2 justify-center">
+        <Button
+          variant="secondary"
+          onClick={() => setStep(s => Math.max(0, s - 1))}
+        >
+          ← Prev
+        </Button>
+        <Button
+          variant="secondary"
+          onClick={() => setStep(s => Math.min(TOTAL_STEPS - 1, s + 1))}
+        >
+          Next →
+        </Button>
+      </div>
+      <p className="text-center text-[11px] font-mono text-[var(--color-muted)]">
+        Step {step + 1} / {TOTAL_STEPS}
+      </p>
+
+      <Label>StepDots — larger dots (12 px)</Label>
+      <StepDots total={4} current={1} dotSize={12} gap={8} />
+
+      <Label>StepDots — compact (6 px, tight gap)</Label>
+      <StepDots total={8} current={4} dotSize={6} gap={4} />
+    </Section>
+  );
+}
+
 // ── Main catalog page ─────────────────────────────────────────────────────────
 
 export function ComponentCatalog() {
@@ -770,6 +843,7 @@ export function ComponentCatalog() {
           <ActionSheetSection />
           <AnimationsSection />
           <SegmentedControlSection />
+          <ProgressSection />
         </div>
       </PageContent>
     </Page>

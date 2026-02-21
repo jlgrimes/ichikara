@@ -1,16 +1,10 @@
-import { lazy, Suspense, useState } from 'react';
+import { useState } from 'react';
 import { Page, PageContent, useNavigation } from '../lib/ui';
 import { useAuth } from '../context/AuthContext';
 import { useLanguage } from '../context/LanguageContext';
 import { LanguageSelector } from './LanguageSelector';
 import { PrivacyPage } from './PrivacyPage';
 import { TermsPage } from './TermsPage';
-
-// Dev-only: lazy import so ComponentCatalog is excluded from prod bundle entirely.
-// Vite dead-code eliminates the import() call when import.meta.env.DEV is false.
-const ComponentCatalog = import.meta.env.DEV
-  ? lazy(() => import('../lib/ui/ComponentCatalog').then(m => ({ default: m.ComponentCatalog })))
-  : null;
 
 interface SettingsViewProps {
   onSignOut: () => void;
@@ -127,32 +121,6 @@ export function SettingsView({ onSignOut }: SettingsViewProps) {
               </button>
             </div>
           </div>
-
-          {/* Developer tools — only in dev builds */}
-          {import.meta.env.DEV && ComponentCatalog !== null && (
-            <div>
-              <p className="text-xs font-mono text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-3 px-1">
-                Developer
-              </p>
-              <button
-                onClick={() =>
-                  push(
-                    <Suspense fallback={<div className="flex-1 flex items-center justify-center"><p className="text-sm font-mono text-gray-400">Loading…</p></div>}>
-                      <ComponentCatalog />
-                    </Suspense>,
-                  )
-                }
-                className="w-full bg-[var(--surface-warning)] backdrop-blur-sm rounded-3xl border border-[var(--surface-border)] shadow-[0_2px_16px_rgba(0,0,0,0.06)] px-5 py-4 flex items-center gap-3 active:scale-[0.98] active:bg-[var(--surface-active)] transition-all select-none"
-              >
-                <span className="text-2xl leading-none">⚙️</span>
-                <div className="flex-1 text-left">
-                  <p className="text-sm font-bold text-[var(--color-ink)]">UI Component Catalog</p>
-                  <p className="text-xs text-gray-400 dark:text-gray-500 mt-0.5">Dev only — all components with live examples</p>
-                </div>
-                <span className="text-gray-300 dark:text-gray-600 text-xl leading-none">›</span>
-              </button>
-            </div>
-          )}
 
         </div>
       </PageContent>
