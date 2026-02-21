@@ -1,5 +1,7 @@
 // iOS 26-style floating tab bar — glass pill that floats above the home indicator
 
+import { hapticMedium } from '../haptics';
+
 interface Tab {
   id: string;
   icon: string;    // character or emoji used as icon
@@ -27,7 +29,7 @@ export function TabBar<T extends string>({ tabs, activeTab, onChange }: TabBarPr
             icon={tab.icon}
             label={tab.label}
             active={activeTab === tab.id}
-            onClick={() => onChange(tab.id as T)}
+            onClick={() => { hapticMedium(); onChange(tab.id as T); }}
           />
         ))}
       </div>

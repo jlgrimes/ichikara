@@ -1,6 +1,7 @@
 import type { NavbarProps } from './types';
 import { useNavigation, usePageDepth } from './NavigationStack';
 import { useScrollToTop } from './Page';
+import { hapticMedium } from '../haptics';
 
 export function Navbar({ title, left, right }: NavbarProps) {
   const { pop }    = useNavigation();
@@ -10,7 +11,7 @@ export function Navbar({ title, left, right }: NavbarProps) {
 
   const backButton = (
     <button
-      onClick={pop}
+      onClick={() => { hapticMedium(); pop(); }}
       className="flex items-center gap-1 text-[var(--color-accent)] font-mono text-xs tracking-wider min-h-[44px] min-w-[44px] active:opacity-40 transition-opacity"
     >
       ← back

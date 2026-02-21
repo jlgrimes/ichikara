@@ -2,6 +2,7 @@ import { useCallback, useMemo, useRef, useState } from 'react';
 import { Navbar, Page, PageContent, Button, useNavigation } from '../lib/ui';
 import { useLanguage } from '../context/LanguageContext';
 import { getLessonMastery, recordResult, sortByPriority } from '../lib/quiz';
+import { hapticSuccess, hapticWarning } from '../lib/haptics';
 import type { Lesson, TargetSample } from '../types/language';
 
 // ── Card data ─────────────────────────────────────────────────────────────────
@@ -190,6 +191,7 @@ export function QuizView({ lessonId }: QuizViewProps) {
       recordResult(lessonId, currentCardId, correct);
 
       if (correct) {
+        hapticSuccess();
         const newDone = new Set(done);
         newDone.add(currentCardId);
         setDone(newDone);
@@ -211,6 +213,7 @@ export function QuizView({ lessonId }: QuizViewProps) {
           setRevealed(false);
         }
       } else {
+        hapticWarning();
         // "Again" — re-queue this card at the end (but not if already at end)
         const newQueue = [
           ...queue.slice(0, cursor),

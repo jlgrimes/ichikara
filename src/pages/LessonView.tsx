@@ -4,6 +4,7 @@ import { ConceptHero } from '../components/ConceptHero';
 import { useLanguage } from '../context/LanguageContext';
 import { useProgress } from '../context/ProgressContext';
 import { getLessonMastery } from '../lib/quiz';
+import { hapticMedium, hapticSuccess } from '../lib/haptics';
 import { QuizView } from './QuizView';
 
 interface LessonViewProps {
@@ -102,7 +103,10 @@ export function LessonView({ lessonId }: LessonViewProps) {
           {/* ── Mark Complete ─────────────────────────────────────────── */}
           <div>
             <button
-              onClick={() => completed ? markIncomplete(lessonId) : markComplete(lessonId)}
+              onClick={() => {
+                if (completed) { hapticMedium(); markIncomplete(lessonId); }
+                else { hapticSuccess(); markComplete(lessonId); }
+              }}
               className={[
                 'w-full rounded-2xl p-4 flex items-center justify-between gap-4',
                 'border-2 transition-all duration-200 ease-out select-none',
