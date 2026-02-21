@@ -7,6 +7,8 @@ import { AuthPage } from './pages/AuthPage';
 import { Home } from './pages/Home';
 import { SOSHome } from './pages/SOSHome';
 import { SettingsView } from './pages/SettingsView';
+import { OnboardingView } from './pages/OnboardingView';
+import { isOnboarded } from './hooks/useOnboarding';
 
 type Tab = 'grammar' | 'sos' | 'settings';
 
@@ -25,7 +27,8 @@ const EASE = `${DUR}ms cubic-bezier(0.16, 1, 0.3, 1)`;
 
 function AppShell() {
   const { session, loading, signOut } = useAuth();
-  const [activeTab, setActiveTab] = useState<Tab>('grammar');
+  const [activeTab, setActiveTab]     = useState<Tab>('grammar');
+  const [onboarded, setOnboarded]     = useState(() => isOnboarded());
 
   const tabRefs       = useRef<Map<Tab, HTMLDivElement>>(new Map());
   const navHandles    = useRef<Map<Tab, NavigationHandle>>(new Map());
@@ -97,6 +100,10 @@ function AppShell() {
   }
 
   if (!session) return <AuthPage />;
+
+  if (!onboarded) {
+    return <OnboardingView onComplete={() => setOnboarded(true)} />;
+  }
 
   return (
     <div className="h-dvh overflow-hidden relative bg-[var(--color-paper)]">

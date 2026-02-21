@@ -5,6 +5,7 @@ import { useLanguage } from '../context/LanguageContext';
 import { useProgress } from '../context/ProgressContext';
 import { search, type PhraseResult } from '../lib/search';
 import { isTTSAvailable, speak } from '../lib/tts';
+import { getStartLevel } from '../hooks/useOnboarding';
 import { LessonView } from './LessonView';
 import { ParticlesView } from './ParticlesView';
 
@@ -52,6 +53,7 @@ export function Home() {
   const CURRICULUM   = language.curriculum;
   const totalLessons = CURRICULUM.length;
   const pct          = totalLessons > 0 ? Math.round((completedCount / totalLessons) * 100) : 0;
+  const startLevel   = getStartLevel(); // from onboarding self-assessment
 
   // ── Search state ────────────────────────────────────────────────────────────
   const [query, setQuery]               = useState('');
@@ -291,6 +293,11 @@ export function Home() {
                           JLPT {level}
                         </span>
                         <span className="text-[10px] text-gray-400 font-mono mt-0.5">{desc}</span>
+                        {startLevel === level && (
+                          <span className="text-[9px] font-mono text-[var(--color-accent)] uppercase tracking-widest mt-1">
+                            ↑ your start
+                          </span>
+                        )}
                       </div>
                       <div className={`flex-1 h-px ${line}`} />
                     </div>
