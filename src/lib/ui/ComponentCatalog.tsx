@@ -19,6 +19,7 @@
  *   12 · BottomSheet   — drag-dismiss example
  *   13 · ActionSheet   — destructive + disabled actions
  *   14 · Animations    — spring presets live demo
+ *   15 · SegmentedControl — sliding pill tabs (2–6 segments)
  */
 
 import { useState, useRef } from 'react';
@@ -36,6 +37,7 @@ import { BottomSheet } from './BottomSheet';
 import { ActionSheet } from './ActionSheet';
 import { useToast } from './Toast';
 import { Presets, animate } from './animations';
+import { SegmentedControl } from './SegmentedControl';
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
@@ -651,6 +653,93 @@ function AnimationsSection() {
   );
 }
 
+// ── 15 · SegmentedControl ─────────────────────────────────────────────────────
+
+function SegmentedControlSection() {
+  const [tab2,   setTab2]   = useState<'hiragana' | 'katakana'>('hiragana');
+  const [tab3,   setTab3]   = useState<'all' | 'quiz' | 'saved'>('all');
+  const [tab4,   setTab4]   = useState<'n5' | 'n4' | 'n3' | 'n2'>('n5');
+  const [tabIco, setTabIco] = useState<'list' | 'grid' | 'map'>('list');
+
+  return (
+    <Section title="15 · SegmentedControl">
+      <Label>2-segment (script toggle)</Label>
+      <SegmentedControl
+        options={[
+          { value: 'hiragana', label: 'Hiragana' },
+          { value: 'katakana', label: 'Katakana' },
+        ]}
+        value={tab2}
+        onChange={setTab2}
+        aria-label="Script toggle"
+      />
+
+      <Label>3-segment (default)</Label>
+      <SegmentedControl
+        options={[
+          { value: 'all',   label: 'All' },
+          { value: 'quiz',  label: 'Quiz' },
+          { value: 'saved', label: 'Saved' },
+        ]}
+        value={tab3}
+        onChange={setTab3}
+        aria-label="Content filter"
+      />
+
+      <Label>4-segment (JLPT levels)</Label>
+      <SegmentedControl
+        options={[
+          { value: 'n5', label: 'N5' },
+          { value: 'n4', label: 'N4' },
+          { value: 'n3', label: 'N3' },
+          { value: 'n2', label: 'N2' },
+        ]}
+        value={tab4}
+        onChange={setTab4}
+        aria-label="JLPT level"
+      />
+
+      <Label>With icons</Label>
+      <SegmentedControl
+        options={[
+          { value: 'list', label: 'List',  icon: '☰' },
+          { value: 'grid', label: 'Grid',  icon: '⊞' },
+          { value: 'map',  label: 'Map',   icon: '🗺' },
+        ]}
+        value={tabIco}
+        onChange={setTabIco}
+        aria-label="View mode"
+      />
+
+      <Label>Small size</Label>
+      <SegmentedControl
+        options={[
+          { value: 'hiragana', label: 'Hiragana' },
+          { value: 'katakana', label: 'Katakana' },
+        ]}
+        value={tab2}
+        onChange={setTab2}
+        size="sm"
+        aria-label="Script toggle small"
+      />
+
+      <Label>With disabled segment</Label>
+      <SegmentedControl
+        options={[
+          { value: 'all',   label: 'All' },
+          { value: 'quiz',  label: 'Quiz' },
+          { value: 'saved', label: 'Saved', disabled: true },
+        ]}
+        value={tab3}
+        onChange={setTab3 as (v: string) => void}
+        aria-label="With disabled"
+      />
+
+      <Label>Selected: <span className="font-mono text-[var(--color-accent)]">{tab3}</span></Label>
+    </Section>
+  );
+}
+
 // ── Main catalog page ─────────────────────────────────────────────────────────
 
 export function ComponentCatalog() {
@@ -680,6 +769,7 @@ export function ComponentCatalog() {
           <BottomSheetSection />
           <ActionSheetSection />
           <AnimationsSection />
+          <SegmentedControlSection />
         </div>
       </PageContent>
     </Page>

@@ -28,6 +28,10 @@ export { Input } from './Input';
 export { Badge } from './Badge';
 export { Chip, ChipGroup } from './Chip';
 
+// ── New: QRT-197 ──────────────────────────────────────────────────────────────
+export { SegmentedControl } from './SegmentedControl';
+export type { SegmentedControlProps, SegmentOption } from './SegmentedControl';
+
 // ── Dev tools — import directly, not via barrel, to keep prod bundle clean ────
 // import { ComponentCatalog } from './ComponentCatalog'; // use in app conditionally
 
