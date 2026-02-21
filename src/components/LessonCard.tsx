@@ -1,4 +1,4 @@
-import type { Lesson } from '../data/curriculum';
+import type { Lesson } from '../types/language';
 
 interface LessonCardProps {
   lesson: Lesson;
@@ -33,11 +33,14 @@ export function LessonCard({ lesson, onClick, completed = false }: LessonCardPro
       onClick={onClick}
       className={[
         'w-full text-left',
-        'bg-white/80 backdrop-blur-sm',
-        'rounded-3xl border border-white/60',
+        completed
+          ? 'bg-emerald-50/70 backdrop-blur-sm border-emerald-100/80'
+          : 'bg-white/80 backdrop-blur-sm border-white/60',
+        'rounded-3xl border',
         'shadow-[0_2px_16px_rgba(0,0,0,0.06)]',
         'p-5',
-        'active:scale-[0.97] active:shadow-none active:bg-white/60',
+        'active:scale-[0.97] active:shadow-none',
+        completed ? 'active:bg-emerald-50/50' : 'active:bg-white/60',
         'transition-all duration-150 ease-out',
         'select-none',
       ].join(' ')}
@@ -50,9 +53,6 @@ export function LessonCard({ lesson, onClick, completed = false }: LessonCardPro
             <span className={`text-[11px] font-mono uppercase tracking-widest ${colors.label}`}>
               Module {lesson.module}
             </span>
-            {completed && (
-              <span className="text-[11px] text-emerald-500 font-medium">✓</span>
-            )}
           </div>
 
           <h3 className="font-bold text-[var(--color-ink)] text-[17px] leading-snug">
@@ -61,8 +61,14 @@ export function LessonCard({ lesson, onClick, completed = false }: LessonCardPro
           <p className="text-[13px] text-gray-500 mt-0.5 leading-snug">{lesson.subtitle}</p>
         </div>
 
-        {/* Chevron */}
-        <span className="text-gray-300 text-xl shrink-0 leading-none">›</span>
+        {/* Completion badge OR chevron */}
+        {completed ? (
+          <span className="shrink-0 w-7 h-7 rounded-full bg-emerald-500 flex items-center justify-center text-white text-xs font-bold leading-none">
+            ✓
+          </span>
+        ) : (
+          <span className="text-gray-300 text-xl shrink-0 leading-none">›</span>
+        )}
       </div>
     </button>
   );

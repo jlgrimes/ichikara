@@ -1,6 +1,7 @@
 import { Page, PageContent, useNavigation } from '../lib/ui';
 import { LessonCard } from '../components/LessonCard';
 import { useLanguage } from '../context/LanguageContext';
+import { useProgress } from '../context/ProgressContext';
 import { LessonView } from './LessonView';
 import { ParticlesView } from './ParticlesView';
 
@@ -44,7 +45,10 @@ const JLPT_GROUPS = [
 export function Home() {
   const { push }     = useNavigation();
   const { language } = useLanguage();
+  const { isComplete, completedCount } = useProgress();
   const CURRICULUM   = language.curriculum;
+  const totalLessons = CURRICULUM.length;
+  const pct          = totalLessons > 0 ? Math.round((completedCount / totalLessons) * 100) : 0;
 
   return (
     <Page>
@@ -57,12 +61,32 @@ export function Home() {
       <PageContent>
         <div className="max-w-lg mx-auto px-4 space-y-10">
 
-          {/* iOS 26 large title — left-aligned, scrolls with content */}
+          {/* iOS 26 large title + progress summary */}
           <div className="pt-6 pb-2">
             <h1 className="text-[42px] font-black text-[var(--color-ink)] tracking-tight leading-none">
               一から
             </h1>
             <p className="text-sm text-gray-400 font-mono mt-1.5">from scratch</p>
+
+            {/* Progress bar */}
+            <div className="mt-4 space-y-1.5">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-mono text-gray-400">
+                  {completedCount} / {totalLessons} lessons complete
+                </span>
+                {completedCount > 0 && (
+                  <span className="text-xs font-mono text-[var(--color-accent)]">
+                    {pct}%
+                  </span>
+                )}
+              </div>
+              <div className="h-1.5 bg-gray-100 rounded-full overflow-hidden">
+                <div
+                  className="h-full bg-[var(--color-accent)] rounded-full transition-all duration-500 ease-out"
+                  style={{ width: `${pct}%` }}
+                />
+              </div>
+            </div>
           </div>
 
           {/* Particle system shortcut */}
@@ -115,6 +139,7 @@ export function Home() {
                         <LessonCard
                           key={lesson.id}
                           lesson={lesson}
+                          completed={isComplete(lesson.id)}
                           onClick={() => push(<LessonView lessonId={lesson.id} />)}
                         />
                       ))}

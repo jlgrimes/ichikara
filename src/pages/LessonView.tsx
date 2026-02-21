@@ -2,6 +2,7 @@ import { useMemo } from 'react';
 import { Navbar, Page, PageContent, useNavigation } from '../lib/ui';
 import { ConceptHero } from '../components/ConceptHero';
 import { useLanguage } from '../context/LanguageContext';
+import { useProgress } from '../context/ProgressContext';
 import { getLessonMastery } from '../lib/quiz';
 import { QuizView } from './QuizView';
 
@@ -19,9 +20,11 @@ function getCardIds(lesson: { id: string; sample: unknown; sections?: unknown[] 
 }
 
 export function LessonView({ lessonId }: LessonViewProps) {
-  const { push }     = useNavigation();
-  const { language } = useLanguage();
-  const lesson = language.curriculum.find((l) => l.id === lessonId);
+  const { push }               = useNavigation();
+  const { language }           = useLanguage();
+  const { isComplete, markComplete, markIncomplete } = useProgress();
+  const lesson     = language.curriculum.find((l) => l.id === lessonId);
+  const completed  = isComplete(lessonId);
 
   const cardIds = useMemo(() => (lesson ? getCardIds(lesson) : []), [lesson]);
   const mastery = useMemo(() => getLessonMastery(lessonId, cardIds), [lessonId, cardIds]);
@@ -95,6 +98,45 @@ export function LessonView({ lessonId }: LessonViewProps) {
               </ul>
             </div>
           )}
+
+          {/* ── Mark Complete ─────────────────────────────────────────── */}
+          <div>
+            <button
+              onClick={() => completed ? markIncomplete(lessonId) : markComplete(lessonId)}
+              className={[
+                'w-full rounded-2xl p-4 flex items-center justify-between gap-4',
+                'border-2 transition-all duration-200 ease-out select-none',
+                completed
+                  ? 'bg-emerald-50 border-emerald-200 active:bg-emerald-100'
+                  : 'bg-white border-gray-200 active:bg-gray-50',
+              ].join(' ')}
+            >
+              <div className="flex items-center gap-3">
+                <div className={[
+                  'w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold transition-all',
+                  completed ? 'bg-emerald-500 text-white' : 'bg-gray-100 text-gray-400',
+                ].join(' ')}>
+                  ✓
+                </div>
+                <div className="text-left">
+                  <p className={[
+                    'text-sm font-semibold transition-colors',
+                    completed ? 'text-emerald-700' : 'text-[var(--color-ink)]',
+                  ].join(' ')}>
+                    {completed ? 'Lesson complete' : 'Mark as complete'}
+                  </p>
+                  <p className="text-xs text-gray-400 font-mono">
+                    {completed ? 'tap to undo' : 'track your progress'}
+                  </p>
+                </div>
+              </div>
+              {completed && (
+                <span className="text-[11px] font-mono text-emerald-500 uppercase tracking-widest shrink-0">
+                  Done
+                </span>
+              )}
+            </button>
+          </div>
 
           {/* ── Practice / Quiz ───────────────────────────────────────── */}
           <div className="pt-2">

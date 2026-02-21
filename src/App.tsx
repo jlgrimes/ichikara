@@ -1,6 +1,7 @@
 import { useCallback, useRef, useState } from 'react';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { LanguageProvider } from './context/LanguageContext';
+import { ProgressProvider } from './context/ProgressContext';
 import { NavigationStack, TabBar, type NavigationHandle } from './lib/ui';
 import { AuthPage } from './pages/AuthPage';
 import { Home } from './pages/Home';
@@ -132,7 +133,9 @@ export default function App() {
   return (
     <AuthProvider>
       <LanguageProvider>
-        <AppShell />
+        <ProgressProvider>
+          <AppShell />
+        </ProgressProvider>
       </LanguageProvider>
     </AuthProvider>
   );
