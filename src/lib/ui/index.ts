@@ -28,6 +28,9 @@ export { Input } from './Input';
 export { Badge } from './Badge';
 export { Chip, ChipGroup } from './Chip';
 
+// ── Dev tools — import directly, not via barrel, to keep prod bundle clean ────
+// import { ComponentCatalog } from './ComponentCatalog'; // use in app conditionally
+
 // ── Design tokens (QRT-191) ───────────────────────────────────────────────────
 export { tokens, color, surface, text, font, space, radius, shadow, ring, duration, ease, transition, z, touchTarget } from './tokens';
 
