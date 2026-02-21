@@ -1,12 +1,25 @@
+// ── Navigation + layout ───────────────────────────────────────────────────────
 export { NavigationStack, useNavigation } from './NavigationStack';
 export type { NavigationHandle } from './NavigationStack';
 export { TabBar } from './TabBar';
 export { Page, PageContent, useScrollToTop } from './Page';
 export { Navbar } from './Navbar';
+
+// ── Core components ───────────────────────────────────────────────────────────
 export { Card } from './Card';
 export { Button } from './Button';
 export { List, ListItem } from './List';
 export { SectionTitle } from './SectionTitle';
+
+// ── New: QRT-192 ──────────────────────────────────────────────────────────────
+export { Input } from './Input';
+export { Badge } from './Badge';
+export { Chip, ChipGroup } from './Chip';
+
+// ── Design tokens (QRT-191) ───────────────────────────────────────────────────
+export { tokens, color, surface, text, font, space, radius, shadow, ring, duration, ease, transition, z, touchTarget } from './tokens';
+
+// ── Prop types ────────────────────────────────────────────────────────────────
 export type {
   PageProps,
   NavbarProps,
@@ -14,4 +27,7 @@ export type {
   ButtonProps,
   ListItemProps,
   SectionTitleProps,
+  InputProps,
+  BadgeProps,
+  ChipProps,
 } from './types';
