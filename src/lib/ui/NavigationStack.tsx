@@ -1,13 +1,22 @@
 import {
   createContext,
+  forwardRef,
   useCallback,
   useContext,
   useEffect,
+  useImperativeHandle,
   useLayoutEffect,
   useRef,
   useState,
   type ReactNode,
 } from 'react';
+
+// ── Imperative handle (for App to call popToRoot) ─────────────────────────────
+
+export interface NavigationHandle {
+  /** Pop all pages back to root. animated=false for silent tab resets. */
+  popToRoot: (animated?: boolean) => void;
+}
 
 // ── Easing ───────────────────────────────────────────────────────────────────
 // Aggressive ease-out — fast deceleration like iOS nav
@@ -58,7 +67,8 @@ function tx(el: HTMLElement | null, x: number, transition = 'none') {
 
 // ── NavigationStack ──────────────────────────────────────────────────────────
 
-export function NavigationStack({ initialPage }: { initialPage: ReactNode }) {
+export const NavigationStack = forwardRef<NavigationHandle, { initialPage: ReactNode }>(
+function NavigationStack({ initialPage }, ref) {
   const winW = window.innerWidth;
 
   const [stack, setStack] = useState<StackEntry[]>([
@@ -99,6 +109,33 @@ export function NavigationStack({ initialPage }: { initialPage: ReactNode }) {
   const push = useCallback((page: ReactNode) => {
     setStack(p => [...p, { id: crypto.randomUUID(), page }]);
   }, []);
+
+  // ── Pop to root ────────────────────────────────────────────────────────────
+
+  const popToRoot = useCallback((animated = true) => {
+    if (stackRef.current.length <= 1) return;
+    const rootEntry = stackRef.current[0];
+    const currEntry = stackRef.current[stackRef.current.length - 1];
+    const rootEl = getEl(rootEntry.id);
+    const currEl = getEl(currEntry.id);
+
+    if (!animated) {
+      // Silent reset — used when switching away from a tab
+      if (rootEl) tx(rootEl, 0);
+      setStack([rootEntry]);
+      return;
+    }
+
+    // Animated — same as pop but target is always root.
+    // Bring root to -30% starting position then animate both.
+    if (rootEl) tx(rootEl, -winW * 0.3);
+    tx(currEl, winW, `transform 0.28s ${POP_EASE}`);
+    if (rootEl) tx(rootEl, 0, `transform 0.28s ${POP_EASE}`);
+
+    setTimeout(() => setStack([rootEntry]), 285);
+  }, [winW]);
+
+  useImperativeHandle(ref, () => ({ popToRoot }), [popToRoot]);
 
   // ── Push animation ─────────────────────────────────────────────────────────
 
@@ -252,4 +289,5 @@ export function NavigationStack({ initialPage }: { initialPage: ReactNode }) {
       </div>
     </NavigationContext.Provider>
   );
-}
+});
+

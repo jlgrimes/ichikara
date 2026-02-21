@@ -1,6 +1,6 @@
 import { useCallback, useLayoutEffect, useRef, useState } from 'react';
 import { AuthProvider, useAuth } from './context/AuthContext';
-import { NavigationStack, TabBar } from './lib/ui';
+import { NavigationStack, TabBar, type NavigationHandle } from './lib/ui';
 import { AuthPage } from './pages/AuthPage';
 import { Home } from './pages/Home';
 import { SOSHome } from './pages/SOSHome';
@@ -25,7 +25,8 @@ function AppShell() {
   const { session, loading, signOut } = useAuth();
   const [activeTab, setActiveTab] = useState<Tab>('grammar');
 
-  const tabRefs   = useRef<Map<Tab, HTMLDivElement>>(new Map());
+  const tabRefs    = useRef<Map<Tab, HTMLDivElement>>(new Map());
+  const navHandles = useRef<Map<Tab, NavigationHandle>>(new Map());
   const currentTab = useRef<Tab>('grammar');
 
   // useLayoutEffect — fires before paint, so no flash.
@@ -42,8 +43,14 @@ function AppShell() {
   }, []); // runs once before first paint
 
   const switchTab = useCallback((newTab: Tab) => {
-    if (newTab === currentTab.current) return;
+    if (newTab === currentTab.current) {
+      // Tapping the active tab — pop to root with animation (iOS standard)
+      navHandles.current.get(newTab)?.popToRoot(true);
+      return;
+    }
     const prevTab = currentTab.current;
+    // Silently reset the outgoing tab to root so it's clean when you return
+    navHandles.current.get(prevTab)?.popToRoot(false);
     currentTab.current = newTab;
     setActiveTab(newTab);
 
@@ -102,9 +109,9 @@ function AppShell() {
           ref={el => { if (el) tabRefs.current.set(t, el); }}
           className="absolute inset-0 will-change-transform"
         >
-          {t === 'grammar'  && <NavigationStack initialPage={<Home />} />}
-          {t === 'sos'      && <NavigationStack initialPage={<SOSHome />} />}
-          {t === 'settings' && <NavigationStack initialPage={<SettingsView onSignOut={signOut} />} />}
+          {t === 'grammar'  && <NavigationStack ref={el => { if (el) navHandles.current.set('grammar', el); }}  initialPage={<Home />} />}
+          {t === 'sos'      && <NavigationStack ref={el => { if (el) navHandles.current.set('sos', el); }}      initialPage={<SOSHome />} />}
+          {t === 'settings' && <NavigationStack ref={el => { if (el) navHandles.current.set('settings', el); }} initialPage={<SettingsView onSignOut={signOut} />} />}
         </div>
       ))}
 
