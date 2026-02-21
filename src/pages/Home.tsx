@@ -23,6 +23,9 @@ const MODULE_LABELS: Record<number, string> = {
   10: 'Causative',
   11: 'Conditionals',
   12: 'Sentence-Final Particles',
+  13: 'Change & Becoming',
+  14: 'Formal Structures',
+  15: 'Advanced Nuance',
 };
 
 const JLPT_GROUPS = [
@@ -43,6 +46,12 @@ const JLPT_GROUPS = [
     modules: [10, 11, 12],
     pill: 'bg-purple-100 text-purple-700 border-purple-200',
     line: 'bg-purple-100',
+  },
+  {
+    level: 'N2', desc: 'Advanced expressions',
+    modules: [13, 14, 15],
+    pill: 'bg-rose-100 text-rose-700 border-rose-200',
+    line: 'bg-rose-100',
   },
 ];
 

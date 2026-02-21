@@ -1735,4 +1735,318 @@ CURRICULUM.push(
     keyPoints: [],
     practiceItems: [],
   },
+
+  // ── Module 13: Change & Becoming (N2) ──────────────────────────────────────
+
+  {
+    id: 'you-ni-naru',
+    module: 13,
+    title: 'ようになる — Change of State',
+    subtitle: 'Arriving at a new ability or condition',
+    sample: {
+      target: '日本語が話せるようになった',
+      highlightedTerm: 'ようになった',
+      literal: 'Japanese (← ability-subject) speak-can became',
+      natural: 'I became able to speak Japanese',
+    },
+    concept: 'ようになる marks a change from a previous state to a new one — gradual arrival at a new condition. Paired with potential verbs it describes acquired abilities; paired with plain verbs it marks newly adopted habits. The past ようになった means "arrived at this state"; ようにしている means "I make a deliberate effort to."',
+    sections: [
+      {
+        sample: {
+          target: '辛いものが食べられるようになった',
+          highlightedTerm: 'ようになった',
+          literal: 'spicy-things (← ability-subject) eat-can became',
+          natural: 'I got to where I can eat spicy food',
+        },
+        points: [
+          'Potential verb + ようになる = acquired ability: 〜できるようになる (become able to do)',
+          'Gradual or cumulative change — not sudden like なる alone',
+          'Contrast: 食べられるようになった (can eat now) vs 食べるようになった (now eats it — habit)',
+        ],
+      },
+      {
+        sample: {
+          target: '毎日運動するようになった',
+          highlightedTerm: 'ようになった',
+          literal: 'every-day exercise do became',
+          natural: 'I got into the habit of exercising every day',
+        },
+        points: [
+          'Plain verb + ようになる = newly adopted habit or tendency',
+          'ようにしている = making conscious effort: 早く寝るようにしている (I try to sleep early)',
+          'Reversal: 飲まないようになった (stopped drinking — arrived at non-doing)',
+        ],
+      },
+    ],
+    keyPoints: [],
+    practiceItems: [],
+  },
+
+  {
+    id: 'ni-yotte',
+    module: 13,
+    title: 'によって — By / Depending On',
+    subtitle: 'Agent, means, and variability',
+    sample: {
+      target: 'この規則は国によって違う',
+      highlightedTerm: 'によって',
+      literal: 'this rule (← topic) country-depending differs',
+      natural: 'This rule varies by country',
+    },
+    concept: 'によって is a formal connector with three uses: (1) passive agent — "by whom an action is performed," (2) means or method — "by means of / through," and (3) variability — "depending on / according to." It is more formal than に alone and cannot replace に for simple location or destination.',
+    sections: [
+      {
+        sample: {
+          target: 'その曲はモーツァルトによって作られた',
+          highlightedTerm: 'によって',
+          literal: 'that piece (← topic) Mozart-by was-composed',
+          natural: 'That piece was composed by Mozart',
+        },
+        points: [
+          'Passive agent: X によって Y される = Y is done by X',
+          'More formal than に in passive constructions',
+          'Sets up a named, accountable agent — who specifically did it',
+        ],
+      },
+      {
+        sample: {
+          target: '努力によって夢が叶った',
+          highlightedTerm: 'によって',
+          literal: 'effort-by dream (← subject) came-true',
+          natural: 'Through effort, the dream came true',
+        },
+        points: [
+          'Means: X によって Y = Y achieved through / by means of X',
+          'More formal than で; emphasises the causal mechanism',
+          'Variability: 人によって違う (it differs from person to person)',
+        ],
+      },
+    ],
+    keyPoints: [],
+    practiceItems: [],
+  },
+
+  // ── Module 14: Formal Structures (N2) ──────────────────────────────────────
+
+  {
+    id: 'ni-oite',
+    module: 14,
+    title: 'において — In the Context of',
+    subtitle: 'Formal location, domain, and scope',
+    sample: {
+      target: 'スポーツにおいて精神力は重要だ',
+      highlightedTerm: 'において',
+      literal: 'sports-in-context mental-strength (← topic) important is',
+      natural: 'In sports, mental strength is crucial',
+    },
+    concept: 'において is the formal, written equivalent of で. It defines the domain or scope of a statement — primarily in academic writing, news, and speeches. The related form における functions as an adjectival modifier: 現代社会における問題 (problems in modern society). Avoid in casual speech.',
+    sections: [
+      {
+        sample: {
+          target: '会議において重要な決定がなされた',
+          highlightedTerm: 'において',
+          literal: 'meeting-in-context important decision was-made',
+          natural: 'An important decision was made at the meeting',
+        },
+        points: [
+          'において ≈ formal で: location or setting of an event',
+          'Stiff in casual conversation — use で or では instead',
+          'Adjectival form: 〜における + noun: 日本における伝統 (tradition in Japan)',
+        ],
+      },
+      {
+        sample: {
+          target: '現代においては情報が力だ',
+          highlightedTerm: 'においては',
+          literal: 'modernity-in-context-as-for information (← topic) power is',
+          natural: 'In the modern era, information is power',
+        },
+        points: [
+          'においては adds は for topic contrast: within this scope specifically',
+          'Common in speeches, essays, editorial writing',
+          'にあって is a near-synonym with nuance of circumstance: 逆境にあって (in adversity)',
+        ],
+      },
+    ],
+    keyPoints: [],
+    practiceItems: [],
+  },
+
+  {
+    id: 'wake-da',
+    module: 14,
+    title: 'わけだ — That\'s Why / No Wonder',
+    subtitle: 'Logical conclusions and natural consequences',
+    sample: {
+      target: '彼は十年間日本に住んでいたわけだ',
+      highlightedTerm: 'わけだ',
+      literal: 'he (← topic) ten-years Japan-in was-living — no-wonder',
+      natural: 'No wonder — he lived in Japan for ten years',
+    },
+    concept: 'わけだ expresses a logical conclusion: given what has been established, this outcome naturally follows. It signals "that explains it" or "so it stands to reason." The negative わけではない softens an over-interpretation: "it is not the case that." わけにはいかない means "cannot possibly (do)" for social or ethical reasons.',
+    sections: [
+      {
+        sample: {
+          target: 'ずっと練習したわけだから上手くなった',
+          highlightedTerm: 'わけだから',
+          literal: 'all-along practiced — that-being-so became-skilled',
+          natural: 'Since he kept practicing, of course he improved',
+        },
+        points: [
+          'わけだから: "given that fact, it follows naturally that..."',
+          'Expresses logical inevitability — confirmation, not surprise',
+          'Compare: だから (simple "so") vs わけだから (logical, expected consequence)',
+        ],
+      },
+      {
+        sample: {
+          target: '嫌いなわけではない',
+          highlightedTerm: 'わけではない',
+          literal: 'dislike — [that-being-so] is-not',
+          natural: 'It\'s not that I dislike it',
+        },
+        points: [
+          'わけではない: corrects an assumed conclusion — "it is not the case that X"',
+          'Softer than simply ない — acknowledges the implication and rebuts it precisely',
+          'わけにはいかない: "I cannot possibly" — social or moral constraint prevents it',
+        ],
+      },
+    ],
+    keyPoints: [],
+    practiceItems: [],
+  },
+
+  // ── Module 15: Advanced Nuance (N2) ────────────────────────────────────────
+
+  {
+    id: 'dokoro-ka',
+    module: 15,
+    title: 'どころか — Far From / On the Contrary',
+    subtitle: 'Emphatic reversal and escalation',
+    sample: {
+      target: '英語どころか日本語も話せない',
+      highlightedTerm: 'どころか',
+      literal: 'English-far-from Japanese also cannot-speak',
+      natural: 'Far from English, I can\'t even speak Japanese',
+    },
+    concept: 'どころか rejects a premise and escalates beyond it. It says "not only is A not true, but B — which is even more basic or extreme — is the case." The escalation can go downward (cannot even do the easier thing) or upward (achieved far more than expected). It creates strong rhetorical contrast between expectation and reality.',
+    sections: [
+      {
+        sample: {
+          target: '休むどころか仕事が増えた',
+          highlightedTerm: 'どころか',
+          literal: 'rest-far-from workload increased',
+          natural: 'Far from resting, the workload increased',
+        },
+        points: [
+          'A どころか B: A was expected/hoped; B is the opposite or worse reality',
+          'Strongly contrastive — speaker clearly expected A but got the reverse',
+          'Downward escalation: the hoped-for outcome was not achieved, worse happened',
+        ],
+      },
+      {
+        sample: {
+          target: 'あの映画は面白いどころか感動した',
+          highlightedTerm: 'どころか',
+          literal: 'that movie (← topic) interesting-far-from was-moved',
+          natural: 'That movie was more than interesting — it was deeply moving',
+        },
+        points: [
+          'Upward escalation: "not just A, but even more: B"',
+          'Tone reveals direction: downward (worse than hoped) or upward (beyond expected)',
+          'どころではない: "no time/place for it": 勉強どころではない (I\'m in no state to study)',
+        ],
+      },
+    ],
+    keyPoints: [],
+    practiceItems: [],
+  },
+
+  {
+    id: 'zu-ni-wa-irarenai',
+    module: 15,
+    title: 'ずにはいられない — Can\'t Help But',
+    subtitle: 'Irresistible emotional compulsion',
+    sample: {
+      target: 'あの映画を見ると泣かずにはいられない',
+      highlightedTerm: 'ずにはいられない',
+      literal: 'that film see-if cry-without cannot-stay',
+      natural: 'I can\'t help crying when I watch that film',
+    },
+    concept: 'ずにはいられない (also ないではいられない in modern form) expresses an emotional impulse so strong the speaker cannot restrain themselves. Formed from ず (classical negative stem) + には + いられない (cannot remain). The grammar signals not obligation but compulsion — something forces itself through despite resistance.',
+    sections: [
+      {
+        sample: {
+          target: '彼の話を聞いて笑わずにはいられなかった',
+          highlightedTerm: 'ずにはいられなかった',
+          literal: 'his story-hearing laugh-without could-not-stay',
+          natural: 'Hearing his story, I couldn\'t help laughing',
+        },
+        points: [
+          'Formation: verb (ない-form stem) + ずにはいられない',
+          'する → せずにはいられない (irregular: せず not しず)',
+          'Modern alternative: 笑わないではいられない — same meaning, current negative form',
+        ],
+      },
+      {
+        sample: {
+          target: 'あの曲を聴くと口ずさまずにはいられない',
+          highlightedTerm: 'ずにはいられない',
+          literal: 'that song hear-if hum-without cannot-stay',
+          natural: 'I can\'t help humming along when I hear that song',
+        },
+        points: [
+          'Always emotional/physical compulsion — not duty or obligation',
+          'Contrast: なければならない (must — obligation) vs ずにはいられない (irresistible urge)',
+          'Common with sensory triggers: music, nostalgia, comedy, strong emotion',
+        ],
+      },
+    ],
+    keyPoints: [],
+    practiceItems: [],
+  },
+
+  {
+    id: 'mono-da',
+    module: 15,
+    title: 'ものだ — That\'s How Things Are',
+    subtitle: 'General truths, nostalgia, and moral expectations',
+    sample: {
+      target: '子どもは元気なものだ',
+      highlightedTerm: 'ものだ',
+      literal: 'children (← topic) energetic — that-is-how-things-are',
+      natural: 'Children are naturally energetic — that\'s just how it is',
+    },
+    concept: 'ものだ has three uses, all invoking an established order: (1) general truth — "that is simply how things are / the nature of things," (2) nostalgia — past tense verb + ものだ recalls how things used to be, and (3) moral expectation — "one ought to / should." Verb form and context distinguish the reading.',
+    sections: [
+      {
+        sample: {
+          target: '昔はよく遊んだものだ',
+          highlightedTerm: 'ものだ',
+          literal: 'in-the-past often played — (nostalgic-recall)',
+          natural: 'We used to play so much back then',
+        },
+        points: [
+          'Past tense verb + ものだ = nostalgia: recalling how things used to be',
+          'Carries wistful or reflective tone — speaker looks back with emotion',
+          'Common form: よく〜たものだ (I used to... often)',
+        ],
+      },
+      {
+        sample: {
+          target: '人に迷惑をかけないものだ',
+          highlightedTerm: 'ものだ',
+          literal: 'people-to bother-not — (one-should-not)',
+          natural: 'One should not trouble others',
+        },
+        points: [
+          'Non-past + ものだ = moral expectation / how things ought to be',
+          'ないものだ = "one should not" — a mild moral prescription',
+          'ものではない: stronger prohibition: そんなことを言うものではない (You shouldn\'t say that)',
+        ],
+      },
+    ],
+    keyPoints: [],
+    practiceItems: [],
+  },
 );
