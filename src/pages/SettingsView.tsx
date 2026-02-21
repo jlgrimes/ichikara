@@ -1,12 +1,16 @@
-import { Page, PageContent } from '../lib/ui';
+import { Page, PageContent, useNavigation } from '../lib/ui';
 import { useAuth } from '../context/AuthContext';
+import { useLanguage } from '../context/LanguageContext';
+import { LanguageSelector } from './LanguageSelector';
 
 interface SettingsViewProps {
   onSignOut: () => void;
 }
 
 export function SettingsView({ onSignOut }: SettingsViewProps) {
-  const { session } = useAuth();
+  const { session }  = useAuth();
+  const { push }     = useNavigation();
+  const { language } = useLanguage();
 
   return (
     <Page>
@@ -24,6 +28,24 @@ export function SettingsView({ onSignOut }: SettingsViewProps) {
             <h1 className="text-[42px] font-black text-[var(--color-ink)] tracking-tight leading-none">
               Settings
             </h1>
+          </div>
+
+          {/* Language */}
+          <div>
+            <p className="text-xs font-mono text-gray-400 uppercase tracking-widest mb-3 px-1">
+              Language
+            </p>
+            <button
+              onClick={() => push(<LanguageSelector />)}
+              className="w-full bg-white/80 backdrop-blur-sm rounded-3xl border border-white/60 shadow-[0_2px_16px_rgba(0,0,0,0.06)] px-5 py-4 flex items-center gap-3 active:scale-[0.98] transition-all select-none"
+            >
+              <span className="text-2xl leading-none">{language.meta.flag}</span>
+              <div className="flex-1 text-left">
+                <p className="text-sm font-bold text-[var(--color-ink)]">{language.meta.name}</p>
+                <p className="text-xs text-gray-400 mt-0.5">{language.meta.nativeName}</p>
+              </div>
+              <span className="text-gray-300 text-xl leading-none">›</span>
+            </button>
           </div>
 
           {/* Account */}

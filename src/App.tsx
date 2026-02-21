@@ -1,5 +1,6 @@
-import { useCallback, useLayoutEffect, useRef, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { AuthProvider, useAuth } from './context/AuthContext';
+import { LanguageProvider } from './context/LanguageContext';
 import { NavigationStack, TabBar, type NavigationHandle } from './lib/ui';
 import { AuthPage } from './pages/AuthPage';
 import { Home } from './pages/Home';
@@ -25,31 +26,24 @@ function AppShell() {
   const { session, loading, signOut } = useAuth();
   const [activeTab, setActiveTab] = useState<Tab>('grammar');
 
-  const tabRefs    = useRef<Map<Tab, HTMLDivElement>>(new Map());
-  const navHandles = useRef<Map<Tab, NavigationHandle>>(new Map());
-  const currentTab = useRef<Tab>('grammar');
-
-  // useLayoutEffect — fires before paint, so no flash.
-  // Pre-position ALL tabs: grammar at 0, sos at +100vw, settings at +200vw.
-  // No opacity tricks — pure positional slide, just like iOS.
-  useLayoutEffect(() => {
-    const winW = window.innerWidth;
-    tabRefs.current.forEach((el, id) => {
-      const offset = (TAB_IDX[id] - TAB_IDX['grammar']) * winW;
-      el.style.transition   = 'none';
-      el.style.transform    = `translateX(${offset}px)`;
-      el.style.pointerEvents = id === 'grammar' ? 'auto' : 'none';
-    });
-  }, []); // runs once before first paint
+  const tabRefs       = useRef<Map<Tab, HTMLDivElement>>(new Map());
+  const navHandles    = useRef<Map<Tab, NavigationHandle>>(new Map());
+  const currentTab    = useRef<Tab>('grammar');
+  const repositionTimer = useRef<ReturnType<typeof setTimeout> | null>(null); // runs once before first paint
 
   const switchTab = useCallback((newTab: Tab) => {
     if (newTab === currentTab.current) {
-      // Tapping the active tab — pop to root with animation (iOS standard)
       navHandles.current.get(newTab)?.popToRoot(true);
       return;
     }
+
+    // Cancel any pending reposition from a previous (possibly incomplete) animation
+    if (repositionTimer.current) {
+      clearTimeout(repositionTimer.current);
+      repositionTimer.current = null;
+    }
+
     const prevTab = currentTab.current;
-    // Silently reset the outgoing tab to root so it's clean when you return
     navHandles.current.get(prevTab)?.popToRoot(false);
     currentTab.current = newTab;
     setActiveTab(newTab);
@@ -79,12 +73,14 @@ function AppShell() {
       prevEl.style.pointerEvents = 'none';
     }
 
-    // After animation, reposition ALL non-active tabs relative to new active.
-    // This ensures any tab is always ready to slide in from the correct side.
-    setTimeout(() => {
+    // Reposition non-active tabs after animation. Uses currentTab.current at
+    // execution time (not a closure over newTab) so rapid taps don't stale-set.
+    repositionTimer.current = setTimeout(() => {
+      repositionTimer.current = null;
+      const active = currentTab.current;
       tabRefs.current.forEach((el, id) => {
-        if (id === newTab) return;
-        const relativeOffset = (TAB_IDX[id] - TAB_IDX[newTab]) * winW;
+        if (id === active) return;
+        const relativeOffset = (TAB_IDX[id] - TAB_IDX[active]) * winW;
         el.style.transition = 'none';
         el.style.transform  = `translateX(${relativeOffset}px)`;
       });
@@ -106,7 +102,19 @@ function AppShell() {
       {TAB_LIST.map(t => (
         <div
           key={t}
-          ref={el => { if (el) tabRefs.current.set(t, el); }}
+          ref={el => {
+            if (!el) return;
+            const isNew = !tabRefs.current.has(t);
+            tabRefs.current.set(t, el);
+            if (isNew) {
+              // Set initial position synchronously during commit — before first paint.
+              // Grammar lands at 0 (visible), SOS at +100vw, Settings at +200vw.
+              const winW = window.innerWidth;
+              el.style.transition   = 'none';
+              el.style.transform    = `translateX(${TAB_IDX[t] * winW}px)`;
+              el.style.pointerEvents = t === 'grammar' ? 'auto' : 'none';
+            }
+          }}
           className="absolute inset-0 will-change-transform"
         >
           {t === 'grammar'  && <NavigationStack ref={el => { if (el) navHandles.current.set('grammar', el); }}  initialPage={<Home />} />}
@@ -123,7 +131,9 @@ function AppShell() {
 export default function App() {
   return (
     <AuthProvider>
-      <AppShell />
+      <LanguageProvider>
+        <AppShell />
+      </LanguageProvider>
     </AuthProvider>
   );
 }

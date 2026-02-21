@@ -1,5 +1,5 @@
 export interface SampleSentence {
-  japanese: string;        // full sentence/phrase in Japanese
+  target: string;        // full sentence/phrase in Japanese
   highlightedTerm: string; // the new concept to highlight (substring of japanese)
   literal: string;         // literal breakdown, e.g. "Me (← owner of) dog"
   natural: string;         // natural English, e.g. "My dog"
@@ -35,7 +35,7 @@ export const CURRICULUM: Lesson[] = [
     title: '名詞 — Nouns',
     subtitle: 'The raw material',
     sample: {
-      japanese: 'ねこ',
+      target: 'ねこ',
       highlightedTerm: 'ねこ',
       literal: 'cat (no role until a particle follows)',
       natural: 'cat / a cat / the cats — same word',
@@ -56,7 +56,7 @@ export const CURRICULUM: Lesson[] = [
     title: 'だ / です — The Copula',
     subtitle: 'The equals sign',
     sample: {
-      japanese: 'これはねこだ',
+      target: 'これはねこだ',
       highlightedTerm: 'だ',
       literal: 'this (topic) cat (=)',
       natural: 'This is a cat',
@@ -77,7 +77,7 @@ export const CURRICULUM: Lesson[] = [
     title: 'は — Topic Marker',
     subtitle: 'Setting context',
     sample: {
-      japanese: 'ねこはさかなをたべる',
+      target: 'ねこはさかなをたべる',
       highlightedTerm: 'は',
       literal: 'cat (as for...) fish (obj) eats',
       natural: "The cat eats fish",
@@ -98,7 +98,7 @@ export const CURRICULUM: Lesson[] = [
     title: 'が — Subject Marker',
     subtitle: 'The doer',
     sample: {
-      japanese: 'ねこがたべる',
+      target: 'ねこがたべる',
       highlightedTerm: 'が',
       literal: 'cat (← doer) eats',
       natural: "The cat eats",
@@ -119,7 +119,7 @@ export const CURRICULUM: Lesson[] = [
     title: 'を — Object Marker',
     subtitle: 'The receiver',
     sample: {
-      japanese: 'ねこをみる',
+      target: 'ねこをみる',
       highlightedTerm: 'を',
       literal: 'cat (← receives action) see',
       natural: "See the cat / I see the cat",
@@ -140,7 +140,7 @@ export const CURRICULUM: Lesson[] = [
     title: 'に — Target / Point',
     subtitle: 'The pin',
     sample: {
-      japanese: 'がっこうにいく',
+      target: 'がっこうにいく',
       highlightedTerm: 'に',
       literal: 'school (← pin: destination) go',
       natural: "Go to school",
@@ -150,7 +150,7 @@ export const CURRICULUM: Lesson[] = [
     sections: [
       {
         sample: {
-          japanese: 'がっこうにいく',
+          target: 'がっこうにいく',
           highlightedTerm: 'に',
           literal: 'school (← pin: destination) go',
           natural: 'Go to school',
@@ -163,7 +163,7 @@ export const CURRICULUM: Lesson[] = [
       },
       {
         sample: {
-          japanese: 'さんじにおきる',
+          target: 'さんじにおきる',
           highlightedTerm: 'に',
           literal: '3-oclock (← pin: time) wake-up',
           natural: 'Wake up at 3',
@@ -176,7 +176,7 @@ export const CURRICULUM: Lesson[] = [
       },
       {
         sample: {
-          japanese: 'ともだちにいう',
+          target: 'ともだちにいう',
           highlightedTerm: 'に',
           literal: 'friend (← pin: recipient) say',
           natural: 'Say to a friend',
@@ -189,7 +189,7 @@ export const CURRICULUM: Lesson[] = [
       },
       {
         sample: {
-          japanese: 'こうえんにいる',
+          target: 'こうえんにいる',
           highlightedTerm: 'に',
           literal: 'park (← pin: existence location) be',
           natural: 'Is in the park',
@@ -215,7 +215,7 @@ export const CURRICULUM: Lesson[] = [
     title: 'で — Context / Means',
     subtitle: 'The stage',
     sample: {
-      japanese: 'こうえんであそぶ',
+      target: 'こうえんであそぶ',
       highlightedTerm: 'で',
       literal: 'park (← stage) play',
       natural: "Play at the park",
@@ -225,7 +225,7 @@ export const CURRICULUM: Lesson[] = [
     sections: [
       {
         sample: {
-          japanese: 'こうえんであそぶ',
+          target: 'こうえんであそぶ',
           highlightedTerm: 'で',
           literal: 'park (← stage) play',
           natural: 'Play at the park',
@@ -238,7 +238,7 @@ export const CURRICULUM: Lesson[] = [
       },
       {
         sample: {
-          japanese: 'バスでいく',
+          target: 'バスでいく',
           highlightedTerm: 'で',
           literal: 'bus (← means) go',
           natural: 'Go by bus',
@@ -251,7 +251,7 @@ export const CURRICULUM: Lesson[] = [
       },
       {
         sample: {
-          japanese: 'きでつくる',
+          target: 'きでつくる',
           highlightedTerm: 'で',
           literal: 'wood (← material) make',
           natural: 'Make from wood',
@@ -277,7 +277,7 @@ export const CURRICULUM: Lesson[] = [
     title: 'の — Noun Linker',
     subtitle: 'The modifier chain',
     sample: {
-      japanese: 'わたしのいぬ',
+      target: 'わたしのいぬ',
       highlightedTerm: 'の',
       literal: 'Me (← owner of) dog',
       natural: "My dog",
@@ -287,7 +287,7 @@ export const CURRICULUM: Lesson[] = [
     sections: [
       {
         sample: {
-          japanese: 'わたしのいぬ',
+          target: 'わたしのいぬ',
           highlightedTerm: 'の',
           literal: 'Me (← owner of) dog',
           natural: 'My dog',
@@ -300,7 +300,7 @@ export const CURRICULUM: Lesson[] = [
       },
       {
         sample: {
-          japanese: 'にほんのくるま',
+          target: 'にほんのくるま',
           highlightedTerm: 'の',
           literal: 'Japan (← category of) car',
           natural: 'A Japanese car',
@@ -313,7 +313,7 @@ export const CURRICULUM: Lesson[] = [
       },
       {
         sample: {
-          japanese: 'ともだちのたなかさん',
+          target: 'ともだちのたなかさん',
           highlightedTerm: 'の',
           literal: 'friend (← apposition) Tanaka-san',
           natural: 'My friend Tanaka',
@@ -342,7 +342,7 @@ export const CURRICULUM: Lesson[] = [
     title: '動詞グループ — Verb Groups',
     subtitle: 'The conjugation classes',
     sample: {
-      japanese: 'たべる',
+      target: 'たべる',
       highlightedTerm: 'たべる',
       literal: 'eat (Group 2: る-verb — drop る to conjugate)',
       natural: "to eat",
@@ -364,7 +364,7 @@ export const CURRICULUM: Lesson[] = [
     title: '辞書形 — Dictionary Form',
     subtitle: 'The base',
     sample: {
-      japanese: 'まいにちたべる',
+      target: 'まいにちたべる',
       highlightedTerm: 'たべる',
       literal: 'every-day eat (← plain non-past)',
       natural: "I eat every day / I will eat every day",
@@ -386,7 +386,7 @@ export const CURRICULUM: Lesson[] = [
     title: 'ます形 — Polite Form',
     subtitle: 'Register switch',
     sample: {
-      japanese: 'まいにちたべます',
+      target: 'まいにちたべます',
       highlightedTerm: 'ます',
       literal: 'every-day eat (← polite non-past)',
       natural: "I eat every day (polite)",
@@ -408,7 +408,7 @@ export const CURRICULUM: Lesson[] = [
     title: 'て形 — Connector Form',
     subtitle: 'The joint',
     sample: {
-      japanese: 'たべてねる',
+      target: 'たべてねる',
       highlightedTerm: 'て',
       literal: 'eat (← connector) sleep',
       natural: "Eat and then sleep",
@@ -431,7 +431,7 @@ export const CURRICULUM: Lesson[] = [
     title: 'た形 — Past Form',
     subtitle: 'Completed or prior',
     sample: {
-      japanese: 'ごはんをたべた',
+      target: 'ごはんをたべた',
       highlightedTerm: 'た',
       literal: 'meal (obj) eat (← completed)',
       natural: "I ate / I have eaten",
@@ -454,7 +454,7 @@ export const CURRICULUM: Lesson[] = [
     title: 'ない形 — Negative Form',
     subtitle: 'Absence of action',
     sample: {
-      japanese: 'たべない',
+      target: 'たべない',
       highlightedTerm: 'ない',
       literal: 'eat (← absent)',
       natural: "Don't eat / I don't eat",
@@ -480,7 +480,7 @@ export const CURRICULUM: Lesson[] = [
     title: 'い形容詞 — い-Adjectives',
     subtitle: 'Self-conjugating descriptors',
     sample: {
-      japanese: 'たかいやま',
+      target: 'たかいやま',
       highlightedTerm: 'たかい',
       literal: 'high/expensive (self-conjugating) mountain',
       natural: "A tall mountain",
@@ -504,7 +504,7 @@ export const CURRICULUM: Lesson[] = [
     title: 'な形容詞 — な-Adjectives',
     subtitle: 'Noun-like descriptors',
     sample: {
-      japanese: 'しずかなまち',
+      target: 'しずかなまち',
       highlightedTerm: 'な',
       literal: 'quiet (← copula-connector) town',
       natural: "A quiet town",
@@ -528,7 +528,7 @@ export const CURRICULUM: Lesson[] = [
     title: '比較 — Comparison',
     subtitle: 'More, less, most',
     sample: {
-      japanese: 'ねこはいぬよりちいさい',
+      target: 'ねこはいぬよりちいさい',
       highlightedTerm: 'より',
       literal: 'cat (topic) dog (← standard of comparison) small',
       natural: "Cats are smaller than dogs",
@@ -557,7 +557,7 @@ CURRICULUM.push(
     title: 'も — Also / Even',
     subtitle: 'The additive',
     sample: {
-      japanese: 'わたしもいく',
+      target: 'わたしもいく',
       highlightedTerm: 'も',
       literal: 'me (← also) go',
       natural: 'I\'m going too',
@@ -567,7 +567,7 @@ CURRICULUM.push(
     sections: [
       {
         sample: {
-          japanese: 'わたしもいく',
+          target: 'わたしもいく',
           highlightedTerm: 'も',
           literal: 'me (← also) go',
           natural: 'I\'m going too',
@@ -580,7 +580,7 @@ CURRICULUM.push(
       },
       {
         sample: {
-          japanese: 'ねこもいぬもすきだ',
+          target: 'ねこもいぬもすきだ',
           highlightedTerm: 'も',
           literal: 'cat (← also) dog (← also) liked (=)',
           natural: 'I like both cats and dogs',
@@ -593,7 +593,7 @@ CURRICULUM.push(
       },
       {
         sample: {
-          japanese: 'こどももわかる',
+          target: 'こどももわかる',
           highlightedTerm: 'も',
           literal: 'child (← even) understands',
           natural: 'Even a child understands',
@@ -614,7 +614,7 @@ CURRICULUM.push(
     title: 'と — And / With / Quotation',
     subtitle: 'The connector with three jobs',
     sample: {
-      japanese: 'ねことあそぶ',
+      target: 'ねことあそぶ',
       highlightedTerm: 'と',
       literal: 'cat (← together with) play',
       natural: 'Play with a cat',
@@ -624,7 +624,7 @@ CURRICULUM.push(
     sections: [
       {
         sample: {
-          japanese: 'ねことひつじ',
+          target: 'ねことひつじ',
           highlightedTerm: 'と',
           literal: 'cat (← and, exhaustive) sheep',
           natural: 'A cat and a sheep',
@@ -637,7 +637,7 @@ CURRICULUM.push(
       },
       {
         sample: {
-          japanese: 'ともだちとたべる',
+          target: 'ともだちとたべる',
           highlightedTerm: 'と',
           literal: 'friend (← together with) eat',
           natural: 'Eat with a friend',
@@ -650,7 +650,7 @@ CURRICULUM.push(
       },
       {
         sample: {
-          japanese: 'いくといった',
+          target: 'いくといった',
           highlightedTerm: 'と',
           literal: '(go) (← quote boundary) said',
           natural: 'Said they\'d go',
@@ -671,7 +671,7 @@ CURRICULUM.push(
     title: 'から — From / Because',
     subtitle: 'Origin and reason',
     sample: {
-      japanese: 'がっこうからかえる',
+      target: 'がっこうからかえる',
       highlightedTerm: 'から',
       literal: 'school (← origin: from) return',
       natural: 'Return from school',
@@ -681,7 +681,7 @@ CURRICULUM.push(
     sections: [
       {
         sample: {
-          japanese: 'とうきょうからきた',
+          target: 'とうきょうからきた',
           highlightedTerm: 'から',
           literal: 'Tokyo (← origin: from) came',
           natural: 'Came from Tokyo',
@@ -694,7 +694,7 @@ CURRICULUM.push(
       },
       {
         sample: {
-          japanese: 'たかいからかわない',
+          target: 'たかいからかわない',
           highlightedTerm: 'から',
           literal: '(expensive) (← because) not-buy',
           natural: 'Not buying it because it\'s expensive',
@@ -716,7 +716,7 @@ CURRICULUM.push(
     title: 'まで — Until / Up To',
     subtitle: 'The endpoint',
     sample: {
-      japanese: 'えきまであるく',
+      target: 'えきまであるく',
       highlightedTerm: 'まで',
       literal: 'station (← endpoint: up to) walk',
       natural: 'Walk to the station',
@@ -726,7 +726,7 @@ CURRICULUM.push(
     sections: [
       {
         sample: {
-          japanese: 'えきまであるく',
+          target: 'えきまであるく',
           highlightedTerm: 'まで',
           literal: 'station (← spatial endpoint) walk',
           natural: 'Walk as far as the station',
@@ -739,7 +739,7 @@ CURRICULUM.push(
       },
       {
         sample: {
-          japanese: 'しちじまでしごとだ',
+          target: 'しちじまでしごとだ',
           highlightedTerm: 'まで',
           literal: '7-oclock (← temporal endpoint) work (=)',
           natural: 'Work until 7',
@@ -760,7 +760,7 @@ CURRICULUM.push(
     title: 'こと — Nominalization',
     subtitle: 'Turning verbs into nouns',
     sample: {
-      japanese: 'たべることがすきだ',
+      target: 'たべることがすきだ',
       highlightedTerm: 'こと',
       literal: 'eat (← act-of) (subject) liked (=)',
       natural: 'I like eating',
@@ -770,7 +770,7 @@ CURRICULUM.push(
     sections: [
       {
         sample: {
-          japanese: 'はしることができる',
+          target: 'はしることができる',
           highlightedTerm: 'こと',
           literal: 'run (← act-of) (subject) can-do',
           natural: 'I can run',
@@ -783,7 +783,7 @@ CURRICULUM.push(
       },
       {
         sample: {
-          japanese: 'たべることがすきだ',
+          target: 'たべることがすきだ',
           highlightedTerm: 'こと',
           literal: 'eat (← act-of) (subject) liked (=)',
           natural: 'I like eating',
@@ -796,7 +796,7 @@ CURRICULUM.push(
       },
       {
         sample: {
-          japanese: 'にほんにいったことがある',
+          target: 'にほんにいったことがある',
           highlightedTerm: 'こと',
           literal: 'Japan (dest.) went (← experience-of) (subj.) exists',
           natural: 'I\'ve been to Japan',
@@ -809,7 +809,7 @@ CURRICULUM.push(
       },
       {
         sample: {
-          japanese: 'はなすことはむずかしい',
+          target: 'はなすことはむずかしい',
           highlightedTerm: 'こと',
           literal: 'speak (← act-of) (topic) difficult',
           natural: 'Speaking is difficult',
@@ -830,7 +830,7 @@ CURRICULUM.push(
     title: 'ている — Progressive / State',
     subtitle: 'The two readings',
     sample: {
-      japanese: 'たべている',
+      target: 'たべている',
       highlightedTerm: 'ている',
       literal: 'eat (← and be: ongoing)',
       natural: 'Am eating',
@@ -840,7 +840,7 @@ CURRICULUM.push(
     sections: [
       {
         sample: {
-          japanese: 'ほんをよんでいる',
+          target: 'ほんをよんでいる',
           highlightedTerm: 'いる',
           literal: 'book (obj) read (← and) be',
           natural: 'Is reading a book',
@@ -853,7 +853,7 @@ CURRICULUM.push(
       },
       {
         sample: {
-          japanese: 'しんでいる',
+          target: 'しんでいる',
           highlightedTerm: 'いる',
           literal: 'die (← and) be (resultant state)',
           natural: 'Is dead',
@@ -875,7 +875,7 @@ CURRICULUM.push(
     title: 'ので — Because (soft)',
     subtitle: 'Reason with consideration',
     sample: {
-      japanese: 'たかいのでかわない',
+      target: 'たかいのでかわない',
       highlightedTerm: 'ので',
       literal: '(expensive) (← soft-reason) not-buy',
       natural: 'Not buying it — it\'s expensive',
@@ -885,7 +885,7 @@ CURRICULUM.push(
     sections: [
       {
         sample: {
-          japanese: 'いそがしいのでいけない',
+          target: 'いそがしいのでいけない',
           highlightedTerm: 'ので',
           literal: '(busy) (← soft-reason) cannot-go',
           natural: 'Being busy, I can\'t go',
@@ -898,7 +898,7 @@ CURRICULUM.push(
       },
       {
         sample: {
-          japanese: 'しずかなのでよめる',
+          target: 'しずかなのでよめる',
           highlightedTerm: 'ので',
           literal: '(quiet) (← soft-reason) can-read',
           natural: 'Because it\'s quiet, I can read',
@@ -926,7 +926,7 @@ CURRICULUM.push(
     title: '連体修飾 — Relative Clauses',
     subtitle: 'Verbs that describe nouns',
     sample: {
-      japanese: 'たべたひと',
+      target: 'たべたひと',
       highlightedTerm: 'たべた',
       literal: 'ate (← describes) person',
       natural: 'The person who ate',
@@ -935,7 +935,7 @@ CURRICULUM.push(
     sections: [
       {
         sample: {
-          japanese: 'たべたひと',
+          target: 'たべたひと',
           highlightedTerm: 'たべた',
           literal: 'ate (← pre-nominal clause) person',
           natural: 'The person who ate',
@@ -948,7 +948,7 @@ CURRICULUM.push(
       },
       {
         sample: {
-          japanese: 'わたしがかったほん',
+          target: 'わたしがかったほん',
           highlightedTerm: 'かった',
           literal: 'I (subj.) bought (← pre-nominal) book',
           natural: 'The book I bought',
@@ -961,7 +961,7 @@ CURRICULUM.push(
       },
       {
         sample: {
-          japanese: 'はしっているいぬ',
+          target: 'はしっているいぬ',
           highlightedTerm: 'はしっている',
           literal: 'is-running (← pre-nominal) dog',
           natural: 'A dog that is running',
@@ -982,7 +982,7 @@ CURRICULUM.push(
     title: 'の — Nominalizer',
     subtitle: 'The concrete alternative to こと',
     sample: {
-      japanese: 'はなすのがきこえた',
+      target: 'はなすのがきこえた',
       highlightedTerm: 'の',
       literal: 'speak (← act-of, concrete) (subj.) was-heard',
       natural: 'I could hear (them) speaking',
@@ -991,7 +991,7 @@ CURRICULUM.push(
     sections: [
       {
         sample: {
-          japanese: 'はなすのがきこえた',
+          target: 'はなすのがきこえた',
           highlightedTerm: 'の',
           literal: 'speak (← concrete act) (subj.) was-heard',
           natural: 'I could hear (them) speaking',
@@ -1004,7 +1004,7 @@ CURRICULUM.push(
       },
       {
         sample: {
-          japanese: 'はしるのはたのしい',
+          target: 'はしるのはたのしい',
           highlightedTerm: 'の',
           literal: 'run (← act-of) (topic) fun',
           natural: 'Running is fun',
@@ -1025,7 +1025,7 @@ CURRICULUM.push(
     title: 'てみる — Try Doing',
     subtitle: 'Action as experiment',
     sample: {
-      japanese: 'たべてみる',
+      target: 'たべてみる',
       highlightedTerm: 'みる',
       literal: 'eat (← and) see/try',
       natural: 'Try eating it',
@@ -1034,7 +1034,7 @@ CURRICULUM.push(
     sections: [
       {
         sample: {
-          japanese: 'たべてみる',
+          target: 'たべてみる',
           highlightedTerm: 'みる',
           literal: 'eat (← and) try-to-see',
           natural: 'Try eating it',
@@ -1047,7 +1047,7 @@ CURRICULUM.push(
       },
       {
         sample: {
-          japanese: 'きいてみてください',
+          target: 'きいてみてください',
           highlightedTerm: 'みて',
           literal: 'listen (← try) please',
           natural: 'Please give it a listen',
@@ -1068,7 +1068,7 @@ CURRICULUM.push(
     title: 'てしまう — End Up / Done For',
     subtitle: 'Completion with consequence',
     sample: {
-      japanese: 'たべてしまった',
+      target: 'たべてしまった',
       highlightedTerm: 'しまった',
       literal: 'ate (← and ended up) — done',
       natural: 'I ended up eating it all',
@@ -1077,7 +1077,7 @@ CURRICULUM.push(
     sections: [
       {
         sample: {
-          japanese: 'ぜんぶたべてしまった',
+          target: 'ぜんぶたべてしまった',
           highlightedTerm: 'しまった',
           literal: 'all ate (← totally finished) — done',
           natural: 'I ate it all up',
@@ -1090,7 +1090,7 @@ CURRICULUM.push(
       },
       {
         sample: {
-          japanese: 'わすれてしまった',
+          target: 'わすれてしまった',
           highlightedTerm: 'しまった',
           literal: 'forgot (← regrettably done) — oops',
           natural: 'I went and forgot',
@@ -1111,7 +1111,7 @@ CURRICULUM.push(
     title: 'ておく — Do in Advance',
     subtitle: 'Preparation for later',
     sample: {
-      japanese: 'よんでおく',
+      target: 'よんでおく',
       highlightedTerm: 'おく',
       literal: 'read (← and set aside for later)',
       natural: 'Read it in advance',
@@ -1120,7 +1120,7 @@ CURRICULUM.push(
     sections: [
       {
         sample: {
-          japanese: 'かってておく',
+          target: 'かってておく',
           highlightedTerm: 'おく',
           literal: 'buy (← and leave done for later)',
           natural: 'Buy it ahead of time',
@@ -1133,7 +1133,7 @@ CURRICULUM.push(
       },
       {
         sample: {
-          japanese: 'でんきをけしておいて',
+          target: 'でんきをけしておいて',
           highlightedTerm: 'おい',
           literal: 'lights (obj.) turn-off (← leave done) please-do',
           natural: 'Go ahead and turn the lights off',
@@ -1154,7 +1154,7 @@ CURRICULUM.push(
     title: 'てくる / ていく — Directional Aspect',
     subtitle: 'Action coming toward or going away',
     sample: {
-      japanese: 'だんだんさむくなってきた',
+      target: 'だんだんさむくなってきた',
       highlightedTerm: 'てきた',
       literal: 'gradually cold became (← coming toward now)',
       natural: 'It has been getting cold',
@@ -1163,7 +1163,7 @@ CURRICULUM.push(
     sections: [
       {
         sample: {
-          japanese: 'にほんごがわかってきた',
+          target: 'にほんごがわかってきた',
           highlightedTerm: 'てきた',
           literal: 'Japanese (subj.) understand (← coming-toward-now)',
           natural: 'I have been starting to understand Japanese',
@@ -1176,7 +1176,7 @@ CURRICULUM.push(
       },
       {
         sample: {
-          japanese: 'これからもべんきょうしていく',
+          target: 'これからもべんきょうしていく',
           highlightedTerm: 'ていく',
           literal: 'from-now-on study (← going forward from now)',
           natural: 'I will keep studying going forward',
@@ -1197,7 +1197,7 @@ CURRICULUM.push(
     title: '可能形 — Potential Form',
     subtitle: 'Can / is able to',
     sample: {
-      japanese: 'たべられる',
+      target: 'たべられる',
       highlightedTerm: 'られる',
       literal: 'eat (← can: potential)',
       natural: 'Can eat',
@@ -1206,7 +1206,7 @@ CURRICULUM.push(
     sections: [
       {
         sample: {
-          japanese: 'およげる',
+          target: 'およげる',
           highlightedTerm: 'げる',
           literal: 'swim (← can: Group 1 potential)',
           natural: 'Can swim',
@@ -1219,7 +1219,7 @@ CURRICULUM.push(
       },
       {
         sample: {
-          japanese: 'にほんごがはなせる',
+          target: 'にほんごがはなせる',
           highlightedTerm: 'が',
           literal: 'Japanese (← can-do-subject) speak-can',
           natural: 'Can speak Japanese',
@@ -1240,7 +1240,7 @@ CURRICULUM.push(
     title: '受身形 — Passive Form',
     subtitle: 'Being acted upon',
     sample: {
-      japanese: 'ねこにひっかかれた',
+      target: 'ねこにひっかかれた',
       highlightedTerm: 'れた',
       literal: 'cat (← agent: by) scratched (← passive)',
       natural: 'Got scratched by the cat',
@@ -1249,7 +1249,7 @@ CURRICULUM.push(
     sections: [
       {
         sample: {
-          japanese: 'ほめられた',
+          target: 'ほめられた',
           highlightedTerm: 'られた',
           literal: 'praise (← passive: was-praised)',
           natural: 'Was praised',
@@ -1262,7 +1262,7 @@ CURRICULUM.push(
       },
       {
         sample: {
-          japanese: 'あめにふられた',
+          target: 'あめにふられた',
           highlightedTerm: 'れた',
           literal: 'rain (← agent: by) rained-on (← adversative passive)',
           natural: 'Got rained on / The rain fell on me',
@@ -1284,7 +1284,7 @@ CURRICULUM.push(
     title: 'あげる / もらう / くれる — Giving & Receiving',
     subtitle: 'Direction of benefit is grammaticalized',
     sample: {
-      japanese: 'ともだちにほんをあげた',
+      target: 'ともだちにほんをあげた',
       highlightedTerm: 'あげた',
       literal: 'friend (← recipient) book (obj.) gave-outward',
       natural: 'I gave a book to a friend',
@@ -1293,7 +1293,7 @@ CURRICULUM.push(
     sections: [
       {
         sample: {
-          japanese: 'ともだちにほんをあげた',
+          target: 'ともだちにほんをあげた',
           highlightedTerm: 'あげた',
           literal: 'friend (recipient) book gave-outward',
           natural: 'Gave a book to a friend',
@@ -1306,7 +1306,7 @@ CURRICULUM.push(
       },
       {
         sample: {
-          japanese: 'ともだちにほんをもらった',
+          target: 'ともだちにほんをもらった',
           highlightedTerm: 'もらった',
           literal: 'friend (← source) book received-inward',
           natural: 'Received a book from a friend',
@@ -1319,7 +1319,7 @@ CURRICULUM.push(
       },
       {
         sample: {
-          japanese: 'ともだちがほんをくれた',
+          target: 'ともだちがほんをくれた',
           highlightedTerm: 'くれた',
           literal: 'friend (subj.) book gave-inward (← toward speaker)',
           natural: 'A friend gave me a book',
@@ -1341,7 +1341,7 @@ CURRICULUM.push(
     title: 'てあげる / てもらう / てくれる — Benefactive',
     subtitle: 'Doing actions as gifts',
     sample: {
-      japanese: 'おしえてもらった',
+      target: 'おしえてもらった',
       highlightedTerm: 'もらった',
       literal: 'teach (← and received-inward: as benefit)',
       natural: 'Had someone teach me / Got taught',
@@ -1350,7 +1350,7 @@ CURRICULUM.push(
     sections: [
       {
         sample: {
-          japanese: 'てつだってあげる',
+          target: 'てつだってあげる',
           highlightedTerm: 'あげる',
           literal: 'help (← and give-outward: as benefit)',
           natural: 'I\'ll help you (doing you a favor)',
@@ -1363,7 +1363,7 @@ CURRICULUM.push(
       },
       {
         sample: {
-          japanese: 'おしえてもらった',
+          target: 'おしえてもらった',
           highlightedTerm: 'もらった',
           literal: 'teach (← and received: as benefit to me)',
           natural: 'I had them teach me / I got taught',
@@ -1376,7 +1376,7 @@ CURRICULUM.push(
       },
       {
         sample: {
-          japanese: 'てつだってくれた',
+          target: 'てつだってくれた',
           highlightedTerm: 'くれた',
           literal: 'help (← and gave-inward: toward me)',
           natural: 'They helped me (I appreciate it)',
@@ -1397,7 +1397,7 @@ CURRICULUM.push(
     title: '使役形 — Causative Form',
     subtitle: 'Making or letting someone do',
     sample: {
-      japanese: 'こどもにやさいをたべさせた',
+      target: 'こどもにやさいをたべさせた',
       highlightedTerm: 'させた',
       literal: 'child (← causee: に) vegetables (obj.) made-eat',
       natural: 'Made the child eat vegetables',
@@ -1406,7 +1406,7 @@ CURRICULUM.push(
     sections: [
       {
         sample: {
-          japanese: 'こどもにやさいをたべさせた',
+          target: 'こどもにやさいをたべさせた',
           highlightedTerm: 'させた',
           literal: 'child (に: coerced) vegetables eat-made',
           natural: 'Made the child eat vegetables',
@@ -1419,7 +1419,7 @@ CURRICULUM.push(
       },
       {
         sample: {
-          japanese: 'こどもがあそばせる',
+          target: 'こどもがあそばせる',
           highlightedTerm: 'せる',
           literal: 'child (が: permitted) play-let',
           natural: 'Let the child play',
@@ -1440,7 +1440,7 @@ CURRICULUM.push(
     title: '使役受身 — Causative-Passive',
     subtitle: 'Being made to do against your will',
     sample: {
-      japanese: 'やさいをたべさせられた',
+      target: 'やさいをたべさせられた',
       highlightedTerm: 'させられた',
       literal: 'vegetables eat-made-and-suffered',
       natural: 'Was made to eat vegetables',
@@ -1449,7 +1449,7 @@ CURRICULUM.push(
     sections: [
       {
         sample: {
-          japanese: 'さんじかんまたせられた',
+          target: 'さんじかんまたせられた',
           highlightedTerm: 'させられた',
           literal: '3 hours wait-made-and-suffered',
           natural: 'Was made to wait 3 hours',
@@ -1462,7 +1462,7 @@ CURRICULUM.push(
       },
       {
         sample: {
-          japanese: 'へんなことをいわされた',
+          target: 'へんなことをいわされた',
           highlightedTerm: 'された',
           literal: 'weird thing (obj.) say-made-and-suffered',
           natural: 'Was made to say something weird',
@@ -1483,7 +1483,7 @@ CURRICULUM.push(
     title: 'たら — When / If (Result-Oriented)',
     subtitle: 'After X happens, Y',
     sample: {
-      japanese: 'うちにかえったらでんわして',
+      target: 'うちにかえったらでんわして',
       highlightedTerm: 'たら',
       literal: 'home returned (← when-done) call-me',
       natural: 'Call me when you get home',
@@ -1492,7 +1492,7 @@ CURRICULUM.push(
     sections: [
       {
         sample: {
-          japanese: 'たべたらねる',
+          target: 'たべたらねる',
           highlightedTerm: 'たら',
           literal: 'ate (← when-done) sleep',
           natural: 'After eating, sleep / When done eating, sleep',
@@ -1505,7 +1505,7 @@ CURRICULUM.push(
       },
       {
         sample: {
-          japanese: 'もっとはやかったらよかった',
+          target: 'もっとはやかったらよかった',
           highlightedTerm: 'たら',
           literal: 'more fast-was (← if-only) was-good',
           natural: 'If only it had been faster',
@@ -1526,7 +1526,7 @@ CURRICULUM.push(
     title: 'ば — If (Hypothetical Condition)',
     subtitle: 'Pure conditional — if X then Y',
     sample: {
-      japanese: 'たべればたべるほどすきになる',
+      target: 'たべればたべるほどすきになる',
       highlightedTerm: 'れば',
       literal: 'eat-if eat-the-more liked-become',
       natural: 'The more you eat it, the more you like it',
@@ -1535,7 +1535,7 @@ CURRICULUM.push(
     sections: [
       {
         sample: {
-          japanese: 'はやければまにあう',
+          target: 'はやければまにあう',
           highlightedTerm: 'ければ',
           literal: 'fast-if make-it (natural consequence)',
           natural: 'If it is fast, we will make it',
@@ -1548,7 +1548,7 @@ CURRICULUM.push(
       },
       {
         sample: {
-          japanese: 'たべればたべるほどすきになる',
+          target: 'たべればたべるほどすきになる',
           highlightedTerm: 'れば',
           literal: 'eat-if eat-the-more like-become',
           natural: 'The more you eat it, the more you like it',
@@ -1569,7 +1569,7 @@ CURRICULUM.push(
     title: 'と — Natural Consequence',
     subtitle: 'X always leads to Y',
     sample: {
-      japanese: 'みぎにまがるとえきがある',
+      target: 'みぎにまがるとえきがある',
       highlightedTerm: 'と',
       literal: 'right turn (← natural consequence) station exists',
       natural: 'Turn right and there is the station',
@@ -1578,7 +1578,7 @@ CURRICULUM.push(
     sections: [
       {
         sample: {
-          japanese: 'はるになるとさくらがさく',
+          target: 'はるになるとさくらがさく',
           highlightedTerm: 'と',
           literal: 'spring becomes (← automatic consequence) cherry-blossoms bloom',
           natural: 'When spring comes, cherry blossoms bloom',
@@ -1591,7 +1591,7 @@ CURRICULUM.push(
       },
       {
         sample: {
-          japanese: 'おしたらおちるよ',
+          target: 'おしたらおちるよ',
           highlightedTerm: 'と',
           literal: '(use たら for requests/warnings, not と)',
           natural: '(contrast case)',
@@ -1612,7 +1612,7 @@ CURRICULUM.push(
     title: 'なら — Given That / If That Is the Case',
     subtitle: 'Conditional on shared context',
     sample: {
-      japanese: 'にほんにいくならおすしをたべて',
+      target: 'にほんにいくならおすしをたべて',
       highlightedTerm: 'なら',
       literal: 'Japan go (← given-that) sushi eat-please',
       natural: 'If you are going to Japan, eat sushi',
@@ -1621,7 +1621,7 @@ CURRICULUM.push(
     sections: [
       {
         sample: {
-          japanese: 'にほんにいくならおすしをたべて',
+          target: 'にほんにいくならおすしをたべて',
           highlightedTerm: 'なら',
           literal: 'Japan go (← taking-as-given) sushi eat',
           natural: 'If you are going to Japan, eat sushi',
@@ -1634,7 +1634,7 @@ CURRICULUM.push(
       },
       {
         sample: {
-          japanese: 'やすいならかう',
+          target: 'やすいならかう',
           highlightedTerm: 'なら',
           literal: 'cheap (← given-that-it-is) buy',
           natural: 'If it is cheap, I will buy it',
@@ -1655,7 +1655,7 @@ CURRICULUM.push(
     title: 'ね / よ — Shared & New Information',
     subtitle: 'The two most important sentence enders',
     sample: {
-      japanese: 'いいてんきですね',
+      target: 'いいてんきですね',
       highlightedTerm: 'ね',
       literal: 'nice weather (is) (← seeking agreement)',
       natural: 'Nice weather, isn\'t it?',
@@ -1664,7 +1664,7 @@ CURRICULUM.push(
     sections: [
       {
         sample: {
-          japanese: 'いいてんきですね',
+          target: 'いいてんきですね',
           highlightedTerm: 'ね',
           literal: 'nice weather (is) (← shared-ground: right?)',
           natural: 'Nice weather, isn\'t it?',
@@ -1677,7 +1677,7 @@ CURRICULUM.push(
       },
       {
         sample: {
-          japanese: 'これはからいよ',
+          target: 'これはからいよ',
           highlightedTerm: 'よ',
           literal: 'this is spicy (← asserting: I am telling you)',
           natural: 'This is spicy, I\'m telling you',
@@ -1698,7 +1698,7 @@ CURRICULUM.push(
     title: 'よね / な — Combined & Reflective',
     subtitle: 'Confirmation and self-talk',
     sample: {
-      japanese: 'むずかしいよね',
+      target: 'むずかしいよね',
       highlightedTerm: 'よね',
       literal: 'difficult (← asserting + seeking-confirmation)',
       natural: 'It\'s difficult, right? (I think so too)',
@@ -1707,7 +1707,7 @@ CURRICULUM.push(
     sections: [
       {
         sample: {
-          japanese: 'むずかしいよね',
+          target: 'むずかしいよね',
           highlightedTerm: 'よね',
           literal: 'difficult (← I-assert + right?)',
           natural: 'It\'s tough, isn\'t it? (I feel that way)',
@@ -1720,7 +1720,7 @@ CURRICULUM.push(
       },
       {
         sample: {
-          japanese: 'はやいなあ',
+          target: 'はやいなあ',
           highlightedTerm: 'なあ',
           literal: 'fast (← reflective: thinking aloud)',
           natural: 'Man, that\'s fast... (to oneself)',

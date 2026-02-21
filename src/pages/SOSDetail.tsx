@@ -1,13 +1,15 @@
 import { useState } from 'react';
 import { Navbar, Page, PageContent } from '../lib/ui';
-import { SOS_CATEGORIES, type SOSPhrase } from '../data/sos';
+import { useLanguage } from '../context/LanguageContext';
+import type { SOSPhrase } from '../types/language';
 
 interface SOSDetailProps {
   categoryId: string;
 }
 
 export function SOSDetail({ categoryId }: SOSDetailProps) {
-  const category = SOS_CATEGORIES.find(c => c.id === categoryId);
+  const { language } = useLanguage();
+  const category = language.sosCategories.find(c => c.id === categoryId);
   const [fullscreen, setFullscreen] = useState<SOSPhrase | null>(null);
 
   if (!category) return null;
@@ -39,9 +41,9 @@ export function SOSDetail({ categoryId }: SOSDetailProps) {
               >
                 {/* Japanese — big, point-at-screen size */}
                 <p className="text-2xl font-black text-[var(--color-ink)] leading-snug mb-1.5">
-                  {phrase.japanese}
+                  {phrase.target}
                 </p>
-                <p className="text-xs font-mono text-gray-400 mb-0.5">{phrase.romaji}</p>
+                {phrase.romaji && <p className="text-xs font-mono text-gray-400 mb-0.5">{phrase.romaji}</p>}
                 <p className="text-sm text-gray-600">{phrase.english}</p>
               </button>
             ))}
@@ -63,11 +65,13 @@ export function SOSDetail({ categoryId }: SOSDetailProps) {
             tap anywhere to close
           </p>
           <p className="text-6xl font-black text-white text-center leading-tight mb-8">
-            {fullscreen.japanese}
+            {fullscreen.target}
           </p>
-          <p className="text-lg font-mono text-white/50 text-center mb-2">
-            {fullscreen.romaji}
-          </p>
+          {fullscreen.romaji && (
+            <p className="text-lg font-mono text-white/50 text-center mb-2">
+              {fullscreen.romaji}
+            </p>
+          )}
           <p className="text-base text-white/40 text-center">
             {fullscreen.english}
           </p>

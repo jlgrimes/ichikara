@@ -1,13 +1,31 @@
-import { Navbar, Page, PageContent } from '../lib/ui';
+import { useMemo } from 'react';
+import { Navbar, Page, PageContent, useNavigation } from '../lib/ui';
 import { ConceptHero } from '../components/ConceptHero';
-import { CURRICULUM } from '../data/curriculum';
+import { useLanguage } from '../context/LanguageContext';
+import { getLessonMastery } from '../lib/quiz';
+import { QuizView } from './QuizView';
 
 interface LessonViewProps {
   lessonId: string;
 }
 
+/** Mirror of buildCards in QuizView — just need the IDs for mastery calc. */
+function getCardIds(lesson: { id: string; sample: unknown; sections?: unknown[] }): string[] {
+  const ids = ['sample'];
+  if (lesson.sections) {
+    lesson.sections.forEach((_, i) => ids.push(`section-${i}`));
+  }
+  return ids;
+}
+
 export function LessonView({ lessonId }: LessonViewProps) {
-  const lesson = CURRICULUM.find((l) => l.id === lessonId);
+  const { push }     = useNavigation();
+  const { language } = useLanguage();
+  const lesson = language.curriculum.find((l) => l.id === lessonId);
+
+  const cardIds = useMemo(() => (lesson ? getCardIds(lesson) : []), [lesson]);
+  const mastery = useMemo(() => getLessonMastery(lessonId, cardIds), [lessonId, cardIds]);
+
   if (!lesson) return null;
 
   return (
@@ -17,7 +35,7 @@ export function LessonView({ lessonId }: LessonViewProps) {
       <PageContent>
         {/* Big hero */}
         <ConceptHero
-          japanese={lesson.sample.japanese}
+          target={lesson.sample.target}
           highlightedTerm={lesson.sample.highlightedTerm}
           literal={lesson.sample.literal}
           natural={lesson.sample.natural}
@@ -47,7 +65,7 @@ export function LessonView({ lessonId }: LessonViewProps) {
               {lesson.sections.map((section, i) => (
                 <div key={i} className={i > 0 ? 'pt-6' : ''}>
                   <ConceptHero
-                    japanese={section.sample.japanese}
+                    target={section.sample.target}
                     highlightedTerm={section.sample.highlightedTerm}
                     literal={section.sample.literal}
                     natural={section.sample.natural}
@@ -77,6 +95,44 @@ export function LessonView({ lessonId }: LessonViewProps) {
               </ul>
             </div>
           )}
+
+          {/* ── Practice / Quiz ───────────────────────────────────────── */}
+          <div className="pt-2">
+            <button
+              onClick={() => push(<QuizView lessonId={lesson.id} />)}
+              className={[
+                'w-full rounded-2xl p-5 text-left',
+                'bg-[var(--color-ink)]',
+                'shadow-[0_4px_24px_rgba(26,26,46,0.15)]',
+                'active:scale-[0.97] active:opacity-90',
+                'transition-all duration-150 ease-out select-none',
+              ].join(' ')}
+            >
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-[11px] font-mono text-white/50 mb-1 uppercase tracking-widest">
+                    Flashcard Practice
+                  </p>
+                  <p className="text-base font-bold text-white">
+                    Practice this lesson
+                  </p>
+                  <p className="text-xs text-white/50 mt-0.5">
+                    {cardIds.length} card{cardIds.length !== 1 ? 's' : ''} · spaced repetition
+                  </p>
+                </div>
+                <div className="text-right">
+                  {mastery > 0 ? (
+                    <>
+                      <p className="text-2xl font-black text-white">{mastery}%</p>
+                      <p className="text-[10px] font-mono text-white/40 uppercase tracking-widest">mastered</p>
+                    </>
+                  ) : (
+                    <p className="text-3xl text-white/60">→</p>
+                  )}
+                </div>
+              </div>
+            </button>
+          </div>
         </div>
       </PageContent>
     </Page>

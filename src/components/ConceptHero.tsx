@@ -1,5 +1,5 @@
 interface ConceptHeroProps {
-  japanese: string;
+  target: string;
   highlightedTerm: string;
   literal: string;
   natural: string;
@@ -7,15 +7,15 @@ interface ConceptHeroProps {
 }
 
 export function ConceptHero({
-  japanese,
+  target,
   highlightedTerm,
   literal,
   natural,
   size = 'hero',
 }: ConceptHeroProps) {
-  const idx = japanese.indexOf(highlightedTerm);
-  const before = idx >= 0 ? japanese.slice(0, idx) : japanese;
-  const after = idx >= 0 ? japanese.slice(idx + highlightedTerm.length) : '';
+  const idx = target.indexOf(highlightedTerm);
+  const before = idx >= 0 ? target.slice(0, idx) : target;
+  const after = idx >= 0 ? target.slice(idx + highlightedTerm.length) : '';
   const found = idx >= 0;
 
   const Highlighted = () => (

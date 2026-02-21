@@ -1,6 +1,6 @@
 import { Page, PageContent, useNavigation } from '../lib/ui';
 import { LessonCard } from '../components/LessonCard';
-import { CURRICULUM } from '../data/curriculum';
+import { useLanguage } from '../context/LanguageContext';
 import { LessonView } from './LessonView';
 import { ParticlesView } from './ParticlesView';
 
@@ -42,7 +42,9 @@ const JLPT_GROUPS = [
 ];
 
 export function Home() {
-  const { push } = useNavigation();
+  const { push }     = useNavigation();
+  const { language } = useLanguage();
+  const CURRICULUM   = language.curriculum;
 
   return (
     <Page>

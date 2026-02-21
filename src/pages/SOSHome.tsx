@@ -1,9 +1,11 @@
 import { Page, PageContent, useNavigation } from '../lib/ui';
-import { SOS_CATEGORIES } from '../data/sos';
+import { useLanguage } from '../context/LanguageContext';
 import { SOSDetail } from './SOSDetail';
 
 export function SOSHome() {
-  const { push } = useNavigation();
+  const { push }     = useNavigation();
+  const { language } = useLanguage();
+  const SOS_CATEGORIES = language.sosCategories;
 
   return (
     <Page>
