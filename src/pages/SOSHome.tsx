@@ -36,11 +36,11 @@ export function SOSHome() {
                 onClick={() => push(<SOSDetail categoryId={cat.id} />)}
                 className={[
                   'w-full text-left',
-                  'bg-white/80 backdrop-blur-sm',
-                  'rounded-3xl border border-white/60',
+                  'bg-[var(--surface-bg)] backdrop-blur-sm',
+                  'rounded-3xl border border-[var(--surface-border)]',
                   'shadow-[0_2px_16px_rgba(0,0,0,0.06)]',
                   'p-5',
-                  'active:scale-[0.97] active:shadow-none active:bg-white/60',
+                  'active:scale-[0.97] active:shadow-none active:bg-[var(--surface-active)]',
                   'transition-all duration-150 ease-out select-none',
                 ].join(' ')}
               >
@@ -52,12 +52,12 @@ export function SOSHome() {
                       <p className="text-[17px] font-bold text-[var(--color-ink)] leading-snug">
                         {cat.name}
                       </p>
-                      <p className="text-[13px] text-gray-500 mt-0.5">
+                      <p className="text-[13px] text-gray-500 dark:text-gray-400 mt-0.5">
                         {cat.phrases.length} phrases
                       </p>
                     </div>
                   </div>
-                  <span className="text-gray-300 text-xl shrink-0 leading-none">›</span>
+                  <span className="text-gray-300 dark:text-gray-600 text-xl shrink-0 leading-none">›</span>
                 </div>
               </button>
             ))}

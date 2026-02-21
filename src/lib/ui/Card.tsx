@@ -6,9 +6,9 @@ export function Card({ children, className = '', onClick }: CardProps) {
     <div
       onClick={onClick}
       className={[
-        'bg-white rounded-2xl border border-gray-100 shadow-sm p-5',
+        'bg-[var(--surface-solid)] rounded-2xl border border-[var(--surface-border)] shadow-sm p-5',
         interactive
-          ? 'cursor-pointer active:scale-[0.98] active:shadow-none active:bg-gray-50 transition-all select-none'
+          ? 'cursor-pointer active:scale-[0.98] active:shadow-none active:bg-[var(--surface-active)] transition-all select-none'
           : '',
         className,
       ].join(' ')}

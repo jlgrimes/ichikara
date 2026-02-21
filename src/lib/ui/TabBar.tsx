@@ -22,7 +22,7 @@ export function TabBar<T extends string>({ tabs, activeTab, onChange }: TabBarPr
       style={{ paddingBottom: 'calc(env(safe-area-inset-bottom) + 10px)' }}
     >
       {/* Glass pill */}
-      <div className="pointer-events-auto flex bg-white/80 backdrop-blur-2xl rounded-full shadow-[0_4px_32px_rgba(0,0,0,0.13)] border border-white/60 p-1.5 gap-1">
+      <div className="pointer-events-auto flex bg-[var(--surface-bg)] backdrop-blur-2xl rounded-full shadow-[0_4px_32px_rgba(0,0,0,0.18)] border border-[var(--surface-border)] p-1.5 gap-1">
         {tabs.map(tab => (
           <TabButton
             key={tab.id}

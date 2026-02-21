@@ -42,7 +42,7 @@ export function ConceptHero({
             {literal}
           </span>
           <span className="text-gray-300">—</span>
-          <span className="text-sm text-gray-400 italic">{natural}</span>
+          <span className="text-sm text-gray-400 dark:text-gray-500 italic">{natural}</span>
         </div>
       </div>
     );
@@ -58,7 +58,7 @@ export function ConceptHero({
           {literal}
         </span>
         <span className="text-gray-300 font-light">—</span>
-        <span className="text-base text-gray-400 italic">{natural}</span>
+        <span className="text-base text-gray-400 dark:text-gray-500 italic">{natural}</span>
       </div>
     </div>
   );

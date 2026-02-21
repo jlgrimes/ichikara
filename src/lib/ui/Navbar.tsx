@@ -20,7 +20,7 @@ export function Navbar({ title, left, right }: NavbarProps) {
 
   return (
     <header
-      className="shrink-0 bg-white/70 backdrop-blur-2xl flex flex-col"
+      className="shrink-0 bg-[var(--surface-bg)] backdrop-blur-2xl flex flex-col"
       style={{ paddingTop: 'env(safe-area-inset-top)' }}
     >
       <div className="h-11 flex items-center px-3 gap-1">
@@ -42,7 +42,7 @@ export function Navbar({ title, left, right }: NavbarProps) {
           {right}
         </div>
       </div>
-      <div className="h-px bg-black/[0.06]" />
+      <div className="h-px bg-[var(--surface-divider)]" />
     </header>
   );
 }

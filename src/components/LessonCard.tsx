@@ -34,13 +34,13 @@ export function LessonCard({ lesson, onClick, completed = false }: LessonCardPro
       className={[
         'w-full text-left',
         completed
-          ? 'bg-emerald-50/70 backdrop-blur-sm border-emerald-100/80'
-          : 'bg-white/80 backdrop-blur-sm border-white/60',
+          ? 'bg-emerald-50/70 dark:bg-emerald-950/30 backdrop-blur-sm border-emerald-100/80 dark:border-emerald-900/50'
+          : 'bg-[var(--surface-bg)] backdrop-blur-sm border-[var(--surface-border)]',
         'rounded-3xl border',
         'shadow-[0_2px_16px_rgba(0,0,0,0.06)]',
         'p-5',
         'active:scale-[0.97] active:shadow-none',
-        completed ? 'active:bg-emerald-50/50' : 'active:bg-white/60',
+        completed ? 'active:bg-emerald-50/50 dark:active:bg-emerald-950/20' : 'active:bg-[var(--surface-active)]',
         'transition-all duration-150 ease-out',
         'select-none',
       ].join(' ')}
@@ -58,7 +58,7 @@ export function LessonCard({ lesson, onClick, completed = false }: LessonCardPro
           <h3 className="font-bold text-[var(--color-ink)] text-[17px] leading-snug">
             {lesson.title}
           </h3>
-          <p className="text-[13px] text-gray-500 mt-0.5 leading-snug">{lesson.subtitle}</p>
+          <p className="text-[13px] text-gray-500 dark:text-gray-400 mt-0.5 leading-snug">{lesson.subtitle}</p>
         </div>
 
         {/* Completion badge OR chevron */}
@@ -67,7 +67,7 @@ export function LessonCard({ lesson, onClick, completed = false }: LessonCardPro
             ✓
           </span>
         ) : (
-          <span className="text-gray-300 text-xl shrink-0 leading-none">›</span>
+          <span className="text-gray-300 dark:text-gray-600 text-xl shrink-0 leading-none">›</span>
         )}
       </div>
     </button>

@@ -290,8 +290,8 @@ export function QuizView({ lessonId }: QuizViewProps) {
                       'rounded-3xl border transition-all duration-200 select-none',
                       'shadow-[0_4px_32px_rgba(26,26,46,0.08)]',
                       revealed
-                        ? 'bg-white border-gray-100 cursor-default'
-                        : 'bg-white border-gray-100 cursor-pointer active:scale-[0.98] active:shadow-none',
+                        ? 'bg-[var(--surface-solid)] border-[var(--surface-border)] cursor-default'
+                        : 'bg-[var(--surface-solid)] border-[var(--surface-border)] cursor-pointer active:scale-[0.98] active:shadow-none',
                     ].join(' ')}
                   >
                     {/* Front — always visible */}
@@ -309,7 +309,7 @@ export function QuizView({ lessonId }: QuizViewProps) {
                         revealed ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0',
                       ].join(' ')}
                     >
-                      <div className="h-px bg-gray-100 mx-6" />
+                      <div className="h-px bg-[var(--surface-divider)] mx-6" />
                       <div className="px-6 py-5 space-y-3">
                         {/* Literal */}
                         <div>
@@ -325,7 +325,7 @@ export function QuizView({ lessonId }: QuizViewProps) {
                           <p className="text-[11px] font-mono text-gray-400 uppercase tracking-widest mb-1">
                             Natural
                           </p>
-                          <p className="text-sm text-gray-700 italic leading-relaxed">
+                          <p className="text-sm text-gray-700 dark:text-gray-300 italic leading-relaxed">
                             {currentCard.front.natural}
                           </p>
                         </div>

@@ -32,30 +32,30 @@ export function SettingsView({ onSignOut }: SettingsViewProps) {
 
           {/* Language */}
           <div>
-            <p className="text-xs font-mono text-gray-400 uppercase tracking-widest mb-3 px-1">
+            <p className="text-xs font-mono text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-3 px-1">
               Language
             </p>
             <button
               onClick={() => push(<LanguageSelector />)}
-              className="w-full bg-white/80 backdrop-blur-sm rounded-3xl border border-white/60 shadow-[0_2px_16px_rgba(0,0,0,0.06)] px-5 py-4 flex items-center gap-3 active:scale-[0.98] transition-all select-none"
+              className="w-full bg-[var(--surface-bg)] backdrop-blur-sm rounded-3xl border border-[var(--surface-border)] shadow-[0_2px_16px_rgba(0,0,0,0.06)] px-5 py-4 flex items-center gap-3 active:scale-[0.98] active:bg-[var(--surface-active)] transition-all select-none"
             >
               <span className="text-2xl leading-none">{language.meta.flag}</span>
               <div className="flex-1 text-left">
                 <p className="text-sm font-bold text-[var(--color-ink)]">{language.meta.name}</p>
-                <p className="text-xs text-gray-400 mt-0.5">{language.meta.nativeName}</p>
+                <p className="text-xs text-gray-400 dark:text-gray-500 mt-0.5">{language.meta.nativeName}</p>
               </div>
-              <span className="text-gray-300 text-xl leading-none">›</span>
+              <span className="text-gray-300 dark:text-gray-600 text-xl leading-none">›</span>
             </button>
           </div>
 
           {/* Account */}
           <div>
-            <p className="text-xs font-mono text-gray-400 uppercase tracking-widest mb-3 px-1">
+            <p className="text-xs font-mono text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-3 px-1">
               Account
             </p>
-            <div className="bg-white/80 backdrop-blur-sm rounded-3xl border border-white/60 shadow-[0_2px_16px_rgba(0,0,0,0.06)] overflow-hidden">
-              <div className="px-5 py-4 border-b border-gray-100">
-                <p className="text-[11px] font-mono text-gray-400 uppercase tracking-widest mb-0.5">
+            <div className="bg-[var(--surface-bg)] backdrop-blur-sm rounded-3xl border border-[var(--surface-border)] shadow-[0_2px_16px_rgba(0,0,0,0.06)] overflow-hidden">
+              <div className="px-5 py-4 border-b border-[var(--surface-border)]">
+                <p className="text-[11px] font-mono text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-0.5">
                   Signed in as
                 </p>
                 <p className="text-sm font-medium text-[var(--color-ink)]">
@@ -64,7 +64,7 @@ export function SettingsView({ onSignOut }: SettingsViewProps) {
               </div>
               <button
                 onClick={onSignOut}
-                className="w-full px-5 py-4 text-left text-[var(--color-accent)] font-medium text-sm active:bg-gray-50 transition-colors select-none"
+                className="w-full px-5 py-4 text-left text-[var(--color-accent)] font-medium text-sm active:bg-[var(--surface-active)] transition-colors select-none"
               >
                 Sign out
               </button>
@@ -73,13 +73,13 @@ export function SettingsView({ onSignOut }: SettingsViewProps) {
 
           {/* About */}
           <div>
-            <p className="text-xs font-mono text-gray-400 uppercase tracking-widest mb-3 px-1">
+            <p className="text-xs font-mono text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-3 px-1">
               About
             </p>
-            <div className="bg-white/80 backdrop-blur-sm rounded-3xl border border-white/60 shadow-[0_2px_16px_rgba(0,0,0,0.06)] px-5 py-5 space-y-1">
+            <div className="bg-[var(--surface-bg)] backdrop-blur-sm rounded-3xl border border-[var(--surface-border)] shadow-[0_2px_16px_rgba(0,0,0,0.06)] px-5 py-5 space-y-1">
               <p className="text-[17px] font-black text-[var(--color-ink)] tracking-tight">一から</p>
-              <p className="text-sm text-gray-500">Japanese — structural, from the ground up</p>
-              <p className="text-xs font-mono text-gray-300 pt-1">v0.1.0</p>
+              <p className="text-sm text-gray-500 dark:text-gray-400">Japanese — structural, from the ground up</p>
+              <p className="text-xs font-mono text-gray-300 dark:text-gray-600 pt-1">v0.1.0</p>
             </div>
           </div>
 

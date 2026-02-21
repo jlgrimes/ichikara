@@ -39,9 +39,9 @@ function AudioBtn({ phrase, playing, onPlay, size = 'sm' }: AudioBtnProps) {
         playing
           ? sm
             ? 'bg-[var(--color-accent)] text-white shadow-md'
-            : 'bg-white text-[var(--color-ink)] shadow-lg'
+            : 'bg-[var(--surface-solid)] text-[var(--color-ink)] shadow-lg'
           : sm
-          ? 'bg-gray-100 text-gray-400 active:bg-gray-200'
+          ? 'bg-[var(--input-bg)] text-gray-400 active:opacity-70'
           : 'bg-white/20 text-white active:bg-white/30',
       ].join(' ')}
     >
@@ -112,12 +112,12 @@ export function SOSDetail({ categoryId }: SOSDetailProps) {
                 key={i}
                 className={[
                   'w-full text-left',
-                  'bg-white/80 backdrop-blur-sm',
-                  'rounded-3xl border border-white/60',
+                  'bg-[var(--surface-bg)] backdrop-blur-sm',
+                  'rounded-3xl border border-[var(--surface-border)]',
                   'shadow-[0_2px_16px_rgba(0,0,0,0.06)]',
                   'p-5',
                   'flex items-center gap-3',
-                  playingIdx === i ? 'border-[var(--color-accent)]/30 bg-white' : '',
+                  playingIdx === i ? 'border-[var(--color-accent)]/30 bg-[var(--surface-solid)]' : '',
                   'transition-all duration-150',
                 ].join(' ')}
               >
@@ -131,9 +131,9 @@ export function SOSDetail({ categoryId }: SOSDetailProps) {
                     {phrase.target}
                   </p>
                   {phrase.romaji && (
-                    <p className="text-xs font-mono text-gray-400 mb-0.5">{phrase.romaji}</p>
+                    <p className="text-xs font-mono text-gray-400 dark:text-gray-500 mb-0.5">{phrase.romaji}</p>
                   )}
-                  <p className="text-sm text-gray-600">{phrase.english}</p>
+                  <p className="text-sm text-gray-600 dark:text-gray-400">{phrase.english}</p>
                 </button>
 
                 {/* Audio play button */}

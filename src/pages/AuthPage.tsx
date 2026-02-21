@@ -38,11 +38,11 @@ export function AuthPage() {
       {/* Logo */}
       <div className="mb-10 text-center">
         <h1 className="text-5xl font-black text-[var(--color-ink)] tracking-tight">一から</h1>
-        <p className="text-gray-500 text-sm mt-2">Japanese — structural, from the ground up.</p>
+        <p className="text-gray-500 dark:text-gray-400 text-sm mt-2">Japanese — structural, from the ground up.</p>
       </div>
 
       {/* Card */}
-      <div className="w-full max-w-sm bg-white rounded-3xl border border-gray-200 shadow-sm p-8">
+      <div className="w-full max-w-sm bg-[var(--surface-solid)] rounded-3xl border border-[var(--surface-border)] shadow-sm p-8">
         <h2 className="text-xl font-bold text-[var(--color-ink)] mb-6">
           {mode === 'login' ? 'Welcome back' : 'Create account'}
         </h2>
@@ -57,7 +57,7 @@ export function AuthPage() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-ink)] transition"
+              className="w-full rounded-xl border border-[var(--surface-border)] bg-[var(--color-paper)] text-[var(--color-ink)] px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-ink)] transition"
               placeholder="you@example.com"
             />
           </div>
@@ -72,7 +72,7 @@ export function AuthPage() {
               onChange={(e) => setPassword(e.target.value)}
               required
               minLength={6}
-              className="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-ink)] transition"
+              className="w-full rounded-xl border border-[var(--surface-border)] bg-[var(--color-paper)] text-[var(--color-ink)] px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-ink)] transition"
               placeholder="••••••••"
             />
           </div>
@@ -96,7 +96,7 @@ export function AuthPage() {
         <div className="mt-6 text-center">
           <button
             onClick={() => { setMode(mode === 'login' ? 'signup' : 'login'); setError(null); setSuccess(null); }}
-            className="text-sm text-gray-500 hover:text-[var(--color-ink)] transition"
+            className="text-sm text-gray-500 dark:text-gray-400 hover:text-[var(--color-ink)] transition"
           >
             {mode === 'login' ? "Don't have an account? Sign up" : 'Already have an account? Sign in'}
           </button>

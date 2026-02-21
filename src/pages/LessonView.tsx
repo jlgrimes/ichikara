@@ -50,7 +50,7 @@ export function LessonView({ lessonId }: LessonViewProps) {
           {/* Title */}
           <div>
             <h1 className="text-2xl font-black text-[var(--color-ink)] mb-0.5">{lesson.title}</h1>
-            <p className="text-gray-500 text-sm">{lesson.subtitle}</p>
+            <p className="text-gray-500 dark:text-gray-400 text-sm">{lesson.subtitle}</p>
           </div>
 
           {/* Structural concept */}
@@ -58,8 +58,8 @@ export function LessonView({ lessonId }: LessonViewProps) {
             <p className="text-xs font-mono text-gray-400 uppercase tracking-widest mb-3">
               Structural Concept
             </p>
-            <div className="bg-white rounded-2xl border border-gray-100 p-5 shadow-sm">
-              <p className="text-gray-700 text-sm leading-relaxed">{lesson.concept}</p>
+            <div className="bg-[var(--surface-solid)] rounded-2xl border border-[var(--surface-border)] p-5 shadow-sm">
+              <p className="text-gray-700 dark:text-gray-300 text-sm leading-relaxed">{lesson.concept}</p>
             </div>
           </div>
 
@@ -79,7 +79,7 @@ export function LessonView({ lessonId }: LessonViewProps) {
                     {section.points.map((point, j) => (
                       <li key={j} className="flex gap-3 items-start">
                         <span className="text-[var(--color-accent)] font-bold mt-0.5 shrink-0">→</span>
-                        <span className="text-gray-700 text-sm leading-relaxed">{point}</span>
+                        <span className="text-gray-700 dark:text-gray-300 text-sm leading-relaxed">{point}</span>
                       </li>
                     ))}
                   </ul>
@@ -93,7 +93,7 @@ export function LessonView({ lessonId }: LessonViewProps) {
                 {lesson.keyPoints.map((point, i) => (
                   <li key={i} className="flex gap-3 items-start">
                     <span className="text-[var(--color-accent)] font-bold mt-0.5 shrink-0">→</span>
-                    <span className="text-gray-700 text-sm leading-relaxed">{point}</span>
+                    <span className="text-gray-700 dark:text-gray-300 text-sm leading-relaxed">{point}</span>
                   </li>
                 ))}
               </ul>
@@ -112,13 +112,13 @@ export function LessonView({ lessonId }: LessonViewProps) {
                 'border-2 transition-all duration-200 ease-out select-none',
                 completed
                   ? 'bg-emerald-50 border-emerald-200 active:bg-emerald-100'
-                  : 'bg-white border-gray-200 active:bg-gray-50',
+                  : 'bg-[var(--surface-solid)] border-[var(--surface-border)] active:bg-[var(--surface-active)]',
               ].join(' ')}
             >
               <div className="flex items-center gap-3">
                 <div className={[
                   'w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold transition-all',
-                  completed ? 'bg-emerald-500 text-white' : 'bg-gray-100 text-gray-400',
+                  completed ? 'bg-emerald-500 text-white' : 'bg-[var(--input-bg)] text-gray-400',
                 ].join(' ')}>
                   ✓
                 </div>

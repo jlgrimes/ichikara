@@ -36,7 +36,7 @@ export function LanguageSelector() {
                   'transition-all duration-150 active:scale-[0.97]',
                   languageId === lang.id
                     ? 'bg-[var(--color-ink)] shadow-[0_4px_24px_rgba(26,26,46,0.18)]'
-                    : 'bg-white/80 backdrop-blur-sm border border-white/60 shadow-[0_2px_16px_rgba(0,0,0,0.06)]',
+                    : 'bg-[var(--surface-bg)] backdrop-blur-sm border border-[var(--surface-border)] shadow-[0_2px_16px_rgba(0,0,0,0.06)]',
                 ].join(' ')}
               >
                 <span className="text-4xl leading-none">{lang.flag}</span>
@@ -62,7 +62,7 @@ export function LanguageSelector() {
               {comingSoon.map(lang => (
                 <div
                   key={lang.id}
-                  className="flex flex-col items-center gap-1.5 bg-white/50 rounded-2xl p-4 opacity-60"
+                  className="flex flex-col items-center gap-1.5 bg-[var(--surface-bg)] rounded-2xl p-4 opacity-60"
                 >
                   <span className="text-2xl leading-none">{lang.flag}</span>
                   <p className="text-[11px] font-medium text-[var(--color-ink)] text-center leading-tight">{lang.name}</p>

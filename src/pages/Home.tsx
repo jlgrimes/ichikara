@@ -109,7 +109,7 @@ export function Home() {
                   <span className="text-xs font-mono text-[var(--color-accent)]">{pct}%</span>
                 )}
               </div>
-              <div className="h-1.5 bg-gray-100 rounded-full overflow-hidden">
+              <div className="h-1.5 bg-[var(--input-bg)] rounded-full overflow-hidden">
                 <div
                   className="h-full bg-[var(--color-accent)] rounded-full transition-all duration-500 ease-out"
                   style={{ width: `${pct}%` }}
@@ -120,7 +120,7 @@ export function Home() {
 
           {/* ── iOS-style search bar ─────────────────────────────────────── */}
           <div className="flex items-center gap-2">
-            <div className="flex-1 flex items-center gap-2 bg-gray-100 rounded-xl px-3 h-10">
+            <div className="flex-1 flex items-center gap-2 bg-[var(--input-bg)] rounded-xl px-3 h-10">
               {/* Magnifier */}
               <svg className="w-4 h-4 text-gray-400 shrink-0" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
                 <circle cx="11" cy="11" r="8" /><path d="m21 21-4.35-4.35" />
@@ -141,7 +141,7 @@ export function Home() {
               {query && (
                 <button
                   onClick={clearSearch}
-                  className="text-gray-400 active:text-gray-600 w-5 h-5 flex items-center justify-center rounded-full bg-gray-300 shrink-0"
+                  className="text-gray-400 dark:text-gray-500 active:text-gray-600 w-5 h-5 flex items-center justify-center rounded-full bg-[var(--input-bg)] shrink-0"
                 >
                   <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
@@ -205,7 +205,7 @@ export function Home() {
                         <div
                           key={i}
                           className={[
-                            'bg-white/80 backdrop-blur-sm rounded-3xl border border-white/60',
+                            'bg-[var(--surface-bg)] backdrop-blur-sm rounded-3xl border border-[var(--surface-border)]',
                             'shadow-[0_2px_16px_rgba(0,0,0,0.06)] p-5',
                             'flex items-center gap-3',
                           ].join(' ')}
@@ -238,7 +238,7 @@ export function Home() {
                                 'transition-all duration-150 select-none shrink-0',
                                 playingPhrase === r.target
                                   ? 'bg-[var(--color-accent)] text-white'
-                                  : 'bg-gray-100 text-gray-400 active:bg-gray-200',
+                                  : 'bg-[var(--input-bg)] text-gray-400 active:opacity-70',
                               ].join(' ')}
                             >
                               <span className={playingPhrase === r.target ? 'text-base animate-pulse' : 'text-base'}>
@@ -359,7 +359,7 @@ export function Home() {
                 'w-16 h-16 rounded-full flex items-center justify-center',
                 'transition-all duration-150 select-none active:scale-90',
                 playingPhrase === fullscreenPhrase.target
-                  ? 'bg-white text-[var(--color-ink)]'
+                  ? 'bg-[var(--surface-solid)] text-[var(--color-ink)]'
                   : 'bg-white/20 text-white active:bg-white/30',
               ].join(' ')}
             >

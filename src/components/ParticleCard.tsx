@@ -14,7 +14,7 @@ export function ParticleCard({ particle, onClick, expanded = false }: ParticleCa
   return (
     <div
       className={`
-        bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden
+        bg-[var(--surface-solid)] rounded-2xl border border-[var(--surface-border)] shadow-sm overflow-hidden
         transition-all cursor-pointer
         ${expanded ? 'shadow-md' : 'hover:shadow-md'}
       `}
@@ -24,7 +24,7 @@ export function ParticleCard({ particle, onClick, expanded = false }: ParticleCa
       <div className="p-5 flex items-center gap-4">
         <span className="text-5xl font-bold text-[var(--color-ink)]">{particle.kana}</span>
         <div>
-          <p className="text-sm font-mono text-gray-500">{particle.label}</p>
+          <p className="text-sm font-mono text-gray-500 dark:text-gray-400">{particle.label}</p>
           <p className="text-xs text-gray-400 uppercase tracking-widest mt-0.5">
             {particle.type}
           </p>
@@ -33,8 +33,8 @@ export function ParticleCard({ particle, onClick, expanded = false }: ParticleCa
 
       {/* Structural explanation */}
       {expanded && (
-        <div className="px-5 pb-5 space-y-4 border-t border-gray-100 pt-4">
-          <p className="text-sm text-gray-700 leading-relaxed">
+        <div className="px-5 pb-5 space-y-4 border-t border-[var(--surface-border)] pt-4">
+          <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
             {particle.structural}
           </p>
 
