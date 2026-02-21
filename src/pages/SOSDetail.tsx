@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { Navbar, Page, PageContent } from '../lib/ui';
+import { Navbar, Page, PageContent, useToast } from '../lib/ui';
 import { useLanguage } from '../context/LanguageContext';
 import { useBookmarks } from '../context/BookmarkContext';
 import { isTTSAvailable, speak, stopSpeaking } from '../lib/tts';
@@ -64,6 +64,7 @@ function AudioBtn({ phrase, playing, onPlay, size = 'sm' }: AudioBtnProps) {
 export function SOSDetail({ categoryId }: SOSDetailProps) {
   const { language }   = useLanguage();
   const { isBookmarked, toggleBookmark } = useBookmarks();
+  const toast          = useToast();
   const category       = language.sosCategories.find(c => c.id === categoryId);
   const [fullscreen, setFullscreen]   = useState<SOSPhrase | null>(null);
   const [playingIdx, setPlayingIdx]   = useState<number | null>(null);
@@ -163,7 +164,12 @@ export function SOSDetail({ categoryId }: SOSDetailProps) {
                   onClick={(e) => {
                     e.stopPropagation();
                     hapticLight();
-                    toggleBookmark('phrase', `${categoryId}:${i}`);
+                    const key = `${categoryId}:${i}`;
+                    const willBookmark = !isBookmarked('phrase', key);
+                    toggleBookmark('phrase', key);
+                    toast.show(willBookmark ? 'Phrase saved' : 'Bookmark removed', {
+                      variant: willBookmark ? 'success' : 'default',
+                    });
                   }}
                   className="w-9 h-9 flex items-center justify-center text-lg active:opacity-40 transition-opacity shrink-0 select-none"
                   aria-label={isBookmarked('phrase', `${categoryId}:${i}`) ? 'Remove bookmark' : 'Save phrase'}

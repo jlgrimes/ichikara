@@ -1,5 +1,5 @@
 import { useEffect, useMemo } from 'react';
-import { Navbar, Page, PageContent, ErrorState, useNavigation } from '../lib/ui';
+import { Navbar, Page, PageContent, ErrorState, useNavigation, useToast } from '../lib/ui';
 import { ConceptHero } from '../components/ConceptHero';
 import { useLanguage } from '../context/LanguageContext';
 import { useProgress } from '../context/ProgressContext';
@@ -26,6 +26,7 @@ export function LessonView({ lessonId }: LessonViewProps) {
   const { language }           = useLanguage();
   const { isComplete, markComplete, markIncomplete } = useProgress();
   const { isBookmarked, toggleBookmark } = useBookmarks();
+  const toast       = useToast();
   const lesson      = language.curriculum.find((l) => l.id === lessonId);
   const completed   = isComplete(lessonId);
   const bookmarked  = isBookmarked('lesson', lessonId);
@@ -61,7 +62,14 @@ export function LessonView({ lessonId }: LessonViewProps) {
         title={`Module ${lesson.module}`}
         right={
           <button
-            onClick={() => { hapticMedium(); toggleBookmark('lesson', lessonId); }}
+            onClick={() => {
+              hapticMedium();
+              const willBookmark = !bookmarked;
+              toggleBookmark('lesson', lessonId);
+              toast.show(willBookmark ? 'Lesson saved' : 'Bookmark removed', {
+                variant: willBookmark ? 'success' : 'default',
+              });
+            }}
             className="min-h-[44px] min-w-[44px] flex items-center justify-end text-xl active:opacity-40 transition-opacity"
             aria-label={bookmarked ? 'Remove bookmark' : 'Bookmark lesson'}
           >
@@ -143,10 +151,12 @@ export function LessonView({ lessonId }: LessonViewProps) {
                 if (completed) {
                   hapticMedium();
                   markIncomplete(lessonId);
+                  toast.show('Marked incomplete');
                   import('../lib/analytics').then(({ analytics }) => analytics.lessonUnmarked(lessonId));
                 } else {
                   hapticSuccess();
                   markComplete(lessonId);
+                  toast.show('Lesson complete! 🎉', { variant: 'success' });
                   import('../lib/analytics').then(({ analytics }) => analytics.lessonCompleted(lessonId, lesson.module));
                 }
               }}
