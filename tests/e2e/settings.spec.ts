@@ -70,3 +70,39 @@ test('Sign Out button redirects to Auth page', async ({ page }) => {
   // After sign out, AuthPage should load
   await expect(page.getByRole('heading', { name: /welcome back/i })).toBeVisible({ timeout: 10_000 });
 });
+
+// ── Legal section (QRT-184) ───────────────────────────────────────────────────
+
+test('Legal section shows Privacy Policy and Terms of Service links', async ({ page }) => {
+  await expect(page.getByText(/^legal$/i).first()).toBeVisible();
+  await expect(page.getByRole('button', { name: /privacy policy/i })).toBeVisible();
+  await expect(page.getByRole('button', { name: /terms of service/i })).toBeVisible();
+});
+
+test('Privacy Policy button opens privacy page', async ({ page }) => {
+  await page.getByRole('button', { name: /privacy policy/i }).click();
+  await page.waitForTimeout(400);
+  // PrivacyPage Navbar title
+  await expect(page.getByText('Privacy Policy').first()).toBeVisible({ timeout: 5_000 });
+  // Content: "What We Collect" heading
+  await expect(page.getByText('What We Collect')).toBeVisible({ timeout: 5_000 });
+});
+
+test('Terms of Service button opens terms page', async ({ page }) => {
+  await page.getByRole('button', { name: /terms of service/i }).click();
+  await page.waitForTimeout(400);
+  // TermsPage Navbar title
+  await expect(page.getByText('Terms of Service').first()).toBeVisible({ timeout: 5_000 });
+  // Content: numbered section
+  await expect(page.getByText(/1\. The App/)).toBeVisible({ timeout: 5_000 });
+});
+
+test('Privacy page back button returns to Settings', async ({ page }) => {
+  await page.getByRole('button', { name: /privacy policy/i }).click();
+  await page.waitForTimeout(400);
+  const backBtn = page.getByRole('button', { name: /back/i })
+    .or(page.locator('button').filter({ hasText: /‹|←/ }));
+  await backBtn.first().click();
+  await page.waitForTimeout(400);
+  await expect(page.getByRole('heading', { name: 'Settings', level: 1 })).toBeVisible({ timeout: 5_000 });
+});

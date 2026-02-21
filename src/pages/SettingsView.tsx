@@ -3,6 +3,8 @@ import { Page, PageContent, useNavigation } from '../lib/ui';
 import { useAuth } from '../context/AuthContext';
 import { useLanguage } from '../context/LanguageContext';
 import { LanguageSelector } from './LanguageSelector';
+import { PrivacyPage } from './PrivacyPage';
+import { TermsPage } from './TermsPage';
 
 // Dev-only: lazy import so ComponentCatalog is excluded from prod bundle entirely.
 // Vite dead-code eliminates the import() call when import.meta.env.DEV is false.
@@ -100,6 +102,29 @@ export function SettingsView({ onSignOut }: SettingsViewProps) {
               <p className="text-[17px] font-black text-[var(--color-ink)] tracking-tight">一から</p>
               <p className="text-sm text-gray-500 dark:text-gray-400">Japanese — structural, from the ground up</p>
               <p className="text-xs font-mono text-gray-300 dark:text-gray-600 pt-1">v0.1.0</p>
+            </div>
+          </div>
+
+          {/* Legal */}
+          <div>
+            <p className="text-xs font-mono text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-3 px-1">
+              Legal
+            </p>
+            <div className="bg-[var(--surface-bg)] backdrop-blur-sm rounded-3xl border border-[var(--surface-border)] shadow-[0_2px_16px_rgba(0,0,0,0.06)] overflow-hidden">
+              <button
+                onClick={() => push(<PrivacyPage />)}
+                className="w-full px-5 py-4 flex items-center justify-between border-b border-[var(--surface-border)] active:bg-[var(--surface-active)] transition-colors select-none"
+              >
+                <p className="text-sm font-medium text-[var(--color-ink)]">Privacy Policy</p>
+                <span className="text-gray-300 dark:text-gray-600 text-xl leading-none">›</span>
+              </button>
+              <button
+                onClick={() => push(<TermsPage />)}
+                className="w-full px-5 py-4 flex items-center justify-between active:bg-[var(--surface-active)] transition-colors select-none"
+              >
+                <p className="text-sm font-medium text-[var(--color-ink)]">Terms of Service</p>
+                <span className="text-gray-300 dark:text-gray-600 text-xl leading-none">›</span>
+              </button>
             </div>
           </div>
 

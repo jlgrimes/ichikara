@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Privacy Policy — Ichikara</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink: #1a1a2e;
+      --paper: #fafaf8;
+      --accent: #e03d3d;
+      --muted: #6b7280;
+      --border: rgba(0,0,0,0.08);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --ink: #f0f0ec;
+        --paper: #131318;
+        --muted: #9ca3af;
+        --border: rgba(255,255,255,0.08);
+      }
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--paper);
+      color: var(--ink);
+      line-height: 1.65;
+      padding: 0 1rem 4rem;
+    }
+
+    header {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 3rem 0 2rem;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 2.5rem;
+    }
+
+    .wordmark {
+      font-size: 2rem;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+    }
+
+    .meta {
+      font-size: 0.75rem;
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    main {
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      font-size: 2rem;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.5rem;
+    }
+
+    .lead {
+      color: var(--muted);
+      font-size: 0.9rem;
+      margin-bottom: 2.5rem;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    section {
+      margin-bottom: 2rem;
+    }
+
+    h2 {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+    }
+
+    p, li {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-bottom: 0.5rem;
+    }
+
+    strong { color: var(--ink); font-weight: 600; }
+
+    ul { padding-left: 1.25rem; }
+    li { margin-bottom: 0.35rem; }
+
+    .mono {
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      font-size: 0.8rem;
+      color: var(--accent);
+    }
+
+    footer {
+      max-width: 680px;
+      margin: 3rem auto 0;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.75rem;
+      color: var(--muted);
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    footer a { color: inherit; text-decoration: underline; }
+  </style>
+</head>
+<body>
+
+  <header>
+    <p class="wordmark">一から</p>
+    <p class="meta">Ichikara · Japanese from scratch</p>
+  </header>
+
+  <main>
+    <h1>Privacy Policy</h1>
+    <div class="lead">
+      <p class="meta" style="margin-bottom:0.5rem">Last updated: February 21, 2026</p>
+      <p>Ichikara ("the App") is built by Qrtz. We keep this short and honest.</p>
+    </div>
+
+    <section>
+      <h2>What We Collect</h2>
+      <p><strong>Account data.</strong> When you sign in, we store your email address and a unique user ID via Supabase Auth. Your password is never stored in plaintext — it's handled entirely by Supabase's secure auth system.</p>
+      <p><strong>Progress data.</strong> Your lesson completion state, quiz scores, and bookmarks are stored in your device's local storage. Progress that syncs to our servers is stored in Supabase under your user ID.</p>
+      <p><strong>Usage analytics.</strong> We use PostHog to collect anonymized usage events (e.g. "lesson opened", "quiz completed"). These events help us improve the app. PostHog does not receive your email or any identifying information beyond an anonymous session ID.</p>
+      <p><strong>Error reports.</strong> We use Highlight.io to capture crash reports and session replays (page structure only — no keystrokes or passwords).</p>
+    </section>
+
+    <section>
+      <h2>What We Don't Collect</h2>
+      <p>We do <strong>not</strong> collect:</p>
+      <ul>
+        <li>Your name, phone number, or physical address</li>
+        <li>Payment information (the app is free)</li>
+        <li>Your device's contacts, camera, or microphone</li>
+        <li>Your location</li>
+        <li>Audio from TTS playback (speech synthesis is on-device)</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>How We Use Your Data</h2>
+      <ul>
+        <li>To authenticate you and keep your account secure</li>
+        <li>To sync your progress across devices</li>
+        <li>To understand which features are used so we can improve the app</li>
+        <li>To diagnose and fix crashes</li>
+      </ul>
+      <p>We do <strong>not</strong> sell, rent, or share your data with third parties for advertising or marketing purposes.</p>
+    </section>
+
+    <section>
+      <h2>Third-Party Services</h2>
+      <ul>
+        <li><strong>Supabase</strong> — auth and database hosting (USA). <span class="mono">supabase.com/privacy</span></li>
+        <li><strong>PostHog</strong> — product analytics (USA/EU). <span class="mono">posthog.com/privacy</span></li>
+        <li><strong>Highlight.io</strong> — error monitoring (USA). <span class="mono">highlight.io/privacy</span></li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Data Retention</h2>
+      <p>Your account and server-side data are retained until you delete your account. You can request deletion by emailing us — we'll purge your data within 30 days.</p>
+      <p>On-device storage (quiz scores, bookmarks) is cleared when you uninstall the app or clear browser storage.</p>
+    </section>
+
+    <section>
+      <h2>Your Rights (GDPR / CCPA)</h2>
+      <p>Depending on where you live, you may have rights to access, correct, delete, or export your data, and to opt out of analytics tracking. To exercise these rights, email <span class="mono">privacy@ichikara.app</span>.</p>
+    </section>
+
+    <section>
+      <h2>Children's Privacy</h2>
+      <p>Ichikara is not directed at children under 13 (or 16 in the EU). If you believe a child has provided us with personal data, please contact us and we will delete it.</p>
+    </section>
+
+    <section>
+      <h2>Changes</h2>
+      <p>Material changes will be announced via in-app notice. Continued use after changes constitutes acceptance.</p>
+    </section>
+
+    <section>
+      <h2>Contact</h2>
+      <p>Questions? Email <span class="mono">privacy@ichikara.app</span>.</p>
+    </section>
+  </main>
+
+  <footer>
+    <span>© 2026 Qrtz</span>
+    <a href="/terms.html">Terms of Service</a>
+    <a href="/">Home</a>
+  </footer>
+
+</body>
+</html>
